@@ -1,8 +1,8 @@
 ## Porting WalletShell for Other Currency
 
-> Note that this is only valid/possible for `turtle-service` compatible currency (e.g. a TurtleCoin fork).
+> Note that this is only valid/possible for `BLOC-service` compatible currency (e.g. a TurtleCoin fork).
 
-You can modify WalletShell to be used for your own `turtle-service` compatible currency with few simple steps (assuming you already grab the source code by cloning our repo):
+You can modify WalletShell to be used for your own `BLOC-service` compatible currency with few simple steps (assuming you already grab the source code by cloning our repo):
 
 ### 1. Update package.json
 This step is important in order to avoid conflict with the original WalletShell (or other fork), when user happen to install both wallet version.
@@ -22,7 +22,7 @@ If you want your version of WalletShell looks different than what provided by de
 - Replace `src/assets/image/*` with your own images.
 
 ### 4. Rebuild/package your wallet for distribution
-Please refer to the build guide on the repository [main page](https://github.com/turtlecoin/turtle-wallet-electron).
+Please refer to the build guide on the repository [main page](https://github.com/blockchain-app/BLOC-electron-wallet).
 
 ### Final Note
-_You are free to use, modify, redistribute, or do whatever you want to the WalletShell's code, as long as you comply with the [license](https://github.com/turtlecoin/turtle-wallet-electron/blob/master/LICENSE.md) coming with WalletShell_.
+_You are free to use, modify, redistribute, or do whatever you want to the WalletShell's code, as long as you comply with the [license](https://github.com/blockchain-app/BLOC-electron-wallet/blob/master/LICENSE.md) coming with WalletShell_.

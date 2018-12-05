@@ -38,13 +38,13 @@ This wallet contains the basic functions required to manage your TurtleCoin asse
 
 ### Notes
 
-WalletShell relies on `turtle-service` to manage wallet container &amp; rpc communication.
+WalletShell relies on `BLOC-service` to manage wallet container &amp; rpc communication.
 
-Release installer & packaged archived includes a ready to use `turtle-service` binary, which is unmodified copy TurtleCoin release archive.
+Release installer & packaged archived includes a ready to use `BLOC-service` binary, which is unmodified copy TurtleCoin release archive.
 
-On first launch, WalletShell will try to detect location/path of bundled `turtle-service` binary, but if it's failed, you can manually set path to the `turtle-service` binary on the Settings screen.
+On first launch, WalletShell will try to detect location/path of bundled `BLOC-service` binary, but if it's failed, you can manually set path to the `BLOC-service` binary on the Settings screen.
 
-If you don't trust the bundled `turtle-service` file, you can compare the checksum (sha256sum) against one from the official release, or simply download and use the binary from official TurtleCoin release, which is available here: https://github.com/turtlecoin/turtlecoin/releases. Then,  make sure to update your `turtle-service` path setting.
+If you don't trust the bundled `BLOC-service` file, you can compare the checksum (sha256sum) against one from the official release, or simply download and use the binary from official TurtleCoin release, which is available here: https://github.com/turtlecoin/turtlecoin/releases. Then,  make sure to update your `BLOC-service` path setting.
 
 ### Download &amp; Run WalletShell
 
@@ -70,13 +70,13 @@ You need to have `Node.js` and `npm` installed, go to https://nodejs.org and fin
 
 Once you have Node+npm installed:
 ```
-# first, download turtle-service binary for each platform
+# first, download BLOC-service binary for each platform
 # from TurtleCoin official repo
 # https://github.com/turtlecoin/turtlecoin/releases
-# extract the turtle-service executable somewhere
+# extract the BLOC-service executable somewhere
 
 # clone the repo
-$ git clone https://github.com/turtlecoin/turtle-wallet-electron
+$ git clone https://github.com/blockchain-app/BLOC-electron-wallet
 $ cd turtle-wallet-electron
 
 # install dependencies
@@ -90,17 +90,17 @@ $ cp ./src/assets/icon.* ./build/
 
 # build GNU/Linux package
 $ mkdir -p ./bin/lin
-$ cp /path/to/linux-version-of/turtle-service ./bin/lin/
+$ cp /path/to/linux-version-of/BLOC-service ./bin/lin/
 $ npm run dist-lin
 
 # build Windows package
 $ mkdir -p ./bin/win
-$ cp /path/to/win-version-of/turtle-service.exe ./bin/win/
+$ cp /path/to/win-version-of/BLOC-service.exe ./bin/win/
 $ npm run dist-win
 
 # build OSX package
 $ mkdir -p ./bin/osx
-$ cp /path/to/osx-version-of/turtle-service ./bin/osx/
+$ cp /path/to/osx-version-of/BLOC-service ./bin/osx/
 $ npm run dist-mac
 ```
 

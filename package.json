@@ -1,18 +1,18 @@
 {
-  "name": "walletshell",
-  "productName": "WalletShell",
-  "description": "TurtleCoin GUI Wallet",
-  "version": "v0.3.6",
-  "homepage": "https://github.com/turtlecoin/turtle-wallet-electron",
-  "repository": "https://github.com/turtlecoin/turtle-wallet-electron",
+  "name": "bloc-electron-wallet",
+  "productName": "BLOC-Electron-Wallet",
+  "description": "BLOC GUI Wallet",
+  "version": "v3.0.1",
+  "homepage": "https://github.com/blockchain-app/BLOC-electron-wallet",
+  "repository": "https://github.com/blockchain-app/BLOC-electron-wallet",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
     "debug": "electron . debug",
     "dev": "electron . dev",
-    "dist-win": "./node_modules/.bin/electron-builder --x64 --win -c.extraResources=./bin/win/turtle-service.exe",
-    "dist-lin": "./node_modules/.bin/electron-builder --x64 --linux -c.extraResources=./bin/lin/turtle-service",
-    "dist-mac": "./node_modules/.bin/electron-builder --x64 --mac -c.extraResources=./bin/osx/turtle-service"
+    "dist-win": "./node_modules/.bin/electron-builder --x64 --win -c.extraResources=./bin/win/BLOC-service.exe",
+    "dist-lin": "./node_modules/.bin/electron-builder --x64 --linux -c.extraResources=./bin/lin/BLOC-service",
+    "dist-mac": "./node_modules/.bin/electron-builder --x64 --mac -c.extraResources=./bin/osx/BLOC-service"
   },
   "keywords": [],
   "author": "Rixombea, Macroshock, TurtleCoin Developers",
@@ -34,8 +34,8 @@
     "semver": "^5.6.0"
   },
   "build": {
-    "appId": "lol.turtlecoin.walletshell",
-    "copyright": "Copyright (c) 2018 Rixombea, Macroshock, TurtleCoin Developers",
+    "appId": "money.bloc.bloc-electron-wallet",
+    "copyright": "Copyright (c) 2018 Rixombea, Macroshock, TurtleCoin Developers, BLOC Developers",
     "directories": {
       "app": ".",
       "output": "dist",
@@ -46,14 +46,14 @@
       "target": [
         "AppImage"
       ],
-      "maintainer": "rixombea (@labaylabay)",
+      "maintainer": "furiousteam (@furiousteam)",
       "category": "Office",
-      "vendor": "TurtleCoin",
-      "synopsis": "TurtleCoin GUI Wallet"
+      "vendor": "BLOC",
+      "synopsis": "BLOC GUI Wallet"
     },
     "win": {
       "target": "nsis",
-      "publisherName": "TurtleCoin"
+      "publisherName": "BLOC"
     },
     "nsis": {
       "artifactName": "${productName}-v${version}-${os}-${arch}-setup.${ext}",

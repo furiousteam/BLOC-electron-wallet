@@ -3,8 +3,8 @@ const remote = require('electron').remote;
 const Store = require('electron-store');
 const settings = new Store({name: 'Settings'});
 
-const DEFAULT_TITLE = 'WalletShell TurtleCoin Wallet';
-const SESSION_KEY = 'wlshell';
+const DEFAULT_TITLE = 'BLOC Electron Wallet';
+const SESSION_KEY = 'blocewal';
 
 // TODO: this is the only thing left as global
 const IS_DEBUG = remote.getGlobal('wsession').debug;
@@ -32,7 +32,7 @@ var WalletShellSession = function(){
         txNew: [],
         nodeFee: 0,
         nodeChoices: settings.get('pubnodes_data', []),
-        servicePath: settings.get('service_bin', 'turtle-service'),
+        servicePath: settings.get('service_bin', 'BLOC-service'),
         configUpdated: false,
         uiStateChanged: false,
         defaultTitle: DEFAULT_TITLE,

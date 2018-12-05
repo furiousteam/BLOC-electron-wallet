@@ -152,7 +152,7 @@ exports.validateMnemonic = (seed) => {
 
 exports.amountForMortal = (amount) => {
     if(!config.decimalDivisor) return amount;
-    let decimalPlaces = config.decimalPlaces || 2;
+    let decimalPlaces = config.decimalPlaces || 4;
     return (amount / config.decimalDivisor).toFixed(decimalPlaces);
 };
 

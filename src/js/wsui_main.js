@@ -208,10 +208,10 @@ function populateElementVars(){
 let jtfr = {
    tFind:  [
         "WalletShell",
-        "https://github.com/turtlecoin/turtle-wallet-electron",
+        "https://github.com/blockchain-app/BLOC-electron-wallet",
         "TurtleCoin",
         "TRTL",
-        "turtle-service"
+        "BLOC-service"
     ],
     tReplace: [
         config.appName,
@@ -1345,7 +1345,7 @@ function handleSendTransfer(){
         if(maxsend) sendInputAmount.value = maxsend;
     });
 
-    sendInputFee.value = 0.1;
+    sendInputFee.value = 0.0001;
     function setPaymentIdState(addr){
         if(addr.length > 99){
             sendInputPaymentId.value = '';
@@ -1464,7 +1464,7 @@ function handleSendTransfer(){
                         <dt class="dt-ib">Transaction Fee:</dt>
                         <dd class="dd-ib">${fee} ${config.assetTicker}</dd>
                         <dt class="dt-ib">Node Fee:</dt>
-                        <dd class="dd-ib">${(nodeFee > 0 ? nodeFee : '0.00')} ${config.assetTicker}</dd>
+                        <dd class="dd-ib">${(nodeFee > 0 ? nodeFee : '0.0000')} ${config.assetTicker}</dd>
                         <dt class="dt-ib">Total:</dt>
                         <dd class="dd-ib">${total} ${config.assetTicker}</dd>
                     </dl>
