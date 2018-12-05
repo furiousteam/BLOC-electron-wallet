@@ -76,7 +76,7 @@ Once you have Node+npm installed:
 # extract the BLOC-service executable somewhere
 
 # clone the repo
-$ git clone https://github.com/blockchain-app/BLOC-electron-wallet
+$ git clone https://github.com/furiousteam/BLOC-electron-wallet
 $ cd turtle-wallet-electron
 
 # install dependencies

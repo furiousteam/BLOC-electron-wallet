@@ -5,7 +5,7 @@ config.appName = 'BLOC-Electron-Wallet';
 config.appDescription = 'BLOC GUI Wallet';
 config.appSlogan = 'in BLOC we trust';
 config.appId = 'money.bloc.bloc-electron-wallet';
-config.appGitRepo = 'https://github.com/blockchain-app/BLOC-electron-wallet';
+config.appGitRepo = 'https://github.com/furiousteam/BLOC-electron-wallet';
 
 // default port number for your daemon (e.g. TurtleCoind)
 config.daemonDefaultRpcPort = 2086;

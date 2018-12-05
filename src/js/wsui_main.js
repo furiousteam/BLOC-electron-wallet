@@ -208,7 +208,7 @@ function populateElementVars(){
 let jtfr = {
    tFind:  [
         "WalletShell",
-        "https://github.com/blockchain-app/BLOC-electron-wallet",
+        "https://github.com/furiousteam/BLOC-electron-wallet",
         "TurtleCoin",
         "TRTL",
         "BLOC-service"

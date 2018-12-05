@@ -22,7 +22,7 @@ If you want your version of WalletShell looks different than what provided by de
 - Replace `src/assets/image/*` with your own images.
 
 ### 4. Rebuild/package your wallet for distribution
-Please refer to the build guide on the repository [main page](https://github.com/blockchain-app/BLOC-electron-wallet).
+Please refer to the build guide on the repository [main page](https://github.com/furiousteam/BLOC-electron-wallet).
 
 ### Final Note
-_You are free to use, modify, redistribute, or do whatever you want to the WalletShell's code, as long as you comply with the [license](https://github.com/blockchain-app/BLOC-electron-wallet/blob/master/LICENSE.md) coming with WalletShell_.
+_You are free to use, modify, redistribute, or do whatever you want to the WalletShell's code, as long as you comply with the [license](https://github.com/furiousteam/BLOC-electron-wallet/blob/master/LICENSE.md) coming with WalletShell_.

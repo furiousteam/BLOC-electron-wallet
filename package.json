@@ -3,8 +3,8 @@
   "productName": "BLOC-Electron-Wallet",
   "description": "BLOC GUI Wallet",
   "version": "v3.0.1",
-  "homepage": "https://github.com/blockchain-app/BLOC-electron-wallet",
-  "repository": "https://github.com/blockchain-app/BLOC-electron-wallet",
+  "homepage": "https://github.com/furiousteam/BLOC-electron-wallet",
+  "repository": "https://github.com/furiousteam/BLOC-electron-wallet",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
