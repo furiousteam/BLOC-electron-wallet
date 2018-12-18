@@ -1,70 +1,70 @@
 <!doctype html>
 <html>
-    <head>
-        <meta http-equiv="Content-Security-Policy" 
-            content="default-src 'none'; script-src 'self' 'unsafe-inline'; font-src 'self'; connect-src 'self' https://atom.io https://gh-contractor-zcbenz.s3.amazonaws.com; img-src 'self' file: data:; style-src 'self' 'unsafe-inline'; media-src 'self'">
-        <script defer src="../js/extras/fontawesome-solid.min.js"></script>
-        <script defer src="../js/extras/toast.js"></script>
-        <script defer src="../js/extras/list.min.js"></script>
-        <!-- CSS stylesheets -->
-        <link rel="stylesheet" href="../css/font-roboto-condensed.css">
-        <link rel="stylesheet" href="../css/common.css">
-        <link rel="stylesheet" href="../css/dark.css">
-        <!-- HTML pages (each page contains a section) -->
-        <link rel="import" href="./about.html">
-        <link rel="import" href="./settings.html">
-        <link rel="import" href="./transactions.html">
-        <link rel="import" href="./send.html">
-        <link rel="import" href="./welcome.html">
-        <link rel="import" href="./overview.html">
-        <link rel="import" href="./overview_load.html">
-        <link rel="import" href="./overview_show.html">
-        <link rel="import" href="./overview_import_key.html">
-        <link rel="import" href="./overview_import_seed.html">
-        <link rel="import" href="./overview_create.html">
-        <link rel="import" href="./address_book.html">
-        <link rel="import" href="./address_book_add.html">
-    </head>
+	<head>
+		<meta http-equiv="Content-Security-Policy" 
+			content="default-src 'none'; script-src 'self' 'unsafe-inline'; font-src 'self'; connect-src 'self' https://atom.io https://gh-contractor-zcbenz.s3.amazonaws.com; img-src 'self' file: data:; style-src 'self' 'unsafe-inline'; media-src 'self'">
+		<script defer src="../js/extras/fontawesome-solid.min.js"></script>
+		<script defer src="../js/extras/toast.js"></script>
+		<script defer src="../js/extras/list.min.js"></script>
+		<!-- CSS stylesheets -->
+		<link rel="stylesheet" href="../css/font-roboto-condensed.css">
+		<link rel="stylesheet" href="../css/common.css">
+		<link rel="stylesheet" href="../css/dark.css">
+		<!-- HTML pages (each page contains a section) -->
+		<link rel="import" href="./about.html">
+		<link rel="import" href="./settings.html">
+		<link rel="import" href="./transactions.html">
+		<link rel="import" href="./send.html">
+		<link rel="import" href="./welcome.html">
+		<link rel="import" href="./overview.html">
+		<link rel="import" href="./overview_load.html">
+		<link rel="import" href="./overview_show.html">
+		<link rel="import" href="./overview_import_key.html">
+		<link rel="import" href="./overview_import_seed.html">
+		<link rel="import" href="./overview_create.html">
+		<link rel="import" href="./address_book.html">
+		<link rel="import" href="./address_book_add.html">
+	</head>
 
-    <body>
-        <!-- Top navbar -->
-        <!-- 
+	<body>
+		<!-- Top navbar -->
+		<!-- 
 		<div class="navbar xgrid">
-            <div class="idle" id="navbar-div-sync">
-                <i class="fas fa-pause-circle" id="navbar-icon-sync"></i>
-                <span tabindex="-1" id="navbar-text-sync">IDLE</span>
-            </div>
-            
-            <button tabindex="-1" title="Wallet Overview" class="form-bt navbar-button navbar-need-connected" data-section="section-overview" id="button-section-overview">
-                <i class="fas fa-wallet"></i> <span class="navbar-label">Wallet</span>
-            </button>
-            <button tabindex="-1" title="Address Book" type="button" class="form-bt navbar-button" data-section="section-addressbook" id="button-section-addressbook">
-                <i class="fas fa-address-book"></i> <span class="navbar-label">Address Book</span>
-            </button>
-            <button tabindex="-1" title="Send" class="form-bt navbar-button navbar-need-connected" data-section="section-send" id="button-section-send">
-                <i class="fas fa-share-square"></i> <span class="navbar-label">Send</span>
-            </button>
-            <button tabindex="-1" title="Transactions" class="form-bt navbar-button navbar-need-connected" data-section="section-transactions" id="button-section-transactions">
-                <i class="fas fa-exchange-alt"></i> <span class="navbar-label">Transactions</span>
-            </button>
-            <button tabindex="-1" title="Settings" class="form-bt navbar-button" data-section="section-settings" id="button-section-settings">
-                <i class="fas fa-cog"></i> <span class="navbar-label">Settings</span>
-            </button>
-            <button tabindex="-1" title="About" class="form-bt navbar-button" data-section="section-about" id="button-section-about">
-                <i class="fas fa-info-circle"></i> <span class="navbar-label">About</span>
-            </button>
-        </div>
+			<div class="idle" id="navbar-div-sync">
+				<i class="fas fa-pause-circle" id="navbar-icon-sync"></i>
+				<span tabindex="-1" id="navbar-text-sync">IDLE</span>
+			</div>
+			
+			<button tabindex="-1" title="Wallet Overview" class="form-bt navbar-button navbar-need-connected" data-section="section-overview" id="button-section-overview">
+				<i class="fas fa-wallet"></i> <span class="navbar-label">Wallet</span>
+			</button>
+			<button tabindex="-1" title="Address Book" type="button" class="form-bt navbar-button" data-section="section-addressbook" id="button-section-addressbook">
+				<i class="fas fa-address-book"></i> <span class="navbar-label">Address Book</span>
+			</button>
+			<button tabindex="-1" title="Send" class="form-bt navbar-button navbar-need-connected" data-section="section-send" id="button-section-send">
+				<i class="fas fa-share-square"></i> <span class="navbar-label">Send</span>
+			</button>
+			<button tabindex="-1" title="Transactions" class="form-bt navbar-button navbar-need-connected" data-section="section-transactions" id="button-section-transactions">
+				<i class="fas fa-exchange-alt"></i> <span class="navbar-label">Transactions</span>
+			</button>
+			<button tabindex="-1" title="Settings" class="form-bt navbar-button" data-section="section-settings" id="button-section-settings">
+				<i class="fas fa-cog"></i> <span class="navbar-label">Settings</span>
+			</button>
+			<button tabindex="-1" title="About" class="form-bt navbar-button" data-section="section-about" id="button-section-about">
+				<i class="fas fa-info-circle"></i> <span class="navbar-label">About</span>
+			</button>
+		</div>
 		-->
-    
-        <!-- Main div, here the program will load the different .html files depending on the active tab -->
-        <div id="conn-info" class="status-node-info empty"></div>
-        <div id="main-div"></div>
-        <dialog id="main-dialog" class="default-dialog"></dialog>
-        <dialog id="tx-dialog" class="tx-dialog"></dialog>
-        <dialog id="ab-dialog" class="default-dialog address-book-dialog"></dialog>
-        <dialog id="tf-dialog" class="tx-dialog"></dialog>
-        <button tabindex="-1" title="Show keyboard shortcut" id="kswitch"><i class="fas fa-keyboard"></i></button>
-        <!-- <button tabindex="-1" title="Swith to dark mode" id="tswitch"><i class="fas fa-moon"></i></button> -->
-        <script>require('../js/wsui_main.js')</script>
-    </body>
+	
+		<!-- Main div, here the program will load the different .html files depending on the active tab -->
+		<div id="conn-info" class="status-node-info empty"></div>
+		<div id="main-div"></div>
+		<dialog id="main-dialog" class="default-dialog"></dialog>
+		<dialog id="tx-dialog" class="tx-dialog"></dialog>
+		<dialog id="ab-dialog" class="default-dialog address-book-dialog"></dialog>
+		<dialog id="tf-dialog" class="tx-dialog"></dialog>
+		<button tabindex="-1" title="Show keyboard shortcut" id="kswitch"><i class="fas fa-keyboard"></i></button>
+		<!-- <button tabindex="-1" title="Swith to dark mode" id="tswitch"><i class="fas fa-moon"></i></button> -->
+		<script>require('../js/wsui_main.js')</script>
+	</body>
 </html>

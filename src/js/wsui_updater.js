@@ -10,8 +10,8 @@ const settings = new Store({name: 'Settings'});
 const wsession = new WalletShellSession();
 
 /* sync progress ui */
-const syncDiv = document.getElementById('navbar-div-sync');
-const syncInfoBar = document.getElementById('navbar-text-sync');
+// const syncDiv = document.getElementById('navbar-div-sync');
+// const syncInfoBar = document.getElementById('navbar-text-sync');
 const connInfoDiv = document.getElementById('conn-info');
 
 const SYNC_STATUS_NET_CONNECTED = -10;
@@ -38,7 +38,7 @@ function triggerTxRefresh(){
 }
 
 function updateSyncProgress(data){
-    const iconSync = document.getElementById('navbar-icon-sync');
+    // const iconSync = document.getElementById('navbar-icon-sync');
     let blockCount = data.displayBlockCount;
     let knownBlockCount = data.displayKnownBlockCount;
     let blockSyncPercent = data.syncPercent;
@@ -47,12 +47,12 @@ function updateSyncProgress(data){
     if(knownBlockCount === SYNC_STATUS_NET_CONNECTED){
         // sync status text
         statusText = 'RESUMING WALLET SYNC...';
-        syncInfoBar.innerHTML = statusText;
+        // syncInfoBar.innerHTML = statusText;
         // sync info bar class
-        syncDiv.className = 'syncing';
+        // syncDiv.className = 'syncing';
         // sync status icon
-        iconSync.setAttribute('data-icon', 'sync');
-        iconSync.classList.add('fa-spin');
+        // iconSync.setAttribute('data-icon', 'sync');
+        // iconSync.classList.add('fa-spin');
         // connection status
         connInfoDiv.innerHTML = 'Connection restored, resuming sync process...';
         connInfoDiv.classList.remove('empty');
@@ -65,12 +65,12 @@ function updateSyncProgress(data){
     }else if(knownBlockCount === SYNC_STATUS_NET_DISCONNECTED){
         // sync status text
         statusText = 'PAUSED, NETWORK DISCONNECTED';
-        syncInfoBar.innerHTML = statusText;
+        // syncInfoBar.innerHTML = statusText;
         // sync info bar class
-        syncDiv.className = '';
+        // syncDiv.className = '';
         // sync status icon
-        iconSync.setAttribute('data-icon', 'ban');
-        iconSync.classList.remove('fa-spin');
+        // iconSync.setAttribute('data-icon', 'ban');
+        // iconSync.classList.remove('fa-spin');
         // connection status
         connInfoDiv.innerHTML = 'Synchronization paused, please check your network connection!';
         connInfoDiv.classList.remove('empty');
@@ -83,12 +83,12 @@ function updateSyncProgress(data){
     }else if(knownBlockCount === SYNC_STATUS_IDLE){
         // sync status text
         statusText = 'IDLE';
-        syncInfoBar.innerHTML = statusText;
+        // syncInfoBar.innerHTML = statusText;
         // sync info bar class
-        syncDiv.className = '';
+        // syncDiv.className = '';
         // sync status icon
-        iconSync.setAttribute('data-icon', 'pause-circle');
-        iconSync.classList.remove('fa-spin');
+        // iconSync.setAttribute('data-icon', 'pause-circle');
+        // iconSync.classList.remove('fa-spin');
         // connection status
         connInfoDiv.classList.remove('conn-warning');
         connInfoDiv.classList.add('empty');
@@ -106,13 +106,13 @@ function updateSyncProgress(data){
     }else if(knownBlockCount === SYNC_STATUS_NODE_ERROR){
         // not connected
         // status info bar class
-        syncDiv.className = 'failed';
+        // syncDiv.className = 'failed';
         // sync status text
         statusText = 'NODE ERROR';
-        syncInfoBar.textContent = statusText;
+        // syncInfoBar.textContent = statusText;
         //sync status icon
-        iconSync.setAttribute('data-icon', 'times');
-        iconSync.classList.remove('fa-spin');
+        // iconSync.setAttribute('data-icon', 'times');
+        // iconSync.classList.remove('fa-spin');
         // connection status
         connInfoDiv.innerHTML = 'Connection failed, try switching to another Node in settings page, close and reopen your wallet';
         connInfoDiv.classList.remove('empty');
@@ -125,25 +125,25 @@ function updateSyncProgress(data){
         statusText = `${blockCount}/${knownBlockCount}` ;
         if(blockCount+1 >= knownBlockCount && knownBlockCount !== 0) {
             // info bar class
-            syncDiv.classList = 'synced';
+            // syncDiv.classList = 'synced';
             // status text
             statusText = `SYNCED ${statusText}`;
-            syncInfoBar.textContent = statusText;
+            // syncInfoBar.textContent = statusText;
             // status icon
-            iconSync.setAttribute('data-icon', 'check');
-            iconSync.classList.remove('fa-spin');
+            // iconSync.setAttribute('data-icon', 'check');
+            // iconSync.classList.remove('fa-spin');
             // sync status sess flag
             wsession.set('synchronized', true);
             brwin.setProgressBar(-1);
          } else {
              // info bar class
-            syncDiv.className = 'syncing';
+            // syncDiv.className = 'syncing';
             // status text
             statusText = `SYNCING ${statusText} (${blockSyncPercent}%)`;
-            syncInfoBar.textContent = statusText;
+            // syncInfoBar.textContent = statusText;
             // status icon
-            iconSync.setAttribute('data-icon', 'sync');
-            iconSync.classList.add('fa-spin');
+            // iconSync.setAttribute('data-icon', 'sync');
+            // iconSync.classList.add('fa-spin');
             // sync status sess flag
             wsession.set('synchronized', false);
             let taskbarProgress = +(parseFloat(blockSyncPercent)/100).toFixed(2);
@@ -308,7 +308,7 @@ function showFeeWarning(fee){
         <p>The fee for sending transactions is: <strong>${fee.toFixed(config.decimalPlaces)} ${config.assetTicker} </strong>.<br>
             If you don't want to pay the node fee, please close your wallet, reopen and choose different public node (or run your own node).
         </p>
-        <p style="text-align:center;margin-top: 1.25rem;"><button  type="button" class="form-bt button-green" id="dialog-end">OK, I Understand</button></p>
+        <p style="text-align:center;margin-top: 1.25rem;"><button  type="button" class="form-bt button-blue" id="dialog-end">OK, I Understand</button></p>
     `;
 
     wsutil.innerHTML(dialog, htmlStr);

@@ -1,8 +1,8 @@
 <template>
     <section class="section" id="section-overview-load">
-        <div class="section-contents darkened">
+        <div class="section-contents section-wallet-setup darkened">
             <div class="div-title">
-                <h2 class="title">Open a wallet</h2>
+                <h2 class="section-wallet-setup-title">Open a wallet</h2>
             </div>
             <div class="div-input">
                 <div class="input-wrap">
@@ -13,9 +13,8 @@
                         id="input-load-path" tabindex="0" 
                         placeholder="Full path to the wallet file to be opened..."
                         />
-                    <button data-selection="openFile" data-targetinput="input-load-path" type="button" class="button-green path-input-button notabindex" id="button-load-browse" tabindex="2"><i class="fas fa-folder-open"></i></button>
+                    <button data-selection="openFile" data-targetinput="input-load-path" type="button" class="button-browse path-input-button notabindex" id="button-load-browse" tabindex="2"><i class="fas fa-folder-open"></i></button>
                 </div>
-
                 <div class="input-wrap">
                     <h4 class="text-spaced input-required">Wallet password</h4>
                     <input required="required" autofocus="true" tabindex="0" type="password"
@@ -41,26 +40,17 @@
                         <span  id="daemonPortFormHelp" class="form-help"></span>
                     </div>
                 </div>
-
-                <!-- <div class="input-wrap">
-                    <h4 class="text-spaced input-required">Daemon or public node address (&lt;IP_or_hostname&gt;:&lt;port_number&gt;)</h4>
-                    <input tabindex="0" required="required" data-initial="xdaemon_host" 
-                        name="nodeAddress" class="text-block" id="xinput-settings-daemon-address" 
-                        placeholder="Required, TurtleCoin daemon or public node address &amp; port, e.g mydaemon.com:2086" 
-                        />
-                    <span id="xdaemonHostFormHelp" class="form-help">Type first few character(s) and select from public node list, or type to your own node address.</span>
-                </div> -->
+				<div class="input-wrap" id="walletOpenButtons">
+				   <button type="button" class="form-bt button-blue button-block" id="button-load-load">Open the wallet</button>
+				</div>
                 
                 <div class="input-wrap">
-                    <span class="form-ew form-msg text-spaced-error" id="text-load-error"></span>
-                    <span class="form-ew form-msg text-spaced-warning" id="text-load-warning"></span>
-                    <span class="form-ew form-msg text-spaced-success" id="text-load-success"></span>
+                    <span class="form-ew form-msg text-spaced-error text-center" id="text-load-error"></span>
+                    <span class="form-ew form-msg text-spaced-warning text-center" id="text-load-warning"></span>
+                    <span class="form-ew form-msg text-spaced-success text-center" id="text-load-success"></span>
                 </div>
             </div>
-            <div class="action-buttons" id="walletOpenButtons">
-                <button tabindex="0" type="button" class="form-bt button-green" id="button-load-load">Open</button>
-                <button tabindex="0" type="button" class="form-bt button-red" data-section="section-welcome" id="button-load-cancel">Back</button>
-            </div>
         </div>
+		<button type="button" class="form-bt back-button-top-left" data-section="section-welcome" id="button-load-cancel"><img src="../assets/arrow_left.png" /> Back</button>
     </section>
 </template>

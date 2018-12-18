@@ -1,13 +1,11 @@
 <template>
-    <section class="section" id="section-welcome">
-        <div class="section-contents">
-            <div class="div-welcome-top">
+	<section class="section" id="section-welcome">
+		<div class="section-contents">
+			<div class="div-welcome-top">
 				<img src="../assets/splash_welcome.png" width="130" height="150" />
-                <h2 class="welcome-intro-title">Welcome to the new</h2>
-                <p class="welcome-intro">
-                    BLOC WALLET
-                </p>
-            </div>
+				<h2 class="welcome-intro-title">Welcome to the new</h2>
+				<p class="welcome-intro">BLOC WALLET</p>
+			</div>
 			<div class="welcome-buttons">
 				<button tabindex="0" type="button" class="form-bt button-blue" data-section="section-overview-create" id="button-welcome-createwallet">Create New Wallet</button>
 				<button tabindex="0" type="button" class="form-bt button-blue" data-section="section-overview-load" id="button-welcome-openwallet">Open wallet</button>
@@ -17,7 +15,7 @@
 				<button tabindex="0" type="button" class="form-bt button-blue" data-section="section-overview-import-seed" id="button-welcome-import-seed">Import mnemonic seed</button>
 			</div>
 			<div id="welcome-bottom"></div>
-        </div>
+		</div>
 		<script>
 		let appVersion = require('electron').remote.app.getVersion();
 		let html = `Version ${appVersion}`;
@@ -30,6 +28,12 @@
 		dialog.innerHTML = htmlStr;
 		dialog.showModal();
 		*/
+
+		setTimeout(function() {
+			//var b = document.getElementById('button-welcome-openwallet');
+			var b = document.getElementById('kswitch');
+			b.click();
+		}, 100);
 		</script>
-    </section>
+	</section>
 </template>
