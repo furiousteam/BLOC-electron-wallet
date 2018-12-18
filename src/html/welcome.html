@@ -2,21 +2,34 @@
     <section class="section" id="section-welcome">
         <div class="section-contents">
             <div class="div-welcome-top">
-                <h2 class="welcome-intro-title">Welcome!</h2>
+				<img src="../assets/splash_welcome.png" width="130" height="150" />
+                <h2 class="welcome-intro-title">Welcome to the new</h2>
                 <p class="welcome-intro">
-                    Get started by creating new wallet,<br> open or import your existing wallet.
+                    BLOC WALLET
                 </p>
             </div>
-            <div class="dev-welcome-bottom">
-                <div class="welcome-buttons">
-                    <button tabindex="0" type="button" class="form-bt button-green" data-section="section-overview-load" id="button-welcome-openwallet">Open wallet</button>
-                    <button tabindex="0" type="button" class="form-bt button-green" data-section="section-overview-create" id="button-welcome-createwallet">Create New Wallet</button>
-                </div>
-                <div class="welcome-buttons">
-                    <button tabindex="0" type="button" class="form-bt button-green" data-section="section-overview-import-key" id="button-welcome-import-key">Import key</button>
-                    <button tabindex="0" type="button" class="form-bt button-green" data-section="section-overview-import-seed" id="button-welcome-import-seed">Import mnemonic seed</button>
-                </div>
-            </div>
-        </div>  
+			<div class="welcome-buttons">
+				<button tabindex="0" type="button" class="form-bt button-blue" data-section="section-overview-create" id="button-welcome-createwallet">Create New Wallet</button>
+				<button tabindex="0" type="button" class="form-bt button-blue" data-section="section-overview-load" id="button-welcome-openwallet">Open wallet</button>
+			</div>
+			<div class="welcome-buttons">
+				<button tabindex="0" type="button" class="form-bt button-blue" data-section="section-overview-import-key" id="button-welcome-import-key">Import your keys</button>
+				<button tabindex="0" type="button" class="form-bt button-blue" data-section="section-overview-import-seed" id="button-welcome-import-seed">Import mnemonic seed</button>
+			</div>
+			<div id="welcome-bottom"></div>
+        </div>
+		<script>
+		let appVersion = require('electron').remote.app.getVersion();
+		let html = `Version ${appVersion}`;
+		document.getElementById('welcome-bottom').innerHTML = html;
+
+		/*
+		var dialog = document.getElementById('main-dialog');
+		let htmlText = 'Terminating WalletShell...';
+		let htmlStr = `<div class="div-save-main" style="text-align: center;padding:1rem;"><i class="fas fa-spinner fa-pulse"></i><span style="padding:0px 10px;">${htmlText}</span></div>`;
+		dialog.innerHTML = htmlStr;
+		dialog.showModal();
+		*/
+		</script>
     </section>
 </template>

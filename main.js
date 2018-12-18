@@ -37,7 +37,8 @@ const DEFAULT_SETTINGS = {
     tray_close: false,
     darkmode: true
 };
-const DEFAULT_SIZE = { width: 840, height: 680 };
+// const DEFAULT_SIZE = { width: 1280, height: 850 };
+const DEFAULT_SIZE = { width: 1280, height: 1100 };
 
 app.prompExit = true;
 app.prompShown = false;
@@ -74,10 +75,10 @@ function createWindow () {
         windowOpts: winOpts,
         templateUrl: path.join(__dirname, "src/html/splash.html"),
         delay: 0, 
-        minVisible: 3000,
+        minVisible: 0,
         splashScreenOpts: {
-            width: 425,
-            height: 325,
+            width: 728,
+            height: 446,
             transparent: true
         },
     });

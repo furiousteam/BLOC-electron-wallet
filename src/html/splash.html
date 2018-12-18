@@ -1,50 +1,64 @@
 <!doctype html>
 <html>
-    <head>
-        <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline'; font-src 'self'; connect-src 'self' https://atom.io https://gh-contractor-zcbenz.s3.amazonaws.com; img-src 'self' file: data:; style-src 'self' 'unsafe-inline'; media-src 'self'">
-        <style>
-            * { box-sizing: border-box; }
-            @keyframes geboy {0%{opacity:0.2;} 50%{opacity:1;} 100%{opacity:0.2;}}
-            html,body{margin: 0; padding: 0;}
-            body{
-                height: 325px;
-                width: 325px;
-                background: #000 url(../assets/splash_bg.png) 50% 50% no-repeat;
-                text-align: center;
-                margin: 0 auto;
-                position: relative;
-                font-family: sans-serif;
-            }
-            #wsVersion{
-                position: absolute;
-                bottom: 55px;
-                left: 138px;
-                color: #fff;
-                font-size: 14px;
-                text-shadow: 1px 1px 1px #888;
-                opacity: 0.5;
-            }
-            img {
-                opacity: 0.2;
-                transition:all 0.5s ease-in-out;
-                animation:geboy normal 4s infinite ease-in-out;
-                animation-delay: 0.5s;
-                width:180px;
-                height:auto;
-                position:relative;
-                left:-10px;
-                top:68px;
-                image-rendering: optimizeQuality;
-            }​
-        </style>
-    </head>
-    <body>
-    <img src="../assets/splash_logo.png" />
-    <span id="wsVersion"></span>
+<head>
+	<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline'; font-src 'self'; connect-src 'self' https://atom.io https://gh-contractor-zcbenz.s3.amazonaws.com; img-src 'self' file: data:; style-src 'self' 'unsafe-inline'; media-src 'self'">
+	<link rel="stylesheet" href="../css/font-roboto-condensed.css">
+	<style>
+	* {
+		box-sizing: border-box;
+	}
+	@keyframes geboy {
+		0%{opacity: 1;}
+		50%{opacity: 0.4;}
+		100%{opacity: 1;}
+	}
+	html, body {
+		margin: 0;
+		padding: 0;
+	}
+	body {
+		width: 728px;
+		height: 446px;
+		background: #00012a url(../assets/splash_bg.png) 50% 50% no-repeat;
+		text-align: center;
+		margin: 0 auto;
+		position: relative;
+		font-family: 'Roboto Condensed', sans-serif;
+		font-weight: 400;
+	}
+	#wsVersion {
+		position: absolute;
+		bottom: 35px;
+		left: 0;
+		right: 0;
+		text-align: center;
+		color: #fff;
+		font-size: 13px;
+		text-shadow: 1px 1px 1px #888;
+		opacity: 0.5;
+	}
+	img {
+		opacity: 1;
+		transition: all 0.5s ease-in-out;
+		animation: geboy normal 4s infinite ease-in-out;
+		animation-delay: 0.5s;
+		width: 263px;
+		height: 240px;
+		position: relative;
+		left: 0;
+		top: 68px;
+		image-rendering: optimizeQuality;
+	}​
+	</style>
+</head>
+<body>
+	<img src="../assets/splash_logo.png" />
+	<span id="wsVersion"></span>
 
-    <script>
-        let remote = require('electron').remote;
-        document.getElementById('wsVersion').innerHTML = remote.app.getVersion();
-    </script>
-    </body>
+	<script>
+	let appVersion = require('electron').remote.app.getVersion();
+	let html = `<strong>BLOC Wallet</strong><br />Version ${appVersion}`;
+	document.getElementById('wsVersion').innerHTML = html;
+	</script>
+</body>
 </html>

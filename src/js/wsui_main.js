@@ -110,13 +110,13 @@ let txInputNotify;
 let txButtonExport;
 // misc
 let thtml;
-let dmswitch;
+// let dmswitch;
 let kswitch;
 
 function populateElementVars(){
     // misc
     thtml = document.documentElement;
-    dmswitch = document.getElementById('tswitch');
+    // dmswitch = document.getElementById('tswitch');
     kswitch = document.getElementById('kswitch');
     firstTab = document.querySelector('.navbar-button');
     // generics
@@ -1827,8 +1827,8 @@ function handleNetworkChange(){
 // event handlers
 function initHandlers(){
     initSectionTemplates();
-    let darkStart = settings.get('darkmode', false);
-    setDarkMode(darkStart);
+    // let darkStart = settings.get('darkmode', false);
+    // setDarkMode(darkStart);
     
     // netstatus
     handleNetworkChange();
@@ -2032,10 +2032,10 @@ function initHandlers(){
         }, false);
     }
 
-    dmswitch.addEventListener('click', () => {
-        let tmode = thtml.classList.contains('dark') ? '' : 'dark';
-        setDarkMode(tmode);
-    });
+    // dmswitch.addEventListener('click', () => {
+        // let tmode = thtml.classList.contains('dark') ? '' : 'dark';
+        // setDarkMode(tmode);
+    // });
 
     kswitch.addEventListener('click', showKeyBindings);
     
@@ -2154,9 +2154,9 @@ function initKeyBindings(){
         return openedDialog.close();
     });
 
-    Mousetrap.bind([`ctrl+\\`,`command+\\`], ()=>{
-        setDarkMode(!document.documentElement.classList.contains('dark'));
-    });
+    // Mousetrap.bind([`ctrl+\\`,`command+\\`], ()=>{
+        // setDarkMode(!document.documentElement.classList.contains('dark'));
+    // });
 }
 
 // spawn event handlers

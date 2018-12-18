@@ -7,7 +7,7 @@
         <script defer src="../js/extras/toast.js"></script>
         <script defer src="../js/extras/list.min.js"></script>
         <!-- CSS stylesheets -->
-        <link rel="stylesheet" href="../css/font-notosans.css">
+        <link rel="stylesheet" href="../css/font-roboto-condensed.css">
         <link rel="stylesheet" href="../css/common.css">
         <link rel="stylesheet" href="../css/dark.css">
         <!-- HTML pages (each page contains a section) -->
@@ -28,7 +28,8 @@
 
     <body>
         <!-- Top navbar -->
-        <div class="navbar xgrid">
+        <!-- 
+		<div class="navbar xgrid">
             <div class="idle" id="navbar-div-sync">
                 <i class="fas fa-pause-circle" id="navbar-icon-sync"></i>
                 <span tabindex="-1" id="navbar-text-sync">IDLE</span>
@@ -53,6 +54,7 @@
                 <i class="fas fa-info-circle"></i> <span class="navbar-label">About</span>
             </button>
         </div>
+		-->
     
         <!-- Main div, here the program will load the different .html files depending on the active tab -->
         <div id="conn-info" class="status-node-info empty"></div>
@@ -62,7 +64,7 @@
         <dialog id="ab-dialog" class="default-dialog address-book-dialog"></dialog>
         <dialog id="tf-dialog" class="tx-dialog"></dialog>
         <button tabindex="-1" title="Show keyboard shortcut" id="kswitch"><i class="fas fa-keyboard"></i></button>
-        <button  tabindex="-1" title="Swith to dark mode" id="tswitch"><i class="fas fa-moon"></i></button>
+        <!-- <button tabindex="-1" title="Swith to dark mode" id="tswitch"><i class="fas fa-moon"></i></button> -->
         <script>require('../js/wsui_main.js')</script>
     </body>
 </html>
