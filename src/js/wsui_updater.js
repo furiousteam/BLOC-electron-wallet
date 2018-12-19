@@ -150,10 +150,10 @@ function updateSyncProgress(data){
             brwin.setProgressBar(taskbarProgress);
         }
 
-        let connStatusText = `Connected to: <strong>${wsession.get('connectedNode')}</strong>`;
+        let connStatusText = `<strong>Connected to:</strong><br /><span>${wsession.get('connectedNode')}</span>`;
         let connNodeFee = wsession.get('nodeFee');
         if(connNodeFee > 0 ){
-            connStatusText += ` | Node fee: <strong>${connNodeFee.toFixed(config.decimalPlaces)} ${config.assetTicker}</strong>`;
+            connStatusText += `<br /><strong>Node fee:</strong><br /><span>${connNodeFee.toFixed(config.decimalPlaces)} ${config.assetTicker}</span>`;
         }
         connInfoDiv.innerHTML = connStatusText;
         connInfoDiv.classList.remove('conn-warning');

@@ -34,6 +34,8 @@ let COMPLETION_PUBNODES;
 let COMPLETION_ADDRBOOK;
 
 /*  dom elements vars; */
+// body
+let body;
 // main section link
 let sectionButtons;
 // generics
@@ -124,6 +126,9 @@ function populateElementVars(){
 	genericFormMessage = document.getElementsByClassName('form-ew');
 	genericEnterableInputs = document.querySelectorAll('.section input:not(.noenter)');
 	genericEditableInputs = document.querySelectorAll('textarea:not([readonly]), input:not([readonly]');
+
+	// body
+	body = document.getElementsByTagName('body');
 
 	// main section link
 	sectionButtons = document.querySelectorAll('[data-section]');
@@ -475,16 +480,45 @@ function switchTab(){
 	changeSection(nextSection);
 }
 
+function setCssWalletOpened() {
+	body[0].classList.add('wallet-opened');
+}
+
+function setCssWalletClosed() {
+	body[0].classList.remove('wallet-opened');
+}
+
+function setIconSelected(btnActive) {
+	// remove the selected icon from all the items
+	let allButtons = document.querySelectorAll('.navbar button');
+	for(var i=0; i < allButtons.length;i++){
+		let img = allButtons[i].querySelector('img');
+		let normal = img.getAttribute('data-normal');
+		img.setAttribute('src', normal);
+	}
+
+	// add the selected icon to the current item
+	let img = btnActive.querySelector('img');
+	let selected = img.getAttribute('data-selected');
+	img.setAttribute('src', selected);
+}
+
 // section switcher
 function changeSection(sectionId, isSettingRedir) {
 	if(WALLET_OPEN_IN_PROGRESS){
 		showToast('Opening wallet in progress, please wait...');
 		return;
 	}
-	
+
 	formMessageReset();
 	isSettingRedir = isSettingRedir === true ? true : false;
 	let targetSection = sectionId.trim();
+
+	// when overview is loaded, show the sidebar nav
+	if(targetSection === 'section-overview'){
+		setCssWalletOpened();
+	}
+
 	let untoast = false;
 	if(targetSection === 'section-welcome'){
 		targetSection = 'section-overview';
@@ -533,8 +567,11 @@ function changeSection(sectionId, isSettingRedir) {
 	let newActiveNavbarButton = document.querySelector(`.navbar button[data-section="${finalButtonTarget}"]`);
 	if(newActiveNavbarButton){
 		const activeButton = document.querySelector(`.btn-active`);
-		if(activeButton) activeButton.classList.remove('btn-active');	
-		if(newActiveNavbarButton) newActiveNavbarButton.classList.add('btn-active');
+		if(activeButton) activeButton.classList.remove('btn-active');
+		if(newActiveNavbarButton) {
+			setIconSelected(newActiveNavbarButton);
+			newActiveNavbarButton.classList.add('btn-active');
+		}
 	}
 
 	// toggle section
@@ -1121,9 +1158,10 @@ function handleWalletClose(){
 		// save + SIGTERMed wallet daemon
 		wsmanager.stopService().then(() => {
 			setTimeout(function(){
-				// cleare form err msg
+				// clear form err msg
 				formMessageReset();
 				changeSection('section-overview');
+				setCssWalletClosed(); // this is not in changeSection function because the section sent was 'section-overview' instead of 'section-welcome'
 				// update/clear tx
 				txInputUpdated.value = 1;
 				txInputUpdated.dispatchEvent(new Event('change'));
