@@ -37,8 +37,12 @@ const DEFAULT_SETTINGS = {
     tray_close: false,
     darkmode: true
 };
-// const DEFAULT_SIZE = { width: 1280, height: 850 };
-const DEFAULT_SIZE = { width: 1280, height: 1100 };
+
+if (IS_DEBUG) {
+	const DEFAULT_SIZE = { width: 1280, height: 1100 };
+} else {
+	const DEFAULT_SIZE = { width: 1280, height: 850 };
+}
 
 app.prompExit = true;
 app.prompShown = false;

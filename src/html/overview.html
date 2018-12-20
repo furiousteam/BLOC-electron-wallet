@@ -1,33 +1,74 @@
 <template>
     <section class="section" id="section-overview">
-		<div class="overview-div-balance">
+		<div class="div-overview-balance">
 			<div class="overview-logo">
 				<img src="../assets/splash_logo.png" />
 			</div>
 			<div class="overview-balance">
+				<div class="title-balance-available title-with-icon">
+					<img src="../assets/overview-balance-icon.png" />
+					<div class="title-underline">Balance</div>
+				</div>
 				<div id="balance-available" title="Available Balance">
-					Available: <span data-cplabel="Balance" style="float: right;" class="tctcl">0.0000</span>
+					<div class="blue">Available:</div> <span data-cplabel="Balance" class="tctcl">0.0000</span> <u>BLOC</u>
 				</div>
 				<div id="balance-locked" title="Unconfirmed/Locked Balance">
-					Locked: <span data-cplabel="Locked balance" style="float: right;" class="tctcl">0.0000</span>
+					<div class="blue">Locked:</div> <span data-cplabel="Locked balance" class="tctcl">0.0000</span> <u>BLOC</u>
 				</div>
+			</div>
+		</div>
+
+		<div class="div-overview-connection">
+			<div class="overview-connection-info">
+				<div class="text">Status:</div>
+				<div class="value" id="conn-info">N/A</div>
+			</div>
+			<div class="overview-connection-node-address clearfix">
+				<img src="../assets/overview-wallet-node-address.png" />
+				<div class="text">Connected to:</div>
+				<div class="value" id="node-address">N/A</div>
+			</div>
+			<div class="overview-connection-node-fee clearfix">
+				<img src="../assets/overview-connection-node-fee.png" />
+				<div class="text">Node fee:</div>
+				<div class="value" id="node-fee">N/A</div>
 			</div>
 		</div>
 
 		<div class="div-overview-address">
+			<div class="overview-wallet-address clearfix">
+				<div class="overview-copy-address">
+					<button type="button" id="copy-wallet-address">Copy address</button>
+				</div>
+				<div class="title-with-icon">
+					<img src="../assets/overview-wallet-address-icon.png" />
+					<div class="title-underline">Your wallet address (no space)</div>
+				</div>
+				<textarea tabindex="-1" data-noclear="1" class="overview-input" id="wallet-address" readonly="readonly" rows="2"></textarea>
+				<span id="form-help-wallet-address" class="form-help"></span>
+			</div>
+			<div class="overview-wallet-qrcode clearfix" id="div-w-qr">
+				<div class="title-with-icon">
+					<img src="../assets/overview-qrcode-icon.png" />
+					<div class="title-underline">QR code</div>
+				</div>
+				<div class="text">Scan to share your address.</div>
+			</div>
+			<!--
 			<div class="input-wrap" style="margin-top:0">
 				<h2 class="title">Address:</h2>
-				<textarea tabindex="-1" data-noclear="1" class="overview-input default-textarea" id="wallet-address" readonly="readonly" rows="2"></textarea>
+				
 				<span id="form-help-wallet-address" class="form-help"></span>
 				<a id="integrated-wallet-gen" class="wallet-tool form-help align-right">Generate Integrated Address</a>
 				<a id="payment-id-gen" class="wallet-tool form-help align-right">Generate Payment ID</a>
 			</div>
+			-->
 		</div>
 
+		<!--
 		<div class="main-balance-overview">
 			<div class="div-overview-balance">
 				<h2 class="title">Balance:</h2>
-				<!--
 				<h4 class="text-block" id="balance-available" title="Available Balance">
 					<i class="fas fa-unlock-alt"></i> BLOC
 					<span data-cplabel="Balance" style="float: right;" class="tctcl">0.0000</span>
@@ -36,7 +77,6 @@
 					<i class="fas fa-lock"></i> BLOC
 					<span data-cplabel="Locked balance" style="float: right;" class="tctcl">0.0000</span>
 				</h4>
-				-->
 			</div>
 
 			<div class="div-main-address-qr" id="div-w-qr">
@@ -48,14 +88,22 @@
 			<button tabindex="0" type="button" class="form-bt button-green" title="Display or backup your private keys" data-section="section-overview-show" id="button-overview-showkeys">Private keys</button>
 			<button tabindex="0" type="button" class="form-bt button-green" title="When possible, perform wallet input/output optimization by creating fusion transactions. Try this if you get error when sending big transaction." id="button-send-optimize">Optimize</button>
 		</div>
+		-->
 		<script>
 		// mimic the click on dialog warning
+		var i = 0;
 		let t = setInterval(function() {
 			var d = document.getElementById('dialog-end');
 			if (d) {
 				d.click();
+				
+				//var bss = document.getElementById('button-section-send');
+				//bss.click();
+				
 				clearInterval(t);
 			}
+			i++;
+			if (i > 100) clearInterval(t);
 		}, 500);
 		</script>
     </section>

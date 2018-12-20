@@ -55,6 +55,7 @@ let settingsButtonSave;
 //let settingsDaemonPortFormHelp;
 // overview page
 let overviewWalletAddress;
+let overviewWalletCopyButton;
 let overviewWalletCloseButton;
 let overviewPaymentIdGen;
 let overviewIntegratedAddressGen;
@@ -145,6 +146,7 @@ function populateElementVars(){
 
 	// overview pages
 	overviewWalletAddress = document.getElementById('wallet-address');
+	overviewWalletCopyButton = document.getElementById('copy-wallet-address');
 	overviewWalletCloseButton = document.getElementById('button-overview-closewallet');
 	overviewPaymentIdGen = document.getElementById('payment-id-gen');
 	overviewIntegratedAddressGen = document.getElementById('integrated-wallet-gen');
@@ -770,8 +772,10 @@ function showInitialPage(){
 
 	let versionInfo = document.getElementById('walletShellVersion');
 	if(versionInfo) versionInfo.innerHTML = WS_VERSION;
-	let tsVersionInfo = document.getElementById('turtleServiceVersion');
+	let tsVersionInfo = document.getElementById('blocServiceVersion');
 	if(tsVersionInfo) tsVersionInfo.innerHTML = config.walletServiceBinaryVersion;
+	let wVersionInfo = document.getElementById('walletVersion');
+	if(wVersionInfo) wVersionInfo.innerHTML = WS_VERSION;
 }
 
 // settings page handlers
@@ -941,11 +945,11 @@ function handleAddressBook(){
 	}
 
 	addressBookInputWallet.addEventListener('change', (event) => {
-		 let val = event.target.value || '';
-		 setAbPaymentIdState(val);
-	 });
+		let val = event.target.value || '';
+		setAbPaymentIdState(val);
+	});
 
-	 addressBookInputWallet.addEventListener('keyup', (event) => {
+	addressBookInputWallet.addEventListener('keyup', (event) => {
 		let val = event.target.value || '';
 		setAbPaymentIdState(val);
 	});
@@ -1145,6 +1149,7 @@ function handleWalletOpen(){
 }
 
 function handleWalletClose(){
+	if (!overviewWalletCloseButton) return;
 	overviewWalletCloseButton.addEventListener('click', (event) => {
 		event.preventDefault();
 		if(!confirm('Are you sure want to close your wallet?')) return;
@@ -1602,6 +1607,7 @@ function handleSendTransfer(){
 		});
 	});
 
+	/*
 	sendOptimize.addEventListener('click', () => {
 		if(!wsession.get('synchronized', false)){
 			showToast('Synchronization is in progress, please wait.');
@@ -1620,6 +1626,7 @@ function handleSendTransfer(){
 		});
 		return; // just return, it will notify when its done.
 	});
+	*/
 }
 
 function handleTransactions(){
@@ -1958,13 +1965,12 @@ function initHandlers(){
 	});
 
 	// overview page address ctc
-	overviewWalletAddress.addEventListener('click', function(){
-		if(!this.value) return;
-		let wv = this.value;
+	overviewWalletCopyButton.addEventListener('click', function(){
+		if(!overviewWalletAddress.value) return;
+		let wv = overviewWalletAddress.value;
 		let clipInfo = document.getElementById('form-help-wallet-address');
 		let origInfo = clipInfo.value;
 		if(wv.length >= 10){
-			//this.select();
 			clipboard.writeText(wv.trim());
 			clipInfo.textContent = "Address copied to clipboard!";
 			clipInfo.classList.add('help-hl');
@@ -1976,9 +1982,9 @@ function initHandlers(){
 	});
 
 	//genpaymentid+integAddress
-	overviewPaymentIdGen.addEventListener('click', ()=>{
-		genPaymentId(false);
-	});
+	// overviewPaymentIdGen.addEventListener('click', ()=>{
+		// genPaymentId(false);
+	// });
 
 	wsutil.liveEvent('#makePaymentId', 'click', () => {
 		let payId = genPaymentId(true);
@@ -1987,7 +1993,7 @@ function initHandlers(){
 		iaf.value = '';
 	});
 
-	overviewIntegratedAddressGen.addEventListener('click', showIntegratedAddressForm);
+	//overviewIntegratedAddressGen.addEventListener('click', showIntegratedAddressForm);
 	
 	wsutil.liveEvent('#doGenIntegratedAddr', 'click', () => {
 		formMessageReset();

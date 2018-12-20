@@ -1,58 +1,40 @@
 <template>
-    <section class="section" id="section-send">
-        <div class="section-contents darkened">
+	<section class="section" id="section-send">
+		<div class="div-title clearfix">
+			<img src="../assets/send-title.png" />
+			<h2 class="title">Send BLOC</h2>
+			<div class="subtitle">Send / transfer your BLOC</div>
+		</div>
+		<div class="div-input">
+			<div class="input-wrap">
+				<h4 class="text-spaced input-required">Amount</h4>
+				<input tabindex="0" title="Required, amount of BLOC you want to send..." required="required" max="1.00" type="number" step="0.10" min="1.00" class="text-block" id="input-send-amount" placeholder="1.00" />
+				<span id="sendFormHelp" class="form-help">Max. amount you can send is 0.0000 BLOC</span>
+				<span tabindex="0" id="sendMaxAmount" class="hidden">send all</span>
+			</div>
+			<div class="input-wrap">
+				<h4 class="text-spaced input-required">Recipient Address</h4>
+				<input tabindex="0" required="required" class="text-block" id="input-send-address" placeholder="Required, a valid BLOC address..." />
+				<span class="form-help info">Type one or more characters to search from address book, or type new address.</span>
+			</div>
+			<div class="input-wrap">
+				<h4 class="text-spaced input-required">Transaction Fee</h4>
+				<input tabindex="0" title="Required, BLOC amount for transaction fee..." required="required" data-noclear="1" value="0.0001" type="number" step="0.0001" min="0.0001" class="text-block" id="input-send-fee" placeholder="0.0001" />
+				<span id="sendFormHelp" class="form-help info">Min. fee is 0.0001 BLOC</span>
+			</div>
+			<div class="input-wrap">
+				<h4 class="text-spaced">Payment ID</h4>
+				<input tabindex="0" title="Optional" class="text-block" id="input-send-payid" placeholder="Optional, a valid payment id for this transfer..." />
+			</div>
+			<div class="input-wrap">
+			   <button type="button" class="form-bt button-blue" id="button-send-send">Send the BLOC to this address</button>
+			</div>
 
-            <div class="div-title">
-                <h2 class="title">Send TurtleCoin</h2>
-            </div>
-            <div class="div-input">
-                <div class="input-wrap">
-                    <h4 class="text-spaced input-required">Recipient Address</h4>
-                    <input tabindex="0" required="required" class="text-block" id="input-send-address" 
-                        placeholder="Required, a valid BLOC address..."
-                    />
-                    <span class="form-help">Type one or more characters to search from address book, or type new address.</span>
-                </div>
-
-                <div class="input-wrap">
-                    <h4 class="text-spaced">Payment ID</h4>
-                    <input tabindex="0" title="Optional" class="text-block" id="input-send-payid" 
-                        placeholder="Optional, a valid payment id for this transfer..."
-                    />
-
-                </div>
-                
-                <div class="input-wrap">
-                    <div class="div-send-amount  inline-block-div half-width">
-                        <h4 class="text-spaced input-required">Amount</h4>
-                        <input tabindex="0" title="Required, amount of BLOC you want to send..." 
-                            required="required" max="1.00" type="number" step="0.10" 
-                            min="1.00" class="text-block" id="input-send-amount" 
-                            placeholder="1.00"
-                        />
-                        <span id="sendFormHelp" class="form-help">Max. amount you can send is 0.0000 BLOC</span>
-                        <span tabindex="0" id="sendMaxAmount" class="hidden">send all</span>
-                    </div>
-                    <div class="div-send-fee inline-block-div half-width half-width-end">
-                            <h4 class="text-spaced input-required">Transaction Fee</h4>
-                            <input tabindex="0" title="Required, BLOC amount for transaction fee..." required="required" 
-                                data-noclear="1" value="0.0001" type="number" step="0.0001" min="0.0001" 
-                                class="text-block" id="input-send-fee" placeholder="0.0001"
-                            />
-                            <span id="sendFormHelp" class="form-help">Min. fee is 0.0001 BLOC</span>
-                    </div>
-                </div>
-                                
-                <div class="input-wrap">
-                    <span class="form-ew form-msg text-spaced-error" id="text-send-error"></span>
-                    <span class="form-ew form-msg text-spaced-warning" id="text-send-warning"></span>
-                    <span class="form-ew form-msg text-spaced-success" id="text-send-success"></span>
-                </div>
-            </div>
-            <div class="action-buttons">
-                    <button type="button" class="form-bt button-green" id="button-send-send">Send</button>
-                    <button type="button" class="form-bt button-red" data-section="section-overview" id="button-send-back">Back</button>
-            </div>
-        </div>
-    </section>
+			<div class="input-wrap">
+				<span class="form-ew form-msg text-spaced-error text-center" id="text-send-error"></span>
+				<span class="form-ew form-msg text-spaced-warning text-center" id="text-send-warning"></span>
+				<span class="form-ew form-msg text-spaced-success text-center" id="text-send-success"></span>
+			</div>
+		</div>
+	</section>
 </template>

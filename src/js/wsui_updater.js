@@ -12,7 +12,9 @@ const wsession = new WalletShellSession();
 /* sync progress ui */
 // const syncDiv = document.getElementById('navbar-div-sync');
 // const syncInfoBar = document.getElementById('navbar-text-sync');
-const connInfoDiv = document.getElementById('conn-info');
+let connInfoDiv;
+let nodeAddressDiv;
+let nodeFeeDiv;
 
 const SYNC_STATUS_NET_CONNECTED = -10;
 const SYNC_STATUS_NET_DISCONNECTED = -50;
@@ -38,6 +40,10 @@ function triggerTxRefresh(){
 }
 
 function updateSyncProgress(data){
+	connInfoDiv = document.getElementById('conn-info');
+	nodeAddressDiv = document.getElementById('node-address');
+	nodeFeeDiv = document.getElementById('node-fee');
+
     // const iconSync = document.getElementById('navbar-icon-sync');
     let blockCount = data.displayBlockCount;
     let knownBlockCount = data.displayKnownBlockCount;
@@ -54,9 +60,9 @@ function updateSyncProgress(data){
         // iconSync.setAttribute('data-icon', 'sync');
         // iconSync.classList.add('fa-spin');
         // connection status
-        connInfoDiv.innerHTML = 'Connection restored, resuming sync process...';
-        connInfoDiv.classList.remove('empty');
-        connInfoDiv.classList.remove('conn-warning');
+        // connInfoDiv.innerHTML = 'Connection restored, resuming sync process...';
+        // connInfoDiv.classList.remove('conn-warning');
+		connInfoDiv.innerHTML = statusText;
 
         // sync sess flags
         wsession.set('syncStarted', false);
@@ -72,9 +78,12 @@ function updateSyncProgress(data){
         // iconSync.setAttribute('data-icon', 'ban');
         // iconSync.classList.remove('fa-spin');
         // connection status
-        connInfoDiv.innerHTML = 'Synchronization paused, please check your network connection!';
-        connInfoDiv.classList.remove('empty');
-        connInfoDiv.classList.add('conn-warning');
+        // connInfoDiv.innerHTML = 'Synchronization paused, please check your network connection!';
+        // connInfoDiv.classList.add('conn-warning');
+		connInfoDiv.innerHTML = statusText;
+
+		nodeAddressDiv.innerHTML = 'N/A';
+		nodeFeeDiv.innerHTML = 'N/A';
 
         // sync sess flags
         wsession.set('syncStarted', false);
@@ -90,10 +99,12 @@ function updateSyncProgress(data){
         // iconSync.setAttribute('data-icon', 'pause-circle');
         // iconSync.classList.remove('fa-spin');
         // connection status
-        connInfoDiv.classList.remove('conn-warning');
-        connInfoDiv.classList.add('empty');
-        connInfoDiv.textContent = '';
+        // connInfoDiv.classList.remove('conn-warning');
+        // connInfoDiv.textContent = 'N/A';
+		connInfoDiv.innerHTML = statusText;
 
+		nodeAddressDiv.innerHTML = 'N/A';
+		nodeFeeDiv.innerHTML = 'N/A';
 
         // sync sess flags
         wsession.set('syncStarted', false);
@@ -114,20 +125,23 @@ function updateSyncProgress(data){
         // iconSync.setAttribute('data-icon', 'times');
         // iconSync.classList.remove('fa-spin');
         // connection status
-        connInfoDiv.innerHTML = 'Connection failed, try switching to another Node in settings page, close and reopen your wallet';
-        connInfoDiv.classList.remove('empty');
-        connInfoDiv.classList.add('conn-warning');
+        // connInfoDiv.innerHTML = 'Connection failed, try switching to another Node in settings page, close and reopen your wallet';
+        // connInfoDiv.classList.add('conn-warning');
+		connInfoDiv.innerHTML = statusText;
+
         wsession.set('connectedNode', '');
         brwin.setProgressBar(-1);
     }else{
         // sync sess flags
         wsession.set('syncStarted', true);
-        statusText = `${blockCount}/${knownBlockCount}` ;
+        statusText = `${blockCount}/${knownBlockCount}`;
+		connInfoDiv.innerHTML = statusText;
+
         if(blockCount+1 >= knownBlockCount && knownBlockCount !== 0) {
             // info bar class
             // syncDiv.classList = 'synced';
             // status text
-            statusText = `SYNCED ${statusText}`;
+            // statusText = `SYNCED ${statusText}`;
             // syncInfoBar.textContent = statusText;
             // status icon
             // iconSync.setAttribute('data-icon', 'check');
@@ -139,7 +153,7 @@ function updateSyncProgress(data){
              // info bar class
             // syncDiv.className = 'syncing';
             // status text
-            statusText = `SYNCING ${statusText} (${blockSyncPercent}%)`;
+            // statusText = `SYNCING ${statusText} (${blockSyncPercent}%)`;
             // syncInfoBar.textContent = statusText;
             // status icon
             // iconSync.setAttribute('data-icon', 'sync');
@@ -150,14 +164,16 @@ function updateSyncProgress(data){
             brwin.setProgressBar(taskbarProgress);
         }
 
-        let connStatusText = `<strong>Connected to:</strong><br /><span>${wsession.get('connectedNode')}</span>`;
+        // let connStatusText = `<strong>Connected to:</strong><br /><span>${wsession.get('connectedNode')}</span>`;
         let connNodeFee = wsession.get('nodeFee');
-        if(connNodeFee > 0 ){
-            connStatusText += `<br /><strong>Node fee:</strong><br /><span>${connNodeFee.toFixed(config.decimalPlaces)} ${config.assetTicker}</span>`;
-        }
-        connInfoDiv.innerHTML = connStatusText;
-        connInfoDiv.classList.remove('conn-warning');
-        connInfoDiv.classList.remove('empty');
+        // if(connNodeFee > 0 ){
+            // connStatusText += `<br /><strong>Node fee:</strong><br /><span>${connNodeFee.toFixed(config.decimalPlaces)} ${config.assetTicker}</span>`;
+        // }
+        // connInfoDiv.innerHTML = connStatusText;
+        // connInfoDiv.classList.remove('conn-warning');
+
+		nodeAddressDiv.innerHTML = wsession.get('connectedNode');
+		nodeFeeDiv.innerHTML = `${connNodeFee.toFixed(config.decimalPlaces)} ${config.assetTicker}`;
     }
 
     if(WFCLEAR_TICK === 0 || WFCLEAR_TICK === WFCLEAR_INTERVAL){
@@ -181,6 +197,7 @@ function updateBalance(data){
         inputSendAmountField.setAttribute('max','0.0000');
         inputSendAmountField.setAttribute('disabled','disabled');
         maxSendFormHelp.innerHTML = "You don't have any funds to be sent.";
+        maxSendFormHelp.classList.add('warning');
         sendMaxAmount.dataset.maxsend = 0;
         sendMaxAmount.classList.add('hidden');
         wsession.set('walletUnlockedBalance', 0);
@@ -205,6 +222,7 @@ function updateBalance(data){
         inputSendAmountField.setAttribute('max',maxSend);
         inputSendAmountField.removeAttribute('disabled');
         maxSendFormHelp.innerHTML = `Max. amount is ${maxSend}`;
+		maxSendFormHelp.classList.remove('warning');
         sendMaxAmount.dataset.maxsend = maxSend;
         sendMaxAmount.classList.remove('hidden');
     }
@@ -345,10 +363,12 @@ function updateQr(address){
         qrImg.setAttribute('id', 'qr-gen-img');
         qrImg.setAttribute('src', qr_base64);
         qrBox.prepend(qrImg);
-        document.getElementById('scan-qr-help').classList.remove('hidden');
+        //document.getElementById('scan-qr-help').classList.remove('hidden');
     }else{
-        document.getElementById('scan-qr-help').classList.add('hidden');
+        //document.getElementById('scan-qr-help').classList.add('hidden');
     }
+
+	connInfoDiv.innerHTML = 'connected';
 }
 
 function resetFormState(){
@@ -371,10 +391,9 @@ function resetFormState(){
 
     const settingsBackBtn = document.getElementById('button-settings-back');
     if(wsession.get('serviceReady')){
-        connInfoDiv.classList.remove('empty');
         settingsBackBtn.dataset.section = 'section-welcome';
     }else{
-        connInfoDiv.classList.add('empty');
+        if (connInfoDiv) connInfoDiv.textContent = 'N/A';
         settingsBackBtn.dataset.section = 'section-overview';
     }
 }
