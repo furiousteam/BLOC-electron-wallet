@@ -38,11 +38,10 @@ const DEFAULT_SETTINGS = {
     darkmode: true
 };
 
-if (IS_DEBUG) {
-	const DEFAULT_SIZE = { width: 1280, height: 1100 };
-} else {
-	const DEFAULT_SIZE = { width: 1280, height: 850 };
-}
+const DEFAULT_SIZE = {
+	width: 1280,
+	height: IS_DEBUG ? 1100 : 850
+};
 
 app.prompExit = true;
 app.prompShown = false;
