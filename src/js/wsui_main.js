@@ -744,13 +744,13 @@ function setTxFiller(show){
 	let txRow = document.getElementById('transaction-lists');
 
 	if(!show && fillerRow){
-		fillerRow.classList.add('hidden');
+		fillerRow.parentNode.classList.add('hidden');
 		txRow.classList.remove('hidden');
 	}else{
 		let hasItemRow = document.querySelector('#transaction-list-table > tbody > tr.txlist-item');
 		if(!hasItemRow)  {
 			txRow.classList.add('hidden');
-			fillerRow.classList.remove('hidden');
+			fillerRow.parentNode.classList.remove('hidden');
 		}
 	}
 }
@@ -1500,12 +1500,14 @@ function handleSendTransfer(){
 			formMessageSet('send','error',`Amount can't have more than ${config.decimalPlaces} decimal places`);
 			return;
 		}
-		
+
 		total += amount;
+		//console.log('total after amount', total);
 		let txAmount = wsutil.amountForImmortal(amount); // final transfer amount
 
 		let fee = sendInputFee.value ? parseFloat(sendInputFee.value) : 0;
-		let minFee = config.minimumFee;
+		let minFee = config.minimumFee / config.decimalDivisor;
+		//console.log('fee', fee, 'minFee', minFee);
 		if (fee < minFee) {
 			formMessageSet('send','error',`Fee can't be less than ${wsutil.amountForMortal(minFee)}`);
 			return;
@@ -1517,10 +1519,12 @@ function handleSendTransfer(){
 		}
 
 		total += fee;
+		//console.log('total after fee', total);
 		let txFee = wsutil.amountForImmortal(fee);
 
 		let nodeFee = wsession.get('nodeFee') || 0; // nodeFee value is already for mortal
 		total += nodeFee;
+		//console.log('total after nodeFee', total);
 		let txTotal = wsutil.amountForMortal(total);
 
 		const availableBalance = wsession.get('walletUnlockedBalance') || (0).toFixed(config.decimalPlaces);
@@ -1564,8 +1568,8 @@ function handleSendTransfer(){
 				</div>
 			</div>
 			<div class="div-panel-buttons">
-				<button data-target='#tf-dialog' type="button" class="form-bt button-red dialog-close-default" id="button-send-ko">Cancel</button>
-				<button data-target='#tf-dialog' type="button" class="form-bt button-green" id="button-send-ok">OK, Send it!</button>
+				<button data-target='#tf-dialog' type="button" class="form-bt button-gray dialog-close-default" id="button-send-ko">Cancel</button>
+				<button data-target='#tf-dialog' type="button" class="form-bt button-blue" id="button-send-ok">OK, Send it!</button>
 			</div>`;
 
 		let dialog = document.getElementById('tf-dialog');
@@ -1684,7 +1688,7 @@ function handleTransactions(){
 					<p class="text-center">${txhashUrl}</p>
 				</div>
 				<div class="div-panel-buttons">
-					<button data-target="#tx-dialog" type="button" class="form-bt button-red dialog-close-default" id="button-transactions-panel-close">Close</button>
+					<button data-target="#tx-dialog" type="button" class="form-bt button-blue dialog-close-default" id="button-transactions-panel-close">Close</button>
 				</div>
 			`;
 
@@ -1844,9 +1848,9 @@ function handleTransactions(){
 		let dialogTpl = `<div class="transaction-panel">
 			<h4>Export Transactions to CSV:</h4>
 			<div class="div-panel-buttons">
-				<button data-txtype="all" type="button" class="button-green export-txtype">All Transfers</button>
-				<button data-txtype="in" type="button" class="button-green export-txtype">Incoming Transfers</button>
-				<button data-txtype="out" type="button" class="button-green export-txtype">Outgoing Transfers</button>
+				<button data-txtype="all" type="button" class="button-blue export-txtype">All Transfers</button>
+				<button data-txtype="in" type="button" class="button-blue export-txtype">Incoming Transfers</button>
+				<button data-txtype="out" type="button" class="button-blue export-txtype">Outgoing Transfers</button>
 				<button data-target="#ab-dialog" type="button" class="button-gray dialog-close-default">Cancel</button>
 			</div>
 		`;

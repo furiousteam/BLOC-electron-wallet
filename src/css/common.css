@@ -356,6 +356,7 @@ span.form-msg{
 /*	transition: all 0.15s ease; */
 	color: #f3f3f3;
 	padding: 1rem 1rem 1rem 1rem;
+	cursor: pointer;
 	/* margin-right: 0.25rem; */
 	/* box-shadow: 2px 2px 2px rgba(0,0,0,.29), inset 0px 0px 2px rgba(0,0,0, .5); */
 }
@@ -383,7 +384,7 @@ span.form-msg{
 	background: -webkit-linear-gradient(top,  #00632e 0%,#00843d 100%);
 }
 .button-gray {
-	background: linear-gradient(45deg,  #676767 0%,#888888 100%);
+	background: #888888;
 }
 .button-red {
 	background: -webkit-linear-gradient(top,  #911b1b 0%,#c93030 100%);
@@ -508,29 +509,25 @@ span.form-msg{
 	padding: 0px;
 	table-layout: fixed;
 	width: 100%;
-	border-spacing: 3px;
-	background: rgba(255,255,255,0.2);
+	border-spacing: 0;
 	border: none;
 	border-radius: 3px;
 }
-
 .custom-table td {
 	padding: 4px 8px;
 }
-
 .custom-table tr:nth-child(odd) {
-	background-color: rgba(0, 0, 0, 0.35);
+	background-color: rgba(163, 166, 175, 0.15);
 }
-
 .custom-table tr:nth-child(even) {
-	background-color: rgba(0, 0, 0, 0.5);
+	background-color: transparent;
 }
-
 .custom-table tr th{
 	background: rgba(0,0,0,0.5);
 	padding: 0.35rem 0;
 	font-weight: normal;
 }
+
 .addressbook-table{
 	table-layout: fixed;
 }
@@ -702,8 +699,7 @@ h4.input-required:after{
 	font-style: normal;
 	float: right;
 	margin: 0.2rem 0 0 0;
-	/* text-decoration: underline; */
-	color: #fffb00;
+	color: #2798c7;
 	position: relative;
 	right: 10px;
 	text-transform: uppercase;
@@ -788,12 +784,11 @@ dialog[open]{
 }
 
 .tx-dialog{
-	background-color: #004720;
+	background-color: #001b45;
 	background-size: cover;
 	width: 90%;
 	max-width: 1000px;
-	border: 1px solid #ccc;
-	border-radius:4px;
+	border-radius: 4px;
 }
 .tx-dialog table{
 	font-size:0.85rem;
@@ -805,7 +800,6 @@ dialog[open]{
 	color: #fff;
 	font-weight: normal;
 }
-
 .tx-dialog table th,
 .tx-dialog table td{
 	white-space: w;
@@ -814,7 +808,6 @@ dialog[open]{
 	color: #fff;
 	overflow-wrap: break-word;
 }
-
 dialog h4{
 	margin: 0rem 0 0.5rem 0;
 	font-size: 1.2rem;
@@ -963,9 +956,38 @@ input.path-input-button{
 
 
 /** TRX **/
-#txfiller p{
+#section-transactions {
+	margin-top: 68px;
+}
+#section-transactions .div-title {
+	margin-left: 65px;
+	margin-bottom: 45px;
+}
+#section-transactions .div-title img {
+	float: left;
+	width: 61px;
+	margin-right: 8px;
+}
+#section-transactions .div-title .title {
+	font-size: 25px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+#section-transactions .div-title .subtitle {
+	font-size: 14px;
+	opacity: .5;
+}
+.transactions-div-transaction-lists {
+	margin-right: 75px;
+	margin-left: 75px;
+}
+.transactions-div-export {
+	margin-left: 75px;
+}
+.transactions-div-no-transactions {
+	margin-right: 75px;
+	margin-left: 75px;
 	padding: 1rem;
-	border: 1px solid #ccccccb8;
 	background: rgba(0, 25, 15, 0.37);
 	border-radius: 6px;
 }
@@ -997,34 +1019,32 @@ input.path-input-button{
 }
 
 .list-tables .pagination{
-	margin: 0.5rem 0 0 0;
+	margin: 15px 0 0 0;
 	text-align: right;
 }
-
 .list-tables .pagination li{
 	display: inline-block;
-	background-color: #00632e;	
+	background-color: #2798c7;	
 	color: #fff;
 	padding: 0px 0px;
 	margin: 0 4px 0 0;
 	text-align: center;
 	line-height: normal !important;
 	border-radius: 4px;
-	border: 1px solid rgba(255,255,255,0.5);
 }
-
 .list-tables .pagination li.active{
-	background-color: #212721;
+	background-color: #fff;
 }
-
-
+.list-tables .pagination li.active a{
+	color: #00012a;
+}
 .list-tables .pagination li a{
 	color: #fff;
 	font-size: 1.2rem;
 	font-weight: 600;
 	text-decoration: none;
-	padding: 0px 8px;
-
+	padding: 2px 12px;
+	display: inline-block;
 }
 .pagination li.disabled a{
 	cursor: default !important;
@@ -1045,7 +1065,6 @@ input.path-input-button{
 	font-size: smaller;
 	bottom: 3px;
 	position: relative;
-
 }
 
 .list-tables th.sort.desc:after,
@@ -1114,9 +1133,7 @@ input.path-input-button{
 	margin: 0;
 	padding: 0;
 	font-size:0.85rem
-
 }
-
 .addressBookDetail-data dt,
 .transferDetail dt{
 	font-weight: normal;
@@ -1124,7 +1141,6 @@ input.path-input-button{
 	padding:0;
 	color: #eee;
 }
-
 .addressBookDetail-data dd,
 .transferDetail dd
 {
@@ -1140,7 +1156,6 @@ input.path-input-button{
 .transferDetail{
 	color:#fff;
 }
-
 .transferDetail dt{
 	font-size: 1rem;
 }
@@ -1148,13 +1163,11 @@ input.path-input-button{
 	font-size: 0.75rem;
 	overflow: visible;
 	word-wrap: break-word;
-	color: #fffb00;
+	color: #2798c7;
 }
-
 dt.dt-ib{
 	display: block;
 }
-
 dd.dd-ib{
 	display: block;
 	margin-left: 1rem;
@@ -1191,7 +1204,17 @@ div.about-links a{
 	overflow-x: hidden;
 	overflow-y: auto;
 	margin-bottom: 0.5rem;
-	background: rgba(25, 53, 29, 0.48);
+}
+.transaction-table-wrapper::-webkit-scrollbar-thumb{
+	max-height: 10px;
+	border-radius: 5px;
+	background: -webkit-linear-gradient(top, #7ac0dd 0%,#517fa0 100%);
+}
+.transaction-table-wrapper::-webkit-scrollbar{
+	border-radius: 5px;
+	width: 10px;
+	height: 10px;
+	background: #040727;
 }
 .tx-tools{
 	overflow: hidden;
@@ -1219,9 +1242,8 @@ div.about-links a{
 
 .tx-tools .tx-sort .csort{
 	display: inline-block;
-	background: -webkit-linear-gradient(top,  #00632e 0%,#00843d 100%);
+	background: #2798c7;
 	padding: 2px 10px;
-	border: 1px solid #c5c5c599;
 	border-radius: 4px;
 	margin-left: 2px;
 	cursor: pointer;
@@ -1253,54 +1275,46 @@ div.about-links a{
 	border-spacing: 0px;
 	margin-bottom: 1rem;
 }
-
-
 .transaction-list-table td{
 	vertical-align: top;
 	font-size: 0.85rem;
 	border-bottom: 1px dashed rgba(0,0,0,.29);
 }
-
 .transaction-list-table td.txamount{
 	text-align: right;
 	padding-right: 0.75rem;
 	width: 20%;
 	min-width:120px !important;
 	max-width: 260px !important;
-	font-size: 1.25rem;
-	font-weight:600;
-	color: #9aef18;
+	font-size: 14px;
+	font-weight: 400;
+	color: #d0df99;
 	vertical-align: middle;
 }
-
-
 .transaction-list-table tr[data-txType="in"] td.txamount:before{
 	content: "+";
 }
 .transaction-list-table tr[data-txType="out"] td.txamount{
-	color: #FF9800;
+	color: #f18f4e;
 }
-
 .transaction-list-table .txinfo{
 	min-width: 50%;
 }
-
 .transaction-list-table .txinfo p{
 	margin: 0;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	width: 98%;
 }
-
 .transaction-list-table .tx-ov-info{
 	font-size: 0.75rem;
 	color: rgba(255,255,255,0.5);
 }
-
 .transaction-list-table .tx-date{
 	font-size: 0.90rem;
 	font-weight: bold;
 }
+
 
 progress.light{
 	width: 100%;
@@ -1743,22 +1757,12 @@ kbd{
 	padding: 0px;
 }
 a.external{
-	color: #fffb00;
+	color: #2798c7;
 	text-decoration: none;
-	background: #2f2f2fc9;
 	padding: 1px 4px;
 	border-radius: 3px;
 	margin-top: 0.5rem;
 	display: inline-block;
-}
-
-#transaction-export{
-	font-size: 0.85rem;
-	color: #fffb00;
-	cursor: pointer;
-}
-#transaction-export:hover{
-	text-decoration: underline;
 }
 
 /*

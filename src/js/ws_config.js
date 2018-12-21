@@ -23,7 +23,7 @@ config.walletServiceBinaryVersion = "v3.0.1";
 config.walletServiceRpcPort = 8070;
 
 // block explorer url, the [[TX_HASH] will be substituted w/ actual transaction hash
-config.blockExplorerUrl = 'https://testnet.bloc-explorer.com/block/[[TX_HASH]]';
+config.blockExplorerUrl = 'https://bloc-explorer.com/block/[[TX_HASH]]';
 
 // default remote node to connect to, set this to a known reliable node for 'just works' user experience
 config.remoteNodeDefaultHost = '206.189.120.52';

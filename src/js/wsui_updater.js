@@ -231,13 +231,12 @@ function updateBalance(data){
 function updateTransactions(result){
     let txlistExisting = wsession.get('txList');
 
-
     const blockItems = result.items;
 
     if(!txlistExisting.length && !blockItems.length){
-        document.getElementById('transaction-export').classList.add('hidden');
+        document.getElementById('transaction-export').parentNode.parentNode.parentNode.classList.add('hidden');
     }else{
-        document.getElementById('transaction-export').classList.remove('hidden');
+        document.getElementById('transaction-export').parentNode.parentNode.parentNode.classList.remove('hidden');
     }
 
     if(!blockItems.length) return;
@@ -245,7 +244,7 @@ function updateTransactions(result){
     let txListNew = [];
 
     Array.from(blockItems).forEach((block) => {
-        block.transactions.map((tx) => {
+		block.transactions.map((tx) => {
             if(tx.amount !== 0 && !wsutil.objInArray(txlistExisting, tx, 'transactionHash')){
                 //tx.amount = (tx.amount/100).toFixed(2);
                 tx.amount = wsutil.amountForMortal(tx.amount);
