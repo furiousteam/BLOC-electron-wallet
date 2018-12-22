@@ -582,11 +582,11 @@ span.form-msg{
 }
   
 .checkbox-container:hover input ~ .checkmark {
-	background-color: #99ceb1;
+	background-color: #2798c7;
 }
   
 .checkbox-container input:checked ~ .checkmark {
-	background-color: #00632e;
+	background-color: #145a86;
 }
   
 .checkmark:after {

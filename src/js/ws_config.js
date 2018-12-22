@@ -17,7 +17,7 @@ config.walletFileDefaultExt = 'money';
 config.walletServiceBinaryFilename = 'BLOC-service';
 
 // version on the bundled service (BLOC-service)
-config.walletServiceBinaryVersion = "v3.0.1";
+config.walletServiceBinaryVersion = "v3.0.2";
 
 // default port number for your wallet service (e.g. BLOC-service)
 config.walletServiceRpcPort = 8070;
@@ -26,22 +26,22 @@ config.walletServiceRpcPort = 8070;
 config.blockExplorerUrl = 'https://bloc-explorer.com/block/[[TX_HASH]]';
 
 // default remote node to connect to, set this to a known reliable node for 'just works' user experience
-config.remoteNodeDefaultHost = '206.189.120.52';
+config.remoteNodeDefaultHost = 'bloc.cool';
 
 // remote node list update url, set to null if you don't have one
 config.remoteNodeListUpdateUrl = 'https://raw.githubusercontent.com/turtlecoin/turtlecoin-nodes-json/master/turtlecoin-nodes.json';
 
 // fallback remote node list, in case fetching update failed, fill this with known to works remote nodes
 config.remoteNodeListFallback = [
-	'nodes.hashvault.pro:2086'
+	'bloc.cool:2086'
 ];
 
 // your currency name
-config.assetName = 'BLOC';
+config.assetName = 'BLOC.MONEY';
 // your currency ticker
 config.assetTicker =  'BLOC';
 // your currency address prefix, for address validation
-config.addressPrefix =  'TbLoc';
+config.addressPrefix =  'abLoc';
 // standard wallet address length, for address validation
 config.addressLength = 99;
 // intergrated wallet address length, for address validation
