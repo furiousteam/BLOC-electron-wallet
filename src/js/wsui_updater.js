@@ -221,7 +221,7 @@ function updateBalance(data){
         let maxSend = (bUnlocked - fees).toFixed(config.decimalPlaces);
         inputSendAmountField.setAttribute('max',maxSend);
         inputSendAmountField.removeAttribute('disabled');
-        maxSendFormHelp.innerHTML = `Max. amount is ${maxSend}`;
+        maxSendFormHelp.innerHTML = `Enter the amount you would like to send`;
 		maxSendFormHelp.classList.remove('warning');
         sendMaxAmount.dataset.maxsend = maxSend;
         sendMaxAmount.classList.remove('hidden');
