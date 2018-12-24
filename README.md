@@ -23,7 +23,7 @@ This wallet contains the basic functions required to manage your BLOC assets:
 * Misc
   * Provides setting to set local or public node address
   * Option to use system tray (on closing/minimizing wallet)
-  * Provides list of public nodes, fetch/updated daily from turtlecoin-nodes-json repo.
+  * Provides list of public nodes, fetch/updated daily from BLOC-nodes-json repo.
   * Custom node address that is not on the list will be added/remembered for future use
   * [Keyboard shortcuts](docs/shortcut.md)
 
@@ -35,24 +35,24 @@ Release installer & packaged archived includes a ready to use `BLOC-service` bin
 
 If you don't trust the bundled `BLOC-service` file, you can download and use the binary from official BLOC release, which is available here: https://github.com/furiousteam/BLOC/releases or compile it yourself. Then, make sure to update your `BLOC-service` path setting.
 
-### Download &amp; Run WalletShell
+### Download &amp; Run BLOC Electron Wallet
 
 #### Windows:
-1. Download the latest installer here: https://github.com/turtlecoin//turtle-wallet-electron/releases
-2. Run the installer (`walletshell-<version>-win-setup.exe`) and follow the installation wizard.
-3. Launch WalletShell via start menu or desktop shortcut.
+1. Download the latest installer here: https://github.com/furiousteam/BLOC-electron-wallet/releases
+2. Run the installer (BLOC-Electron-Wallet-<version>-win-setup.exe) and follow the installation wizard.
+3. Run as Administrator BLOC-Electron-Wallet via start menu or desktop shortcut. (right click on the app icon and select run as Administrator)
 
 #### GNU/Linux (AppImage):
-1. Download latest AppImage bundle here: https://github.com/turtlecoin//turtle-wallet-electron/releases
-2. Make it executable, either via GUI file manager or command line, e.g. `chmod +x walletshell-<version>-linux.AppImage`
+1. Download latest AppImage bundle here: https://github.com/furiousteam/BLOC-electron-wallet/releases
+2. Make it executable, either via GUI file manager or command line, e.g. `chmod +x BLOC-Electron-Wallet-<version>-linux.AppImage`
 3. Run/execute the file, double click in file manager, or run via shell/command line.
 
 See: https://docs.appimage.org/user-guide/run-appimages.html
 
-#### macOS (TBD/Untested)
-1. Download latest archive here: https://github.com/turtlecoin//turtle-wallet-electron/releases
-2. Extract downloaded tar archived
-3. Run the executable binary (`WalletShell.app/Contents/MacOs/WalletShell`) ??
+#### macOS
+1. Download latest archive here: https://github.com/furiousteam/BLOC-electron-wallet/releases
+2. Extract downloaded zip archived into your home folder
+3. Open terminal and Run: `cd /Users/YOURNAME/BLOC-Electron-Wallet.app/Contents/MacOS && ./BLOC-Electron-Wallet`
 
 ### Build
 You need to have `Node.js` and `npm` installed, go to https://nodejs.org and find out how to get it installed on your platform.
@@ -60,13 +60,13 @@ You need to have `Node.js` and `npm` installed, go to https://nodejs.org and fin
 Once you have Node+npm installed:
 ```
 # first, download BLOC-service binary for each platform
-# from TurtleCoin official repo
-# https://github.com/turtlecoin/turtlecoin/releases
+# from BLOC.MONEY official repo
+# https://github.com/furiousteam/BLOC/releases
 # extract the BLOC-service executable somewhere
 
 # clone the repo
 $ git clone https://github.com/furiousteam/BLOC-electron-wallet
-$ cd turtle-wallet-electron
+$ cd BLOC-electron-wallet
 
 # install dependencies
 $ npm install
@@ -96,4 +96,4 @@ $ npm run dist-mac
 Resulting packages or installer can be found inside `dist/` directory.
 
 ### Porting for other coin
-Please see [this guide](docs/porting.md) if you want to adapt WalletShell to be use for your own TurtleCoin fork.
+Please see [this guide](docs/porting.md) if you want to adapt BLOC-electron-wallet to be use for your own BLOC fork.
