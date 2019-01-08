@@ -1632,9 +1632,33 @@ function handleSendTransfer(){
 	});
 	*/
 }
-
+// ﻿b4e8jhgjhgjgh3....3704ghjghjhgj00
 function handleTransactions(){
 	// tx list options
+	var itemF = function(item) {
+		let tDate = (function() {
+			var d = new Date(item.timeStr);
+			var m = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+			return d.getDate() + ' ' + m[d.getMonth()] + ' ' + d.getFullYear() + ' - ' + d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds();
+		})();
+		let status = item.txType == 'in' ? '<span class="rcv">Received</span><img src="../assets/arrow-down-green.png" />' : '<span class="snt">Sent</span><img src="../assets/arrow-up-red.png" />';
+		let hash = item.transactionHash.substring(0, 10) + '...' + item.transactionHash.slice(-10);
+		return `<tr title="click for detail..." class="txlist-item">
+			<td class="tx-date">
+				<img src="../assets/arrow_left.png" /><span>${tDate}</span>
+			</td>
+			<td class="tx-ov-info">
+				<span>${hash}</span>
+			</td>
+			<td class="txinfo">
+				<p class="tx-ov-info"><span class="paymentId"></span></p>
+			</td>
+			<td class="txamount">
+				<span class="amount"></span> ${config.assetTicker}
+			</td>
+			<td class="txstatus">${status}</td>
+		</tr>`
+	};
 	let txListOpts = {
 		valueNames: [
 			{ data: [
@@ -1643,52 +1667,77 @@ function handleTransactions(){
 			]},
 			'amount','timeStr','paymentId','transactionHash','fee'
 		],
-		item: `<tr title="click for detail..." class="txlist-item">
-				<td class="txinfo">
-					<p class="timeStr tx-date"></p>
-					<p class="tx-ov-info">Tx. Hash: <span class="transactionHash"></span></p>
-					<p class="tx-ov-info">Payment ID: <span class="paymentId"></span></p>
-				</td><td class="amount txamount"></td>
-		</tr>`,
+		item: itemF,
 		searchColumns: ['transactionHash','paymentId','timeStr','amount'],
 		indexAsync: true
 	};
 	// tx detail
 	function showTransaction(el){
 		let tx = (el.name === "tr" ? el : el.closest('tr'));
+		console.log(tx.dataset);
 		let txdate = new Date(tx.dataset.timestamp*1000).toUTCString();
-		let txhashUrl = `<a class="external" title="view in block explorer" href="${config.blockExplorerUrl.replace('[[TX_HASH]]', tx.dataset.rawhash)}">View in block explorer</a>`;
+		let txhashUrl = `<a class="external form-bt button-blue" title="view in block explorer" href="${config.blockExplorerUrl.replace('[[TX_HASH]]', tx.dataset.rawhash)}">View in block explorer</a>`;
+		let txTypeBtn = tx.dataset.txtype == 'in' ? `<a class="tx-type-btn tx-type-in">Received<img src="../assets/right-blue-arrow.png" /></a>` : `<a class="tx-type-btn tx-type-out">Sent<img src="../assets/arrow-up-red.png" /></a>`;
 		let dialogTpl = `
 				<div class="div-transactions-panel">
-					<h4>Transaction Detail</h4>
-					<table class="custom-table" id="transactions-panel-table">
-						<tbody>
-							<tr><th scope="col">Hash</th>
-								<td data-cplabel="Tx. hash" class="tctcl">${tx.dataset.rawhash}</td></tr>
-							<tr><th scope="col">Address</th>
-								<td data-cplabel="Address" class="tctcl">${wsession.get('loadedWalletAddress')}</td></tr>
-							<tr><th scope="col">Payment Id</th>
-								<td data-cplabel="Payment ID" class="tctcl">${tx.dataset.rawpaymentid}</td></tr>
-							<tr><th scope="col">Amount</th>
-								<td data-cplabel="Tx. amount" class="tctcl">${tx.dataset.rawamount}</td></tr>
-							<tr><th scope="col">Fee</th>
-								<td  data-cplabel="Tx. fee" class="tctcl">${tx.dataset.rawfee}</td></tr>
-							<tr><th scope="col">Timestamp</th>
-								<td data-cplabel="Tx. date" class="tctcl">${tx.dataset.timestamp} (${txdate})</td></tr>
-							<tr><th scope="col">Block Index</th>
-								<td data-cplabel="Tx. block index" class="tctcl">${tx.dataset.blockindex}</td></tr>
-							<tr><th scope="col">Is Base?</th>
-								<td>${tx.dataset.isbase}</td></tr>
-							<tr><th scope="col">Extra</th>
-								<td data-cplabel="Tx. extra" class="tctcl">${tx.dataset.extra}</td></tr>
-							<tr><th scope="col">Unlock Time</th>
-								<td>${tx.dataset.unlocktime}</td></tr>
-						</tbody>
-					</table>
-					<p class="text-center">${txhashUrl}</p>
-				</div>
-				<div class="div-panel-buttons">
-					<button data-target="#tx-dialog" type="button" class="form-bt button-blue dialog-close-default" id="button-transactions-panel-close">Close</button>
+					<div class="clearfix">
+						<button data-target="#tx-dialog" type="button" class="form-bt button-blue dialog-close-default" id="button-transactions-panel-close">Back to transactions</button>
+
+						<div class="div-title clearfix">
+							<img src="../assets/transactions-title.png" />
+							<h2 class="title">Transaction Detail</h2>
+							<div class="subtitle">All the information</div>
+						</div>
+					</div>
+
+					<div class="transactions-panel-table">
+						<table class="custom-table" id="transactions-panel-table">
+							<tbody>
+								<tr>
+									<th scope="col"><img src="../assets/right-blue-arrow.png" /><span class="opa50">Hash</span></th>
+									<td><span class="opa50 tctcl" data-cplabel="Tx. hash">${tx.dataset.rawhash}</span></td>
+								</tr>
+								<tr>
+									<th scope="col"><img src="../assets/right-blue-arrow.png" /><span class="opa50">Timestamp</span></th>
+									<td><span class="opa50 tctcl" data-cplabel="Tx. date">${tx.dataset.timestamp} (${txdate})</span></td>
+								</tr>
+								<tr>
+									<th scope="col"><img src="../assets/right-blue-arrow.png" /><span class="opa50">Block Index</span></th>
+									<td><span class="opa50 tctcl" data-cplabel="Tx. block index">${tx.dataset.blockindex}</span></td>
+								</tr>
+								<tr>
+									<th scope="col"><img src="../assets/right-blue-arrow.png" /><span class="opa50">Is Base?</span></th>
+									<td><span class="opa50">${tx.dataset.isbase}</span></td>
+								</tr>
+								<tr>
+									<th scope="col"><img src="../assets/right-blue-arrow.png" />Amount</th>
+									<td data-cplabel="Tx. amount" class="tctcl">${tx.dataset.rawamount} ${config.assetTicker}</td>
+								</tr>
+								<tr>
+									<th scope="col"><img src="../assets/right-blue-arrow.png" />Fee</th>
+									<td  data-cplabel="Tx. fee" class="tctcl">${tx.dataset.rawfee} ${config.assetTicker}</td>
+								</tr>
+								<tr>
+									<th scope="col"><img src="../assets/right-blue-arrow.png" />Address</th>
+									<td data-cplabel="Address" class="tctcl">${wsession.get('loadedWalletAddress')}</td>
+								</tr>
+								<tr>
+									<th scope="col"><img src="../assets/right-blue-arrow.png" /><span class="opa50">Extra</span></th>
+									<td><span class="opa50 tctcl" data-cplabel="Tx. extra">${tx.dataset.extra}</span></td>
+								</tr>
+								<tr>
+									<th scope="col"><img src="../assets/right-blue-arrow.png" /><span class="opa50">Payment Id</span></th>
+									<td><span class="opa50 tctcl" data-cplabel="Payment ID">${tx.dataset.rawpaymentid}</span></td>
+								</tr>
+								<tr>
+									<th scope="col"><img src="../assets/right-blue-arrow.png" /><span class="opa50">Unlock Time</span></th>
+									<td><span class="opa50">${tx.dataset.unlocktime}</span></td>
+								</tr>
+							</tbody>
+						</table>
+						${txTypeBtn}
+					</div>
+					<div>${txhashUrl}</div>
 				</div>
 			`;
 

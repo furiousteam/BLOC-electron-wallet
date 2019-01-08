@@ -388,13 +388,15 @@ function resetFormState(){
         }
     }
 
-    const settingsBackBtn = document.getElementById('button-settings-back');
+    /*
+	const settingsBackBtn = document.getElementById('button-settings-back');
     if(wsession.get('serviceReady')){
         settingsBackBtn.dataset.section = 'section-welcome';
     }else{
         if (connInfoDiv) connInfoDiv.textContent = 'N/A';
         settingsBackBtn.dataset.section = 'section-overview';
     }
+	*/
 }
 
 // update ui state, push from svc_main

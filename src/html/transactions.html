@@ -1,9 +1,9 @@
 <template>
 	<section class="section" id="section-transactions">
 		<div class="div-title clearfix">
-			<img src="../assets/send-title.png" />
+			<img src="../assets/transactions-title.png" />
 			<h2 class="title">Transactions</h2>
-			<div class="subtitle">Incoming/Outdoing Transactions History</div>
+			<div class="subtitle">History</div>
 		</div>
 
 		<div class="transactions-div-transaction-lists">
@@ -18,11 +18,18 @@
 						<span tabindex="0" class="csort" data-dir="0" id="txSortTime">Date</span>
 					</div>
 				</div>
-				<div class="transaction-table-wrapper">
-					<table class="custom-table transaction-list-table" id="transaction-list-table">
-						<tbody class="list"></tbody>
-					</table>
-				</div>
+				<table class="custom-table transaction-list-table" id="transaction-list-table">
+					<thead>
+						<tr>
+							<th>Date</th>
+							<th>Transaction hash</th>
+							<th>Payment ID</th>
+							<th>Amount</th>
+							<th>Status</th>
+						</tr>
+					</thead>
+					<tbody class="list"></tbody>
+				</table>
 				<ul class="pagination"></ul>
 			</div>
 		</div>
