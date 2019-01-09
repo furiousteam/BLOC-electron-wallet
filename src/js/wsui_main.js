@@ -299,108 +299,114 @@ function setDarkMode(dark){
 	}
 }
 
-let keybindingTpl = `<div class="transaction-panel">
-<h4>Available Keybindings:</h4>
-<table class="custom-table kb-table">
-	<tbody>
-		<tr class="odd">
-			<th scope="col"><kbd>Ctrl</kbd>+<kbd>Home</kbd></th>
-			<td class="fc"><img src="../assets/arrow_left.png" /></td>
-			<td>Switch to <strong>overview/welcome</strong> screen</td>
-		</tr>
-		<tr class="transparent">
-			<td colspan="2"></td>
-		</tr>
-		<tr class="even">
-			<th scope="col"><kbd>Ctrl</kbd>+<kbd>Tab</kbd></th>
-			<td><img src="../assets/arrow_left.png" /></td>
-			<td>Switch to <strong>next screen</strong></td>
-		</tr>
-		<tr class="transparent">
-			<td colspan="2"></td>
-		</tr>
-		<tr class="odd">
-			<th scope="col"><kbd>Ctrl</kbd>+<kbd>n</kbd></th>
-			<td><img src="../assets/arrow_left.png" /></td>
-			<td>Switch to <strong>Create new wallet</strong> screen</td>
-		</tr>
-		<tr class="transparent">
-			<td colspan="2"></td>
-		</tr>
-		<tr class="even">
-			<th scope="col"><kbd>Ctrl</kbd>+<kbd>o</kbd></th>
-			<td><img src="../assets/arrow_left.png" /></td>
-			<td>Switch to <strong>Open a wallet</strong> screen</td>
-		</tr>
-		<tr class="transparent">
-			<td colspan="2"></td>
-		</tr>
-		<tr class="odd">
-			<th scope="col"><kbd>Ctrl</kbd>+<kbd>i</kbd></th>
-			<td><img src="../assets/arrow_left.png" /></td>
-			<td>Switch to <strong>Import wallet from private keys</strong> screen</td>
-		</tr>
-		<tr class="transparent">
-			<td colspan="2"></td>
-		</tr>
-		<tr class="even">
-			<th scope="col"><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>i</kbd></th>
-			<td><img src="../assets/arrow_left.png" /></td>
-			<td>Switch to <strong>Import wallet from mnemonic seed</strong> screen</td>
-		</tr>
-		<tr class="transparent">
-			<td colspan="2"></td>
-		</tr>
-		<tr class="odd">
-			<th scope="col"><kbd>Ctrl</kbd>+<kbd>e</kbd></th>
-			<td><img src="../assets/arrow_left.png" /></td>
-			<td>Switch to <strong>Export private keys/seed</strong> screen (when wallet opened)</td>
-		</tr>
-		<tr class="transparent">
-			<td colspan="2"></td>
-		</tr>
-		<tr class="even">
-			<th scope="col"><kbd>Ctrl</kbd>+<kbd>t</kbd></th>
-			<td><img src="../assets/arrow_left.png" /></td>
-			<td>Switch to <strong>Transactions</strong> screen (when wallet opened)</td>
-		</tr>
-		<tr class="transparent">
-			<td colspan="2"></td>
-		</tr>
-		<tr class="odd">
-			<th scope="col"><kbd>Ctrl</kbd>+<kbd>s</kbd></th>
-			<td><img src="../assets/arrow_left.png" /></td>
-			<td>Switch to <strong>Send/Transfer</strong> screen (when wallet opened)</td>
-		</tr>
-		<tr class="transparent">
-			<td colspan="2"></td>
-		</tr>
-		<tr class="even">
-			<th scope="col"><kbd>Ctrl</kbd>+<kbd>x</kbd></th>
-			<td><img src="../assets/arrow_left.png" /></td>
-			<td>Close wallet</td>
-		</tr>
-		<tr class="transparent">
-			<td colspan="2"></td>
-		</tr>
-		<tr class="odd">
-			<th scope="col"><kbd>Ctrl</kbd>+<kbd>/</kbd></th>
-			<td><img src="../assets/arrow_left.png" /></td>
-			<td>Display shortcut key information (this dialog)</td>
-		</tr>
-		<tr class="transparent">
-			<td colspan="2"></td>
-		</tr>
-		<tr class="even">
-			<th scope="col"><kbd>Esc</kbd></th>
-			<td><img src="../assets/arrow_left.png" /></td>
-			<td>Close any opened dialog (like this dialog)</td>
-		</tr> 
-	</tbody>
-</table>
-<div class="div-panel-buttons">
-	<button  data-target="#ab-dialog" type="button" class="button-blue dialog-close-default">Close</button>
-</div>
+let keybindingTpl = `<div id="section-shortcuts">
+	<div class="transaction-panel">
+		<div class="div-title clearfix">
+			<img src="../assets/shortcuts-title.png" />
+			<h2 class="title">Available Keybindings</h2>
+			<div class="subtitle">BLOC wallet</div>
+		</div>
+		<table class="custom-table kb-table">
+			<tbody>
+				<tr class="odd">
+					<th scope="col"><kbd>Ctrl</kbd>+<kbd>Home</kbd></th>
+					<td class="fc"><img src="../assets/arrow_left.png" /></td>
+					<td>Switch to <strong>overview/welcome</strong> screen</td>
+				</tr>
+				<tr class="transparent">
+					<td colspan="2"></td>
+				</tr>
+				<tr class="even">
+					<th scope="col"><kbd>Ctrl</kbd>+<kbd>Tab</kbd></th>
+					<td><img src="../assets/arrow_left.png" /></td>
+					<td>Switch to <strong>next screen</strong></td>
+				</tr>
+				<tr class="transparent">
+					<td colspan="2"></td>
+				</tr>
+				<tr class="odd">
+					<th scope="col"><kbd>Ctrl</kbd>+<kbd>n</kbd></th>
+					<td><img src="../assets/arrow_left.png" /></td>
+					<td>Switch to <strong>Create new wallet</strong> screen</td>
+				</tr>
+				<tr class="transparent">
+					<td colspan="2"></td>
+				</tr>
+				<tr class="even">
+					<th scope="col"><kbd>Ctrl</kbd>+<kbd>o</kbd></th>
+					<td><img src="../assets/arrow_left.png" /></td>
+					<td>Switch to <strong>Open a wallet</strong> screen</td>
+				</tr>
+				<tr class="transparent">
+					<td colspan="2"></td>
+				</tr>
+				<tr class="odd">
+					<th scope="col"><kbd>Ctrl</kbd>+<kbd>i</kbd></th>
+					<td><img src="../assets/arrow_left.png" /></td>
+					<td>Switch to <strong>Import wallet from private keys</strong> screen</td>
+				</tr>
+				<tr class="transparent">
+					<td colspan="2"></td>
+				</tr>
+				<tr class="even">
+					<th scope="col"><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>i</kbd></th>
+					<td><img src="../assets/arrow_left.png" /></td>
+					<td>Switch to <strong>Import wallet from mnemonic seed</strong> screen</td>
+				</tr>
+				<tr class="transparent">
+					<td colspan="2"></td>
+				</tr>
+				<tr class="odd">
+					<th scope="col"><kbd>Ctrl</kbd>+<kbd>e</kbd></th>
+					<td><img src="../assets/arrow_left.png" /></td>
+					<td>Switch to <strong>Export private keys/seed</strong> screen (when wallet opened)</td>
+				</tr>
+				<tr class="transparent">
+					<td colspan="2"></td>
+				</tr>
+				<tr class="even">
+					<th scope="col"><kbd>Ctrl</kbd>+<kbd>t</kbd></th>
+					<td><img src="../assets/arrow_left.png" /></td>
+					<td>Switch to <strong>Transactions</strong> screen (when wallet opened)</td>
+				</tr>
+				<tr class="transparent">
+					<td colspan="2"></td>
+				</tr>
+				<tr class="odd">
+					<th scope="col"><kbd>Ctrl</kbd>+<kbd>s</kbd></th>
+					<td><img src="../assets/arrow_left.png" /></td>
+					<td>Switch to <strong>Send/Transfer</strong> screen (when wallet opened)</td>
+				</tr>
+				<tr class="transparent">
+					<td colspan="2"></td>
+				</tr>
+				<tr class="even">
+					<th scope="col"><kbd>Ctrl</kbd>+<kbd>x</kbd></th>
+					<td><img src="../assets/arrow_left.png" /></td>
+					<td>Close wallet</td>
+				</tr>
+				<tr class="transparent">
+					<td colspan="2"></td>
+				</tr>
+				<tr class="odd">
+					<th scope="col"><kbd>Ctrl</kbd>+<kbd>/</kbd></th>
+					<td><img src="../assets/arrow_left.png" /></td>
+					<td>Display shortcut key information (this dialog)</td>
+				</tr>
+				<tr class="transparent">
+					<td colspan="2"></td>
+				</tr>
+				<tr class="even">
+					<th scope="col"><kbd>Esc</kbd></th>
+					<td><img src="../assets/arrow_left.png" /></td>
+					<td>Close any opened dialog (like this dialog)</td>
+				</tr> 
+			</tbody>
+		</table>
+		<div class="div-panel-buttons">
+			<button  data-target="#ab-dialog" type="button" class="button-blue dialog-close-default">Close</button>
+		</div>
+	</div>
 </div>
 `;
 
@@ -515,6 +521,20 @@ function changeSection(sectionId, isSettingRedir) {
 	formMessageReset();
 	isSettingRedir = isSettingRedir === true ? true : false;
 	let targetSection = sectionId.trim();
+
+	// when help is loaded, add the wiki link
+	if(targetSection === 'section-help'){
+		let d = document.getElementById('wiki-link');
+		d.setAttribute('href', config.wikiUrl);
+	}
+	// when about is loaded, add the links
+	if(targetSection === 'section-about'){
+		let d = document.getElementById('github-link');
+		d.setAttribute('href', config.appGitRepo);
+
+		d = document.getElementById('app-version');
+		d.innerHTML = config.walletServiceBinaryVersion;
+	}
 
 	// when overview is loaded, show the sidebar nav
 	if(targetSection === 'section-overview'){

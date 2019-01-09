@@ -98,6 +98,11 @@ body.wallet-opened .navbar {
 	background-color: #040727;
 	padding-top: 60px;
 }
+.navbar .navbar-label {
+	vertical-align: top;
+	line-height: 25px;
+	margin-left: 10px;
+}
 
 .navbar-button {
 	display: block;
@@ -382,6 +387,8 @@ a.external.button-blue{
 	color: #fff;
 	outline: none;
 	text-shadow: 1px 1px 1px #333;
+	padding-bottom: 13px;
+	padding-top: 13px;
 }
 
 .button-green{
@@ -994,6 +1001,29 @@ input.path-input-button{
 }
 
 
+/** SHORTCUTS **/
+#section-shortcuts {
+	margin-top: 10px;
+}
+#section-shortcuts .div-title {
+	margin-left: 15px;
+	margin-bottom: 45px;
+}
+#section-shortcuts .div-title img {
+	float: left;
+	width: 61px;
+	margin-right: 20px;
+}
+#section-shortcuts .div-title .title {
+	font-size: 25px;
+	margin-top: 0;
+	margin-bottom: 5px;
+}
+#section-shortcuts .div-title .subtitle {
+	font-size: 14px;
+	opacity: .5;
+}
+
 /** TRX **/
 #section-transactions {
 	margin-top: 45px;
@@ -1017,8 +1047,8 @@ input.path-input-button{
 	opacity: .5;
 }
 .transactions-div-transaction-lists {
-	margin-right: 75px;
-	margin-left: 75px;
+	margin-right: 65px;
+	margin-left: 65px;
 	margin-bottom: 30px;
 }
 .transactions-div-export {
@@ -1239,6 +1269,71 @@ div.about-links a{
 	border-radius: 4px;
 	background: #004720;
 	line-height: normal;
+}
+
+/* ABOUT */
+.about-div-content {
+	margin-top: 15px;
+	margin-left: 45px;
+	margin-right: 45px;
+}
+.about-div-content .logo {
+	margin-bottom: 5px;
+	text-align: center;
+}
+.about-div-content .under-logo-title {
+	width: 700px;
+	margin: 0 auto 30px auto;
+	font-size: 17px;
+	font-weight: 300;
+	text-align: center;
+}
+.about-div-content .version {
+	font-size: 13px;
+	font-weight: 300;
+	text-align: center;
+	margin-bottom: 30px;
+}
+
+/* HELP */
+#section-help {
+	margin-top: 45px;
+}
+#section-help .div-title {
+	margin-bottom: 45px;
+	margin-left: 65px;
+}
+#section-help .div-title img {
+	float: left;
+	width: 61px;
+	margin-right: 8px;
+}
+#section-help .div-title .title {
+	font-size: 25px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+#section-help .div-title .subtitle {
+	font-size: 14px;
+	opacity: .5;
+}
+.help-div-content {
+	margin-left: 65px;
+	margin-right: 65px;
+}
+.help-div-content img {
+	margin-bottom: 38px;
+}
+.help-div-content .title {
+	font-size: 30px;
+	font-weight: 400;
+	margin-bottom: 15px;
+}
+.help-div-content .text {
+	font-size: 16px;
+	font-weight: 400;
+	margin-bottom: 30px;
+	opacity: 0.5;
 }
 
 /* NEW TX */
@@ -1672,7 +1767,7 @@ progress.light{
 	opacity: .5;
 }
 #section-send .div-input {
-	margin-left: 75px;
+	margin-left: 65px;
 	margin-right: 92px;
 }
 #section-send .form-help {
@@ -1834,6 +1929,10 @@ progress.light{
 }
 .custom-table.kb-table tr.transparent{
 	background-color: transparent;
+}
+.custom-table.kb-table tr.transparent td{
+	height: 5px;
+	padding: 0;
 }
 .custom-table.kb-table kbd{
 	background: #84d0f0;

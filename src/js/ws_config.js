@@ -17,7 +17,7 @@ config.walletFileDefaultExt = 'money';
 config.walletServiceBinaryFilename = 'BLOC-service';
 
 // version on the bundled service (BLOC-service)
-config.walletServiceBinaryVersion = "v3.0.2";
+config.walletServiceBinaryVersion = "v3.0.1";
 
 // default port number for your wallet service (e.g. BLOC-service)
 config.walletServiceRpcPort = 8070;
@@ -71,5 +71,8 @@ config.addressBookSampleEntries = [
 		paymentId: 'DF794857BC4587ECEC911AF6A6AB02513FEA524EC5B98DA8702FAC92195A94B2', 
 	}
 ];
+
+// wiki url
+config.wikiUrl = 'https://wiki.bloc.money/';
 
 module.exports = config;
