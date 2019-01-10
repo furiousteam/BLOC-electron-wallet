@@ -115,12 +115,14 @@ let txButtonExport;
 let thtml;
 // let dmswitch;
 let kswitch;
+let iswitch;
 
 function populateElementVars(){
 	// misc
 	thtml = document.documentElement;
 	// dmswitch = document.getElementById('tswitch');
 	kswitch = document.getElementById('kswitch');
+	iswitch = document.getElementById('iswitch');
 	firstTab = document.querySelector('.navbar-button');
 	// generics
 	genericBrowseButton = document.querySelectorAll('.path-input-button');
@@ -506,9 +508,11 @@ function setIconSelected(btnActive) {
 	}
 
 	// add the selected icon to the current item
-	let img = btnActive.querySelector('img');
-	let selected = img.getAttribute('data-selected');
-	img.setAttribute('src', selected);
+	if (btnActive) {
+		let img = btnActive.querySelector('img');
+		let selected = img.getAttribute('data-selected');
+		img.setAttribute('src', selected);
+	}
 }
 
 // section switcher
@@ -522,6 +526,11 @@ function changeSection(sectionId, isSettingRedir) {
 	isSettingRedir = isSettingRedir === true ? true : false;
 	let targetSection = sectionId.trim();
 
+	// when overview is loaded, show the sidebar nav
+	if(targetSection === 'section-welcome'){
+		iswitch.classList.remove('hidden');
+	}
+
 	// when help is loaded, add the wiki link
 	if(targetSection === 'section-help'){
 		let d = document.getElementById('wiki-link');
@@ -533,7 +542,26 @@ function changeSection(sectionId, isSettingRedir) {
 		d.setAttribute('href', config.appGitRepo);
 
 		d = document.getElementById('app-version');
+		d.innerHTML = remote.app.getVersion();
+
+		d = document.getElementById('service-version');
 		d.innerHTML = config.walletServiceBinaryVersion;
+
+		let donationAddressesList = document.querySelector('#about-donation-addresses .list');
+		if (donationAddressesList.innerHTML == '') {
+			let itemDonation = function(item) {
+				return `<div class="item">
+					Donate to "${item.name}":<br />
+					<input tabindex="0" data-noclear="1" title="Click to copy" type="text" class="ctcl" value="${item.address}" readonly="readonly" />
+				</div>`;
+			};
+			let donationOpts = {
+				valueNames: [],
+				item: itemDonation,
+				indexAsync: true
+			};
+			new List('about-donation-addresses', donationOpts, config.addressBookSampleEntries);
+		}
 	}
 
 	// when overview is loaded, show the sidebar nav
@@ -584,16 +612,16 @@ function changeSection(sectionId, isSettingRedir) {
 		return; // don't do anything if section unchanged
 	}
 
-	// navbar active section indicator, only for main section
+	// navbar active section indicator, only for main section	
+	const activeButton = document.querySelector(`.btn-active`);
+	if(activeButton) activeButton.classList.remove('btn-active');
+	setIconSelected();
+
 	let finalButtonTarget = (finalTarget === 'section-welcome' ? 'section-overview' : finalTarget);
 	let newActiveNavbarButton = document.querySelector(`.navbar button[data-section="${finalButtonTarget}"]`);
 	if(newActiveNavbarButton){
-		const activeButton = document.querySelector(`.btn-active`);
-		if(activeButton) activeButton.classList.remove('btn-active');
-		if(newActiveNavbarButton) {
-			setIconSelected(newActiveNavbarButton);
-			newActiveNavbarButton.classList.add('btn-active');
-		}
+		setIconSelected(newActiveNavbarButton);
+		newActiveNavbarButton.classList.add('btn-active');
 	}
 
 	// toggle section
@@ -792,10 +820,10 @@ function showInitialPage(){
 
 	let versionInfo = document.getElementById('walletShellVersion');
 	if(versionInfo) versionInfo.innerHTML = WS_VERSION;
-	let tsVersionInfo = document.getElementById('blocServiceVersion');
-	if(tsVersionInfo) tsVersionInfo.innerHTML = config.walletServiceBinaryVersion;
+	//let tsVersionInfo = document.getElementById('blocServiceVersion');
+	//if(tsVersionInfo) tsVersionInfo.innerHTML = config.walletServiceBinaryVersion;
 	let wVersionInfo = document.getElementById('walletVersion');
-	if(wVersionInfo) wVersionInfo.innerHTML = WS_VERSION;
+	if(wVersionInfo) wVersionInfo.innerHTML = remote.app.getVersion();
 }
 
 // settings page handlers
@@ -891,7 +919,7 @@ function handleAddressBook(){
 							 <dt>Wallet Address:</dt>
 							 <dd data-cplabel="Wallet address" class="tctcl" title="click to copy">${this.dataset.walletval}</dd>
 							 <dt>Payment Id:</dt>
-							 <dd  data-cplabel="Payment ID" class="tctcl" title="click to copy">${this.dataset.paymentidval ? this.dataset.paymentidval : '-'}</dd>
+							 <dd data-cplabel="Payment ID" class="tctcl" title="click to copy">${this.dataset.paymentidval ? this.dataset.paymentidval : '-'}</dd>
 						 </dl>
 					 </div>
 				 </div>
@@ -2206,7 +2234,11 @@ function initHandlers(){
 	// });
 
 	kswitch.addEventListener('click', showKeyBindings);
-	
+
+	iswitch.addEventListener('click', function() {
+		changeSection('section-about');
+	});
+
 	//handleNetworkChange();
 
 	// settings handlers

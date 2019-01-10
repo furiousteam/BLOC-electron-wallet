@@ -25,6 +25,7 @@
 		<link rel="import" href="./overview_create.html">
 		<link rel="import" href="./address_book.html">
 		<link rel="import" href="./address_book_add.html">
+		<link rel="import" href="./block_explorer.html">
 	</head>
 
 	<body>
@@ -39,6 +40,9 @@
 			<button tabindex="-1" title="Transactions" class="form-bt navbar-button navbar-need-connected" data-section="section-transactions" id="button-section-transactions">
 				<img src="../assets/left-menu-transactions.png" data-normal="../assets/left-menu-transactions.png" data-selected="../assets/left-menu-transactions-selected.png" /><span class="navbar-label">Transactions</span>
 			</button>
+			<button tabindex="-1" title="Block explorer" class="form-bt navbar-button navbar-need-connected" data-section="section-block-explorer" id="button-section-block-explorer">
+				<img src="../assets/left-menu-block-explorer.png" data-normal="../assets/left-menu-block-explorer.png" data-selected="../assets/left-menu-block-explorer-selected.png" /><span class="navbar-label">Block explorer</span>
+			</button>
 			<!--
 			<button tabindex="-1" title="Address Book" type="button" class="form-bt navbar-button" data-section="section-addressbook" id="button-section-addressbook">
 				<img src="../assets/left-menu-address-book.png" data-normal="../assets/left-menu-address-book.png" data-selected="../assets/left-menu-address-book-selected.png" /><span class="navbar-label">Address Book</span>
@@ -47,13 +51,15 @@
 			<button tabindex="-1" title="Help" class="form-bt navbar-button navbar-need-connected" data-section="section-help" id="button-section-help">
 				<img src="../assets/left-menu-help.png" data-normal="../assets/left-menu-help.png" data-selected="../assets/left-menu-help-selected.png" /><span class="navbar-label">Help</span>
 			</button>
+			<!--
 			<button tabindex="-1" title="About" class="form-bt navbar-button navbar-need-connected" data-section="section-about" id="button-section-about">
 				<img src="../assets/left-menu-help.png" data-normal="../assets/left-menu-help.png" data-selected="../assets/left-menu-help-selected.png" /><span class="navbar-label">About</span>
 			</button>
+			-->
 
 			<div class="navbar-wallet-version">
 				<img src="../assets/left-side-wallet-version.png" />
-				<div id="walletVersion" class="wallet-version">...</div>
+				<div class="wallet-version">v<span id="walletVersion">0.0</span></div>
 			</div>
 		</div>
 		<!-- Top navbar -->
@@ -64,23 +70,11 @@
 				<span tabindex="-1" id="navbar-text-sync">IDLE</span>
 			</div>
 			
-			<button tabindex="-1" title="Wallet Overview" class="form-bt navbar-button navbar-need-connected" data-section="section-overview" id="button-section-overview">
-				<i class="fas fa-wallet"></i> <span class="navbar-label">Wallet</span>
-			</button>
 			<button tabindex="-1" title="Address Book" type="button" class="form-bt navbar-button" data-section="section-addressbook" id="button-section-addressbook">
 				<i class="fas fa-address-book"></i> <span class="navbar-label">Address Book</span>
 			</button>
-			<button tabindex="-1" title="Send" class="form-bt navbar-button navbar-need-connected" data-section="section-send" id="button-section-send">
-				<i class="fas fa-share-square"></i> <span class="navbar-label">Send</span>
-			</button>
-			<button tabindex="-1" title="Transactions" class="form-bt navbar-button navbar-need-connected" data-section="section-transactions" id="button-section-transactions">
-				<i class="fas fa-exchange-alt"></i> <span class="navbar-label">Transactions</span>
-			</button>
 			<button tabindex="-1" title="Settings" class="form-bt navbar-button" data-section="section-settings" id="button-section-settings">
 				<i class="fas fa-cog"></i> <span class="navbar-label">Settings</span>
-			</button>
-			<button tabindex="-1" title="About" class="form-bt navbar-button" data-section="section-about" id="button-section-about">
-				<i class="fas fa-info-circle"></i> <span class="navbar-label">About</span>
 			</button>
 		</div>
 		-->
@@ -91,8 +85,12 @@
 		<dialog id="tx-dialog" class="tx-dialog"></dialog>
 		<dialog id="ab-dialog" class="default-dialog address-book-dialog"></dialog>
 		<dialog id="tf-dialog" class="tx-dialog"></dialog>
-		<button tabindex="-1" title="Show keyboard shortcut" id="kswitch"><i class="fas fa-keyboard"></i></button>
-		<!-- <button tabindex="-1" title="Swith to dark mode" id="tswitch"><i class="fas fa-moon"></i></button> -->
+		<div class="right-top-buttons">
+			<img src="../assets/in-bloc-we-trust.png" />
+			<button tabindex="-1" title="Show keyboard shortcut" id="kswitch"><i class="fas fa-keyboard"></i></button>
+			<button tabindex="-1" title="Show about info" id="iswitch" class="hidden"><i class="fas fa-info-circle"></i></button>
+			<!-- <button tabindex="-1" title="Swith to dark mode" id="tswitch"><i class="fas fa-moon"></i></button> -->
+		</div>
 		<script>require('../js/wsui_main.js')</script>
 	</body>
 </html>
