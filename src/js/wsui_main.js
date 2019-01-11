@@ -536,7 +536,7 @@ function changeSection(sectionId, isSettingRedir) {
 		let d = document.getElementById('wiki-link');
 		d.setAttribute('href', config.wikiUrl);
 	}
-	// when about is loaded, add the links
+	// when about is loaded, add the links and the content
 	if(targetSection === 'section-about'){
 		let d = document.getElementById('github-link');
 		d.setAttribute('href', config.appGitRepo);
@@ -562,6 +562,14 @@ function changeSection(sectionId, isSettingRedir) {
 			};
 			new List('about-donation-addresses', donationOpts, config.addressBookSampleEntries);
 		}
+	}
+	// when about is loaded, add the links
+	if(targetSection === 'section-block-explorer'){
+		let d = document.getElementById('bloc-explorer-link');
+		d.setAttribute('href', config.blockExplorerUrl);
+
+		d = document.getElementById('telegram-bot-explorer-link');
+		d.setAttribute('href', config.blockExplorerTelegramBotUrl);
 	}
 
 	// when overview is loaded, show the sidebar nav
@@ -1633,7 +1641,7 @@ function handleSendTransfer(){
 			formMessageSet('send', 'warning', 'Sending transaction, please wait...<br><progress></progress>');
 			wsmanager.sendTransaction(tx).then((result) => {
 				formMessageReset();
-				let txhashUrl = `<a class="external" title="view in block explorer" href="${config.blockExplorerUrl.replace('[[TX_HASH]]', result.transactionHash)}">${result.transactionHash}</a>`;
+				let txhashUrl = `<a class="external" title="view in block explorer" href="${config.blockExplorerTransactionUrl.replace('[[TX_HASH]]', result.transactionHash)}">${result.transactionHash}</a>`;
 				let okMsg = `Transaction sent!<br>Tx. hash: ${txhashUrl}.<br>Your balance may appear incorrect while transaction not fully confirmed.`;
 				formMessageSet('send', 'success', okMsg);
 				// check if it's new address, if so save it
@@ -1722,9 +1730,8 @@ function handleTransactions(){
 	// tx detail
 	function showTransaction(el){
 		let tx = (el.name === "tr" ? el : el.closest('tr'));
-		console.log(tx.dataset);
 		let txdate = new Date(tx.dataset.timestamp*1000).toUTCString();
-		let txhashUrl = `<a class="external form-bt button-blue" title="view in block explorer" href="${config.blockExplorerUrl.replace('[[TX_HASH]]', tx.dataset.rawhash)}">View in block explorer</a>`;
+		let txhashUrl = `<a class="external form-bt button-blue" title="view in block explorer" href="${config.blockExplorerTransactionUrl.replace('[[TX_HASH]]', tx.dataset.rawhash)}">View in block explorer</a>`;
 		let txTypeBtn = tx.dataset.txtype == 'in' ? `<a class="tx-type-btn tx-type-in">Received<img src="../assets/right-blue-arrow.png" /></a>` : `<a class="tx-type-btn tx-type-out">Sent<img src="../assets/arrow-up-red.png" /></a>`;
 		let dialogTpl = `
 				<div class="div-transactions-panel">

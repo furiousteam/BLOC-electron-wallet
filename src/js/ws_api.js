@@ -163,6 +163,10 @@ class WalletShellApi {
                     backupKeys.mnemonicSeed = mres.mnemonicSeed;
                     return resolve(backupKeys);
                 }).catch((err) => {
+					if (err == "Keys not deterministic") {
+						backupKeys.mnemonicSeed = "not available";
+						return resolve(backupKeys);
+					}
                     return reject(err);
                 });
             }).catch((err) => {

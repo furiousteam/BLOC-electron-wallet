@@ -23,7 +23,7 @@ config.walletServiceBinaryVersion = "3.0.1";
 config.walletServiceRpcPort = 8070;
 
 // block explorer url, the [[TX_HASH] will be substituted w/ actual transaction hash
-config.blockExplorerUrl = 'https://bloc-explorer.com/transaction/[[TX_HASH]]';
+config.blockExplorerTransactionUrl = 'https://bloc-explorer.com/transaction/[[TX_HASH]]';
 
 // default remote node to connect to, set this to a known reliable node for 'just works' user experience
 config.remoteNodeDefaultHost = 'bloc.cool';
@@ -74,5 +74,11 @@ config.addressBookSampleEntries = [
 
 // wiki url
 config.wikiUrl = 'https://wiki.bloc.money/';
+
+// block explorer url
+config.blockExplorerUrl = 'https://bloc-explorer.com/';
+
+// block explorer telegram bot url
+config.blockExplorerTelegramBotUrl = 'https://t.me/bloc_explorer_bot';
 
 module.exports = config;

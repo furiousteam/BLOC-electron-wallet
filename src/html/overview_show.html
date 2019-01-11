@@ -1,6 +1,54 @@
 <template>
 	<section class="section" id="section-overview-show">
-		<div class="section-contents darkened">
+		<div class="title-container">
+			<div class="title-left">
+				<div class="div-title clearfix">
+					<img src="../assets/block-explorer-title.png" />
+					<h2 class="title">Backup</h2>
+					<div class="subtitle">Save your keys</div>
+				</div>
+			</div>
+			<div class="title-right">
+				<button type="button" class="external form-bt button-blue" id="button-show-reveal">Reveal the keys and mnemonic seed</button>
+				<button type="button" class="external form-bt button-blue" id="button-show-export">Export to file</button>
+			</div>
+		</div>
+
+		<div class="overview-show-div-content">
+			<p>
+				Backup your key is one of the most important step to keep your coins safe.The key below can restore your wallet on any BLOC application.<br />
+				You must understand that this private key is very sensitive. <b>NEVER SHARE</b> this key with anyone. With this key you can recover and install your wallet on any computer, smartphone, tablet. So if someone find/see it, he can recover your wallet and move the funds like he want. The best way to save your wallet is to print on paper 2 copy of this key and hide them in 2 different safe place. If you lost this key and that your actual wallet is deleted you will never be able to recover your fund, noone will be able to do it, even us. Your funds will be lost for the eternity.<br />
+				<b>This key is essential to save your wallet and funds.</b>
+			</p>
+			<p class="blue">
+				Do not store it on your smartphone, tablet or computer. You are the solo responsible for the security of these key.
+			</p>
+
+			<div class="box">
+				<div class="title">YOUR PRIVATE VIEW KEY</div>
+				<div class="subtitle">Note : the key do not contain space characters</div>
+				<input placeholder="Click the Reveal button to see it" type="text" class="text-block ctcl" id="key-show-view" readonly="readonly" />
+			</div>
+			<div class="box">
+				<div class="title">YOUR PRIVATE SPEND KEY</div>
+				<div class="subtitle">Note : the key do not contain space characters</div>
+				<input placeholder="Click the Reveal button to see it" type="text" class="text-block  ctcl" id="key-show-spend" readonly="readonly" />
+			</div>
+			<div class="box">
+				<div class="title">YOUR PRIVATE MENMONIC SEED</div>
+				<div class="subtitle">Note : the mnemonic seed is always 20 words</div>
+				<textarea  placeholder="Click the Reveal button to see it" class="default-textarea  ctcl" id="seed-show" readonly="readonly" rows="3"></textarea>
+			</div>
+
+			<span class="form-ew form-msg text-spaced-error text-center" id="text-secret-error"></span>
+			<span class="form-ew form-msg text-spaced-success text-center" id="text-secret-success"></span>
+		</div>
+
+
+
+
+
+		<div class="section-contents hidden">
 			<div class="div-title">
 				<h2 class="title">Private Keys &amp; Mnemonic Seed</h2>
 			</div>
@@ -13,27 +61,18 @@
 				</div>
 				<div class="input-wrap" title="click to copy">
 					<h4 class="text-spaced">Your private view key:</h4>		
-					<input placeholder="Click the Reveal button to see it" type="text" class="text-block ctcl" id="key-show-view" readonly="readonly" />
+					<input placeholder="Click the Reveal button to see it" type="text" class="text-block ctcl" id="key-show-view2" readonly="readonly" />
 				</div>
 
 				<div class="input-wrap" title="click to copy">
 					<h4 class="text-spaced">Your private spend key:</h4>
-					<input placeholder="Click the Reveal button to see it" type="text" class="text-block  ctcl" id="key-show-spend" readonly="readonly" />
+					<input placeholder="Click the Reveal button to see it" type="text" class="text-block  ctcl" id="key-show-spend2" readonly="readonly" />
 				</div>
 
 				<div class="input-wrap" title="click to copy">
 					<h4>Mnemonic Seed</h4>
-					<textarea  placeholder="Click the Reveal button to see it" class="default-textarea  ctcl" id="seed-show" readonly="readonly" rows="3"></textarea>
+					<textarea  placeholder="Click the Reveal button to see it" class="default-textarea  ctcl" id="seed-show2" readonly="readonly" rows="3"></textarea>
 				</div>
-				<div class="input-wrap">
-					<span class="form-ew form-msg text-spaced-error text-center" id="text-secret-error"></span>
-					<span class="form-ew form-msg text-spaced-success text-center" id="text-secret-success"></span>
-				</div>
-			</div>
-			<div class="action-buttons">
-				<button type="button" class="form-bt button-green" id="button-show-reveal">Reveal</button>
-				<button type="button" class="form-bt button-green" id="button-show-export">Export to file</button>
-				<button type="button" class="form-bt button-red" data-section="section-overview" id="button-show-back">Back</button>
 			</div>
 		</div>
 	</section>
