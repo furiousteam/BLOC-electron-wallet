@@ -72,13 +72,61 @@ config.addressBookSampleEntries = [
 	}
 ];
 
-// wiki url
-config.wikiUrl = 'https://wiki.bloc.money/';
+// bloc.money url
+config.blockMoneyUrl = 'https://bloc.money/';
 
-// block explorer url
+// bloc.money download url
+config.blockMoneyDownloadUrl = 'https://bloc.money/download';
+
+// GUI-miner download url
+config.guiMinerDownloadUrl = 'https://github.com/furiousteam/BLOC-GUI-Miner/releases';
+
+// Paperwallet url
+config.paperWalletUrl = 'https://paperwallet.bloc.money';
+
+// iPhone download url
+config.iphoneWalletUrl = 'https://itunes.apple.com/us/app/bloc-wallet-by-furiousteam-ltd/id1437924269?mt=8';
+
+// BLOC wiki url
+config.blocWikiUrl = 'https://wiki.bloc.money/';
+
+// Browser mining url
+config.browserMiningUrl = 'https://bloc-mining.com/';
+
+// Block explorer url
 config.blockExplorerUrl = 'https://bloc-explorer.com/';
 
-// block explorer telegram bot url
+// Discord channel url
+config.discordChannelUrl = 'https://discord.gg/5Buudya';
+
+// Telegram channel url
+config.telegramChannelUrl = 'https://t.me/bloc_money';
+
+// Bitcoin-talk url
+config.bitcoinTalkUrl = 'https://bitcointalk.org/index.php?topic=4108831.0';
+
+// Github page url
+config.githubPageUrl = 'https://github.com/furiousteam';
+
+// Twitter profile url
+config.twitterProfileUrl = 'https://twitter.com/bloc_money';
+
+// Medium profile url
+config.mediumProfileUrl = 'https://medium.com/@bloc.money';
+
+// Youtube channel url
+config.youtubeChannelUrl = 'https://www.youtube.com/channel/UCdvnEPWhqGtZUEx3EFBrXvA';
+
+// Facebook page url
+config.facebookPageUrl = 'https://www.facebook.com/Blocmoney-383098922176113';
+
+// Instagram profile url
+config.instagramProfileUrl = 'https://www.instagram.com/bloc.money';
+
+// Block explorer telegram bot url
 config.blockExplorerTelegramBotUrl = 'https://t.me/bloc_explorer_bot';
+
+// news update url
+config.newsUpdateUrl = 'https://bloc.money/wallet-api/latest-medium-news?limit=6';
 
 module.exports = config;

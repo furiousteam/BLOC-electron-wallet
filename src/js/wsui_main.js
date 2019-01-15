@@ -515,6 +515,52 @@ function setIconSelected(btnActive) {
 	}
 }
 
+function showNews(list){
+	list = list || settings.get('news_json', []);
+	console.log(list);
+}
+
+function getNews(cb){
+	const log = require('electron-log');
+	try{
+		const news_time = settings.get('news_timestamp', 0);
+		console.log(news_time);
+		let curr_time = new Date().getTime();
+
+		if (news_time == 0 || (curr_time - news_time) > (1000*60*1)) {
+			// show loading
+
+			// fetch the json file and cache it locally
+			require('https').get(config.newsUpdateUrl, (res) => {
+				var result = '';
+				res.setEncoding('utf8');
+
+				res.on('data', (chunk) => {
+					result += chunk;
+				});
+
+				res.on('end', () => {
+					try{
+						var newsList = JSON.parse(result);
+						settings.set('news_json', newsList);
+						settings.set('news_timestamp', new Date().getTime());
+						showNews(newsList);
+					}catch(e){
+						log.debug(`Failed to get the news: ${e.message}`);
+						showNews();
+					}
+				});
+			}).on('error', (e) => {
+				log.debug(`Failed to get the news: ${e.message}`);
+				showNews();
+			});
+		}
+    }catch(e){
+        log.error(`Failed to get the news: ${e.code} - ${e.message}`);
+		showNews();
+    }
+}
+
 // section switcher
 function changeSection(sectionId, isSettingRedir) {
 	if(WALLET_OPEN_IN_PROGRESS){
@@ -534,7 +580,7 @@ function changeSection(sectionId, isSettingRedir) {
 	// when help is loaded, add the wiki link
 	if(targetSection === 'section-help'){
 		let d = document.getElementById('wiki-link');
-		d.setAttribute('href', config.wikiUrl);
+		d.setAttribute('href', config.blocWikiUrl);
 	}
 	// when about is loaded, add the links and the content
 	if(targetSection === 'section-about'){
@@ -570,6 +616,62 @@ function changeSection(sectionId, isSettingRedir) {
 
 		d = document.getElementById('telegram-bot-explorer-link');
 		d.setAttribute('href', config.blockExplorerTelegramBotUrl);
+	}
+	// when tools is loaded, add the links
+	if(targetSection === 'section-tools'){
+		let d = document.getElementById('bloc-money-link');
+		d.setAttribute('href', config.blockMoneyDownloadUrl);
+
+		d = document.getElementById('iphone-wallet-link');
+		d.setAttribute('href', config.iphoneWalletUrl);
+
+		d = document.getElementById('gui-miner-link');
+		d.setAttribute('href', config.guiMinerDownloadUrl);
+
+		d = document.getElementById('paper-wallet-link');
+		d.setAttribute('href', config.paperWalletUrl);
+
+		d = document.getElementById('bloc-wiki-link');
+		d.setAttribute('href', config.blocWikiUrl);
+
+		d = document.getElementById('web-browser-mining-link');
+		d.setAttribute('href', config.browserMiningUrl);
+	}
+	// when news is loaded, add the links
+	if(targetSection === 'section-news'){
+		let d = document.getElementById('main-website-link');
+		d.setAttribute('href', config.blockMoneyUrl);
+
+		d = document.getElementById('discord-channel-link');
+		d.setAttribute('href', config.discordChannelUrl);
+
+		d = document.getElementById('telegram-channel-link');
+		d.setAttribute('href', config.telegramChannelUrl);
+
+		d = document.getElementById('bitcoin-talk-link');
+		d.setAttribute('href', config.bitcoinTalkUrl);
+
+		d = document.getElementById('github-page-link');
+		d.setAttribute('href', config.githubPageUrl);
+
+		d = document.getElementById('twitter-profile-link');
+		d.setAttribute('href', config.twitterProfileUrl);
+
+		d = document.getElementById('medium-profile-link');
+		d.setAttribute('href', config.mediumProfileUrl);
+
+		d = document.getElementById('youtube-channel-link');
+		d.setAttribute('href', config.youtubeChannelUrl);
+
+		d = document.getElementById('facebook-page-link');
+		d.setAttribute('href', config.facebookPageUrl);
+
+		d = document.getElementById('instagram-profile-link');
+		d.setAttribute('href', config.instagramProfileUrl);
+
+		getNews(function(items) {
+			
+		});
 	}
 
 	// when overview is loaded, show the sidebar nav
