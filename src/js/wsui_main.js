@@ -515,22 +515,55 @@ function setIconSelected(btnActive) {
 	}
 }
 
-function showNews(list){
-	list = list || settings.get('news_json', []);
-	console.log(list);
+function showNews(listNews){
+	listNews = listNews || settings.get('news_json', []);
+
+	let i = 1;
+	let itemNews = function(item) {
+		let created = (function() {
+			var d = new Date(item.created);
+			var m = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+			return d.getDate() + ' ' + m[d.getMonth()] + ' ' + d.getFullYear();
+		})();
+		let title = item.title.substring(0, 50) + (item.title.length > 50 ? '...' : '');
+		let content = item.content.substring(0, 250) + (item.content.length > 250 ? '...' : '');
+		let cont_start = (i === 1) || ((i - 1) % 3 == 0) ? '<div class="news-div-content">' : '';
+		let cont_end = (i % 3 == 0) || (i === listNews.length) ? '</div>' : '';
+		i++;
+		return `${cont_start}
+			<div class="box">
+				<div class="title clearfix">
+					<img src="../assets/news-item-icon.png" />
+					${title}
+				</div>
+				<div class="text">${content}</div>
+				<div class="bottom clearfix">
+					<span class="date">${created}</span>
+					<a href="${item.link}" class="external form-bt button-blue">Read more</a>
+				</div>
+			</div>
+		${cont_end}`;
+	};
+	let html = '';
+	for (let i = 0; i < listNews.length; i++) {
+		html += itemNews(listNews[i]);
+	}
+	document.querySelector('#section-news .list').innerHTML = html;
+
+	let d = document.getElementById('news-loading');
+	d.classList.add('hidden');
 }
 
 function getNews(cb){
 	const log = require('electron-log');
 	try{
 		const news_time = settings.get('news_timestamp', 0);
-		console.log(news_time);
 		let curr_time = new Date().getTime();
 
-		if (news_time == 0 || (curr_time - news_time) > (1000*60*1)) {
-			// show loading
+		if ((curr_time - news_time) > (1000 * 60 * 2) || document.querySelector('#section-news .list').innerHTML == '') {
+			let d = document.getElementById('news-loading');
+			d.classList.remove('hidden');
 
-			// fetch the json file and cache it locally
 			require('https').get(config.newsUpdateUrl, (res) => {
 				var result = '';
 				res.setEncoding('utf8');
@@ -2141,7 +2174,11 @@ function initHandlers(){
 	//external link handler
 	wsutil.liveEvent('a.external', 'click', (event) => {
 		event.preventDefault();
-		shell.openExternal(event.target.getAttribute('href'));
+		shell.openExternal(
+			event.target instanceof HTMLImageElement ? 
+			event.target.parentElement.getAttribute('href') : 
+			event.target.getAttribute('href')
+		);
 		return false;
 	});
 

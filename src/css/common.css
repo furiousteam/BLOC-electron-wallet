@@ -454,6 +454,7 @@ a.external.button-blue{
 
 /* news */
 #section-news {
+	position: relative;
 	margin-top: 45px;
 }
 #section-news .div-title {
@@ -503,13 +504,15 @@ a.external.button-blue{
 .news-div-content .box .title{
 	font-size: 16px;
 	color: #fff;
-	margin-bottom: 15px;
+	margin-bottom: 7px;
 }
 .news-div-content .box .title img{
 	float: left;
 	margin-right: 10px;
 }
 .news-div-content .text{
+	height: 128px;
+	overflow: hidden;
 	font-size: 15px;
 	color: #fff;
 	opacity: .5;
@@ -540,6 +543,25 @@ body .news-div-content .button-blue{
 	text-shadow: none;
 	text-transform: lowercase;
 	margin: 0;
+}
+.news-loading {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background-color: #040727aa;
+}
+.news-loading span {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	text-align: center;
+	color: #fff;
+}
+.news-loading .fa {
+	margin-bottom: 10px;
 }
 
 
