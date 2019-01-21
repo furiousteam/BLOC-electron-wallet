@@ -86,6 +86,7 @@ let sendMaxAmount;
 let sendOptimize;
 // create wallet
 let overviewButtonCreate;
+let zoomQrCode;
 let walletCreateInputPath;
 // let walletCreateInputFilename;
 let walletCreateInputPassword;
@@ -114,6 +115,7 @@ let txButtonExport;
 // misc
 let thtml;
 // let dmswitch;
+let sswitch;
 let kswitch;
 let iswitch;
 
@@ -121,6 +123,7 @@ function populateElementVars(){
 	// misc
 	thtml = document.documentElement;
 	// dmswitch = document.getElementById('tswitch');
+	sswitch = document.getElementById('sswitch');
 	kswitch = document.getElementById('kswitch');
 	iswitch = document.getElementById('iswitch');
 	firstTab = document.querySelector('.navbar-button');
@@ -183,6 +186,7 @@ function populateElementVars(){
 	sendOptimize = document.getElementById('button-send-optimize');
 	// create wallet
 	overviewButtonCreate = document.getElementById('button-create-create');
+	zoomQrCode = document.getElementById('zoom-qr-code');
 	walletCreateInputPath = document.getElementById('input-create-path');
 	//walletCreateInputFilename = document.getElementById('input-create-name');
 	walletCreateInputPassword = document.getElementById('input-create-password');
@@ -304,7 +308,7 @@ function setDarkMode(dark){
 let keybindingTpl = `<div id="section-shortcuts">
 	<div class="transaction-panel">
 		<div class="div-title clearfix">
-			<img src="../assets/shortcuts-title.png" />
+			<img src="../assets/shortcuts/title.png" />
 			<h2 class="title">Available Keybindings</h2>
 			<div class="subtitle">BLOC wallet</div>
 		</div>
@@ -312,7 +316,7 @@ let keybindingTpl = `<div id="section-shortcuts">
 			<tbody>
 				<tr class="odd">
 					<th scope="col"><kbd>Ctrl</kbd>+<kbd>Home</kbd></th>
-					<td class="fc"><img src="../assets/arrow_left.png" /></td>
+					<td class="fc"><img src="../assets/general/arrow-left-white.png" /></td>
 					<td>Switch to <strong>overview/welcome</strong> screen</td>
 				</tr>
 				<tr class="transparent">
@@ -320,7 +324,7 @@ let keybindingTpl = `<div id="section-shortcuts">
 				</tr>
 				<tr class="even">
 					<th scope="col"><kbd>Ctrl</kbd>+<kbd>Tab</kbd></th>
-					<td><img src="../assets/arrow_left.png" /></td>
+					<td><img src="../assets/general/arrow-left-white.png" /></td>
 					<td>Switch to <strong>next screen</strong></td>
 				</tr>
 				<tr class="transparent">
@@ -328,7 +332,7 @@ let keybindingTpl = `<div id="section-shortcuts">
 				</tr>
 				<tr class="odd">
 					<th scope="col"><kbd>Ctrl</kbd>+<kbd>n</kbd></th>
-					<td><img src="../assets/arrow_left.png" /></td>
+					<td><img src="../assets/general/arrow-left-white.png" /></td>
 					<td>Switch to <strong>Create new wallet</strong> screen</td>
 				</tr>
 				<tr class="transparent">
@@ -336,7 +340,7 @@ let keybindingTpl = `<div id="section-shortcuts">
 				</tr>
 				<tr class="even">
 					<th scope="col"><kbd>Ctrl</kbd>+<kbd>o</kbd></th>
-					<td><img src="../assets/arrow_left.png" /></td>
+					<td><img src="../assets/general/arrow-left-white.png" /></td>
 					<td>Switch to <strong>Open a wallet</strong> screen</td>
 				</tr>
 				<tr class="transparent">
@@ -344,7 +348,7 @@ let keybindingTpl = `<div id="section-shortcuts">
 				</tr>
 				<tr class="odd">
 					<th scope="col"><kbd>Ctrl</kbd>+<kbd>i</kbd></th>
-					<td><img src="../assets/arrow_left.png" /></td>
+					<td><img src="../assets/general/arrow-left-white.png" /></td>
 					<td>Switch to <strong>Import wallet from private keys</strong> screen</td>
 				</tr>
 				<tr class="transparent">
@@ -352,7 +356,7 @@ let keybindingTpl = `<div id="section-shortcuts">
 				</tr>
 				<tr class="even">
 					<th scope="col"><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>i</kbd></th>
-					<td><img src="../assets/arrow_left.png" /></td>
+					<td><img src="../assets/general/arrow-left-white.png" /></td>
 					<td>Switch to <strong>Import wallet from mnemonic seed</strong> screen</td>
 				</tr>
 				<tr class="transparent">
@@ -360,7 +364,7 @@ let keybindingTpl = `<div id="section-shortcuts">
 				</tr>
 				<tr class="odd">
 					<th scope="col"><kbd>Ctrl</kbd>+<kbd>e</kbd></th>
-					<td><img src="../assets/arrow_left.png" /></td>
+					<td><img src="../assets/general/arrow-left-white.png" /></td>
 					<td>Switch to <strong>Export private keys/seed</strong> screen (when wallet opened)</td>
 				</tr>
 				<tr class="transparent">
@@ -368,7 +372,7 @@ let keybindingTpl = `<div id="section-shortcuts">
 				</tr>
 				<tr class="even">
 					<th scope="col"><kbd>Ctrl</kbd>+<kbd>t</kbd></th>
-					<td><img src="../assets/arrow_left.png" /></td>
+					<td><img src="../assets/general/arrow-left-white.png" /></td>
 					<td>Switch to <strong>Transactions</strong> screen (when wallet opened)</td>
 				</tr>
 				<tr class="transparent">
@@ -376,7 +380,7 @@ let keybindingTpl = `<div id="section-shortcuts">
 				</tr>
 				<tr class="odd">
 					<th scope="col"><kbd>Ctrl</kbd>+<kbd>s</kbd></th>
-					<td><img src="../assets/arrow_left.png" /></td>
+					<td><img src="../assets/general/arrow-left-white.png" /></td>
 					<td>Switch to <strong>Send/Transfer</strong> screen (when wallet opened)</td>
 				</tr>
 				<tr class="transparent">
@@ -384,7 +388,7 @@ let keybindingTpl = `<div id="section-shortcuts">
 				</tr>
 				<tr class="even">
 					<th scope="col"><kbd>Ctrl</kbd>+<kbd>x</kbd></th>
-					<td><img src="../assets/arrow_left.png" /></td>
+					<td><img src="../assets/general/arrow-left-white.png" /></td>
 					<td>Close wallet</td>
 				</tr>
 				<tr class="transparent">
@@ -392,7 +396,7 @@ let keybindingTpl = `<div id="section-shortcuts">
 				</tr>
 				<tr class="odd">
 					<th scope="col"><kbd>Ctrl</kbd>+<kbd>/</kbd></th>
-					<td><img src="../assets/arrow_left.png" /></td>
+					<td><img src="../assets/general/arrow-left-white.png" /></td>
 					<td>Display shortcut key information (this dialog)</td>
 				</tr>
 				<tr class="transparent">
@@ -400,7 +404,7 @@ let keybindingTpl = `<div id="section-shortcuts">
 				</tr>
 				<tr class="even">
 					<th scope="col"><kbd>Esc</kbd></th>
-					<td><img src="../assets/arrow_left.png" /></td>
+					<td><img src="../assets/general/arrow-left-white.png" /></td>
 					<td>Close any opened dialog (like this dialog)</td>
 				</tr> 
 			</tbody>
@@ -533,7 +537,7 @@ function showNews(listNews){
 		return `${cont_start}
 			<div class="box">
 				<div class="title clearfix">
-					<img src="../assets/news-item-icon.png" />
+					<img src="../assets/news/item-icon.png" />
 					${title}
 				</div>
 				<div class="text">${content}</div>
@@ -554,7 +558,7 @@ function showNews(listNews){
 	d.classList.add('hidden');
 }
 
-function getNews(cb){
+function getNews(){
 	const log = require('electron-log');
 	try{
 		const news_time = settings.get('news_timestamp', 0);
@@ -594,6 +598,79 @@ function getNews(cb){
     }
 }
 
+function showOverviewBlocPrice(listBlocPrice){
+	listBlocPrice = listBlocPrice || settings.get('bloc_price_json', {});
+
+	if (!listBlocPrice.hasOwnProperty('bloc_price_btc')) return;
+
+	var evolutionWrapper = function(value) {
+		if (value < 0) {
+			return `<span class="fall">(${value}%)</span>`;
+		} else if (value > 0) {
+			return `<span class="rise">(${value}%)</span>`;
+		} else {
+			return `<span class="none">(${value}%)</span>`;
+		}
+	};
+	let d;
+
+	d = document.getElementById('bloc-price-btc');
+	d.innerHTML = listBlocPrice.bloc_price_btc + ' BTC ' + evolutionWrapper(listBlocPrice.bloc_price_btc_evolution);
+	d = document.getElementById('bloc-price-usd');
+	d.innerHTML = '$ ' + listBlocPrice.bloc_price_usd + ' USD ' + evolutionWrapper(listBlocPrice.bloc_price_usd_evolution);
+	d = document.getElementById('trading-volume-btc');
+	d.innerHTML = listBlocPrice['24_hours_volume_btc'] + ' BTC ' + evolutionWrapper(listBlocPrice['24_hours_volume_btc_evolution']);
+	d = document.getElementById('trading-volume-usd');
+	d.innerHTML = '$ ' + listBlocPrice['24_hours_volume_usd'] + ' USD ' + evolutionWrapper(listBlocPrice['24_hours_volume_usd_evolution']);
+	d = document.getElementById('market-cap-btc');
+	d.innerHTML = listBlocPrice.market_cap_btc + ' BTC ' + evolutionWrapper(listBlocPrice.market_cap_btc_evolution);
+	d = document.getElementById('market-cap-usd');
+	d.innerHTML = '$ ' + listBlocPrice.market_cap_usd + ' USD ' + evolutionWrapper(listBlocPrice.market_cap_usd_evolution);
+
+	d = document.getElementById('div-overview-markets-loading');
+	d.classList.add('hidden');
+}
+
+function getBlocPrice() {
+	const log = require('electron-log');
+	try{
+		const bloc_price_time = settings.get('bloc_price_timestamp', 0);
+		let curr_time = new Date().getTime();
+
+		if ((curr_time - bloc_price_time) > (1000 * 60 * 5) || document.getElementById('bloc-price-btc').innerHTML == '0.00000000 BTC <span class="none">(0.00%)</span>') {
+			let d = document.getElementById('div-overview-markets-loading');
+			d.classList.remove('hidden');
+
+			require('https').get(config.blocPriceUpdateUrl, (res) => {
+				var result = '';
+				res.setEncoding('utf8');
+
+				res.on('data', (chunk) => {
+					result += chunk;
+				});
+
+				res.on('end', () => {
+					try{
+						var blocPrice = JSON.parse(result);
+						settings.set('bloc_price_json', blocPrice);
+						settings.set('bloc_price_timestamp', new Date().getTime());
+						showOverviewBlocPrice(blocPrice);
+					}catch(e){
+						log.debug(`Failed to get the BLOC price: ${e.message}`);
+						showOverviewBlocPrice();
+					}
+				});
+			}).on('error', (e) => {
+				log.debug(`Failed to get the BLOC price: ${e.message}`);
+				showOverviewBlocPrice();
+			});
+		}
+    }catch(e){
+        log.error(`Failed to get the BLOC price: ${e.code} - ${e.message}`);
+		showOverviewBlocPrice();
+    }
+}
+
 // section switcher
 function changeSection(sectionId, isSettingRedir) {
 	if(WALLET_OPEN_IN_PROGRESS){
@@ -607,9 +684,14 @@ function changeSection(sectionId, isSettingRedir) {
 
 	// when overview is loaded, show the sidebar nav
 	if(targetSection === 'section-welcome'){
+		sswitch.classList.remove('hidden');
 		iswitch.classList.remove('hidden');
 	}
 
+	// when settings is loaded, show the warning
+	if(targetSection === 'section-settings'){
+		formMessageSet('settings','warning', `If you change the address or port, you will need to restart the wallet`);
+	}
 	// when help is loaded, add the wiki link
 	if(targetSection === 'section-help'){
 		let d = document.getElementById('wiki-link');
@@ -702,14 +784,15 @@ function changeSection(sectionId, isSettingRedir) {
 		d = document.getElementById('instagram-profile-link');
 		d.setAttribute('href', config.instagramProfileUrl);
 
-		getNews(function(items) {
-			
-		});
+		getNews();
+
+		changeSection('section-settings');
 	}
 
 	// when overview is loaded, show the sidebar nav
 	if(targetSection === 'section-overview'){
 		setCssWalletOpened();
+		getBlocPrice();
 	}
 
 	let untoast = false;
@@ -974,6 +1057,8 @@ function handleSettings(){
 	settingsButtonSave.addEventListener('click', function(){
 		formMessageReset();
 		let serviceBinValue = settingsInputServiceBin.value ? settingsInputServiceBin.value.trim() : '';
+		let daemonHostValue = settingsInputDaemonAddress.value ? settingsInputDaemonAddress.value.trim() :'';
+		let daemonPortValue = settingsInputDaemonPort.value ? parseInt(settingsInputDaemonPort.value.trim(),10) : '';
 
 		if(!serviceBinValue.length){
 			formMessageSet('settings','error',`Settings can't be saved, please enter correct values`);
@@ -984,11 +1069,34 @@ function handleSettings(){
 			formMessageSet('settings','error',`Unable to find ${config.walletServiceBinaryFilename}, please enter the correct path`);
 			return false;
 		}
-				
+
+		// validate hostname
+		if(!daemonHostValue.length || !Number.isInteger(daemonPortValue)){
+			formMessageSet('settings','error',`Please enter enter a valid daemon address & port`);
+			return false;
+		}
+
+		let validHost = daemonHostValue === 'localhost' ? true : false;
+		if(require('net').isIP(daemonHostValue)) validHost = true;
+		if(!validHost){
+			let domRe = new RegExp(/([a-z])([a-z0-9]+\.)*[a-z0-9]+\.[a-z.]+/i);
+			if(domRe.test(daemonHostValue)) validHost = true;
+		}
+		if(!validHost){
+			formMessageSet('settings','error',`Invalid daemon/node address!`);
+			return false;
+		}
+
+		// validate port
+		if(daemonPortValue <= 0 || daemonPortValue > 65534){
+			formMessageSet('settings','error',`Invalid daemon/node port number!`);
+			return false;
+		}
+
 		let vals = {
 			service_bin: serviceBinValue,
-			daemon_host: settings.get('daemon_host'),
-			daemon_port: settings.get('daemon_port'),
+			daemon_host: daemonHostValue,
+			daemon_port: daemonPortValue,
 			tray_minimize: settingsInputMinToTray.checked,
 			tray_close: settingsInputCloseToTray.checked
 		};
@@ -1252,7 +1360,7 @@ function handleWalletOpen(){
 		}
 
 		// validate port
-		if(daemonPortValue <=0){
+		if(daemonPortValue <= 0 || daemonPortValue > 65534){
 			formMessageSet('load','error',`Invalid daemon/node port number!`);
 			return false;
 		}
@@ -1832,11 +1940,11 @@ function handleTransactions(){
 			var m = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 			return d.getDate() + ' ' + m[d.getMonth()] + ' ' + d.getFullYear() + ' - ' + d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds();
 		})();
-		let status = item.txType == 'in' ? '<span class="rcv">Received</span><img src="../assets/arrow-down-green.png" />' : '<span class="snt">Sent</span><img src="../assets/arrow-up-red.png" />';
+		let status = item.txType == 'in' ? '<span class="rcv">Received</span><img src="../assets/transactions/arrow-down-green.png" />' : '<span class="snt">Sent</span><img src="../assets/transactions/arrow-up-red.png" />';
 		let hash = item.transactionHash.substring(0, 10) + '...' + item.transactionHash.slice(-10);
 		return `<tr title="click for detail..." class="txlist-item">
 			<td class="tx-date">
-				<img src="../assets/arrow_left.png" /><span>${tDate}</span>
+				<img src="../assets/general/arrow-left-white.png" /><span>${tDate}</span>
 			</td>
 			<td class="tx-ov-info">
 				<span>${hash}</span>
@@ -1867,14 +1975,14 @@ function handleTransactions(){
 		let tx = (el.name === "tr" ? el : el.closest('tr'));
 		let txdate = new Date(tx.dataset.timestamp*1000).toUTCString();
 		let txhashUrl = `<a class="external form-bt button-blue" title="view in block explorer" href="${config.blockExplorerTransactionUrl.replace('[[TX_HASH]]', tx.dataset.rawhash)}">View in block explorer</a>`;
-		let txTypeBtn = tx.dataset.txtype == 'in' ? `<a class="tx-type-btn tx-type-in">Received<img src="../assets/right-blue-arrow.png" /></a>` : `<a class="tx-type-btn tx-type-out">Sent<img src="../assets/arrow-up-red.png" /></a>`;
+		let txTypeBtn = tx.dataset.txtype == 'in' ? `<a class="tx-type-btn tx-type-in">Received<img src="../assets/transactions/right-blue-arrow.png" /></a>` : `<a class="tx-type-btn tx-type-out">Sent<img src="../assets/transactions/arrow-up-red.png" /></a>`;
 		let dialogTpl = `
 				<div class="div-transactions-panel">
 					<div class="clearfix">
 						<button data-target="#tx-dialog" type="button" class="form-bt button-blue dialog-close-default" id="button-transactions-panel-close">Back to transactions</button>
 
 						<div class="div-title clearfix">
-							<img src="../assets/transactions-title.png" />
+							<img src="../assets/transactions/title.png" />
 							<h2 class="title">Transaction Detail</h2>
 							<div class="subtitle">All the information</div>
 						</div>
@@ -1884,43 +1992,43 @@ function handleTransactions(){
 						<table class="custom-table" id="transactions-panel-table">
 							<tbody>
 								<tr>
-									<th scope="col"><img src="../assets/right-blue-arrow.png" /><span class="opa50">Hash</span></th>
+									<th scope="col"><img src="../assets/transactions/right-blue-arrow.png" /><span class="opa50">Hash</span></th>
 									<td><span class="opa50 tctcl" data-cplabel="Tx. hash">${tx.dataset.rawhash}</span></td>
 								</tr>
 								<tr>
-									<th scope="col"><img src="../assets/right-blue-arrow.png" /><span class="opa50">Timestamp</span></th>
+									<th scope="col"><img src="../assets/transactions/right-blue-arrow.png" /><span class="opa50">Timestamp</span></th>
 									<td><span class="opa50 tctcl" data-cplabel="Tx. date">${tx.dataset.timestamp} (${txdate})</span></td>
 								</tr>
 								<tr>
-									<th scope="col"><img src="../assets/right-blue-arrow.png" /><span class="opa50">Block Index</span></th>
+									<th scope="col"><img src="../assets/transactions/right-blue-arrow.png" /><span class="opa50">Block Index</span></th>
 									<td><span class="opa50 tctcl" data-cplabel="Tx. block index">${tx.dataset.blockindex}</span></td>
 								</tr>
 								<tr>
-									<th scope="col"><img src="../assets/right-blue-arrow.png" /><span class="opa50">Is Base?</span></th>
+									<th scope="col"><img src="../assets/transactions/right-blue-arrow.png" /><span class="opa50">Is Base?</span></th>
 									<td><span class="opa50">${tx.dataset.isbase}</span></td>
 								</tr>
 								<tr>
-									<th scope="col"><img src="../assets/right-blue-arrow.png" />Amount</th>
+									<th scope="col"><img src="../assets/transactions/right-blue-arrow.png" />Amount</th>
 									<td data-cplabel="Tx. amount" class="tctcl">${tx.dataset.rawamount} ${config.assetTicker}</td>
 								</tr>
 								<tr>
-									<th scope="col"><img src="../assets/right-blue-arrow.png" />Fee</th>
+									<th scope="col"><img src="../assets/transactions/right-blue-arrow.png" />Fee</th>
 									<td  data-cplabel="Tx. fee" class="tctcl">${tx.dataset.rawfee} ${config.assetTicker}</td>
 								</tr>
 								<tr>
-									<th scope="col"><img src="../assets/right-blue-arrow.png" />Address</th>
+									<th scope="col"><img src="../assets/transactions/right-blue-arrow.png" />Address</th>
 									<td data-cplabel="Address" class="tctcl">${wsession.get('loadedWalletAddress')}</td>
 								</tr>
 								<tr>
-									<th scope="col"><img src="../assets/right-blue-arrow.png" /><span class="opa50">Extra</span></th>
+									<th scope="col"><img src="../assets/transactions/right-blue-arrow.png" /><span class="opa50">Extra</span></th>
 									<td><span class="opa50 tctcl" data-cplabel="Tx. extra">${tx.dataset.extra}</span></td>
 								</tr>
 								<tr>
-									<th scope="col"><img src="../assets/right-blue-arrow.png" /><span class="opa50">Payment Id</span></th>
+									<th scope="col"><img src="../assets/transactions/right-blue-arrow.png" /><span class="opa50">Payment Id</span></th>
 									<td><span class="opa50 tctcl" data-cplabel="Payment ID">${tx.dataset.rawpaymentid}</span></td>
 								</tr>
 								<tr>
-									<th scope="col"><img src="../assets/right-blue-arrow.png" /><span class="opa50">Unlock Time</span></th>
+									<th scope="col"><img src="../assets/transactions/right-blue-arrow.png" /><span class="opa50">Unlock Time</span></th>
 									<td><span class="opa50">${tx.dataset.unlocktime}</span></td>
 								</tr>
 							</tbody>
@@ -2228,6 +2336,24 @@ function initHandlers(){
 		}
 	});
 
+	// overview page zoom qr-code
+	zoomQrCode.addEventListener('click', function(){
+		let generatedQrCode = document.getElementById('qr-gen-img').getAttribute('src');
+		let dialogTpl = `<div class="transaction-panel">
+			<div class="text-center">
+				<h4>The QR code of your address:</h4>
+				<img src="${generatedQrCode}" width="245" />
+			</div>
+			<div class="div-panel-buttons">
+				<button data-target="#ab-dialog" type="button" class="button-gray dialog-close-default">Close</button>
+			</div>
+		`;
+		let dialog = document.getElementById('ab-dialog');
+		if(dialog.hasAttribute('open')) dialog.close();
+		dialog.innerHTML = dialogTpl;
+		dialog.showModal();
+	});
+
 	//genpaymentid+integAddress
 	// overviewPaymentIdGen.addEventListener('click', ()=>{
 		// genPaymentId(false);
@@ -2381,6 +2507,9 @@ function initHandlers(){
 
 	kswitch.addEventListener('click', showKeyBindings);
 
+	sswitch.addEventListener('click', function() {
+		changeSection('section-settings');
+	});
 	iswitch.addEventListener('click', function() {
 		changeSection('section-about');
 	});

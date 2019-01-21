@@ -126,7 +126,9 @@ config.instagramProfileUrl = 'https://www.instagram.com/bloc.money';
 // Block explorer telegram bot url
 config.blockExplorerTelegramBotUrl = 'https://t.me/bloc_explorer_bot';
 
-// news update url
+// API news update url
 config.newsUpdateUrl = 'https://bloc.money/wallet-api/latest-medium-news?limit=6';
+// BLOC price update url
+config.blocPriceUpdateUrl = 'https://bloc.money/wallet-api/coingecko-general-stats';
 
 module.exports = config;
