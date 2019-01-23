@@ -1,0 +1,42 @@
+<template>
+	<section class="section" id="section-exchange">
+		<div id="div-exchanges"></div>
+
+		<div class="div-markets">
+			<div class="img">
+				<img src="../assets/general/markets-icon.png" />
+			</div>
+			<div class="box">
+				<div class="title">BLOC price</div>
+				<div class="price" id="exchange-bloc-price-btc">0.00000000 BTC <span class="none">(0.00%)</span></div>
+				<div class="price" id="exchange-bloc-price-usd">$ 0.00 USD <span class="none">(0.00%)</span></div>
+			</div>
+			<div class="box">
+				<div class="title">24 hours trading volume</div>
+				<div class="price" id="exchange-trading-volume-btc">0.00000000 BTC <span class="none">(0.00%)</span></div>
+				<div class="price" id="exchange-trading-volume-usd">$ 0.00 USD <span class="none">(0.00%)</span></div>
+			</div>
+			<div class="box">
+				<div class="title">Market cap</div>
+				<div class="price" id="exchange-market-cap-btc">0.00000000 BTC <span class="none">(0.00%)</span></div>
+				<div class="price" id="exchange-market-cap-usd">$ 0.00 USD <span class="none">(0.00%)</span></div>
+			</div>
+			<div class="div-overview-markets-loading hidden" id="div-overview-markets-loading">
+				<span><i class="fas fa-cog fa-spin fa-lg"></i><br />Loading...</span>
+			</div>
+		</div>
+
+		<div class="div-section-exchange-chart">
+			<div class="buttons">
+				<button type="button" class="selected" id="chart-one-day">1D</button><button type="button" id="chart-one-week">1W</button><button type="button" id="chart-one-month">1M</button><button type="button" id="chart-one-year">1Y</button>
+			</div>
+			<div class="div-section-exchange-chart-inner">
+				<canvas id="exchange-chart"></canvas>
+			</div>
+		</div>
+
+		<div class="exchange-loading hidden" id="exchange-loading">
+			<span><i class="fas fa-cog fa-spin fa-lg"></i><br />Loading...</span>
+		</div>
+	</section>
+</template>

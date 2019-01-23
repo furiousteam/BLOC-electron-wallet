@@ -128,7 +128,9 @@ config.blockExplorerTelegramBotUrl = 'https://t.me/bloc_explorer_bot';
 
 // API news update url
 config.newsUpdateUrl = 'https://bloc.money/wallet-api/latest-medium-news?limit=6';
-// BLOC price update url
+// BLOC price update url for overview
 config.blocPriceUpdateUrl = 'https://bloc.money/wallet-api/coingecko-general-stats';
+// BLOC exchange url
+config.exchangeUpdateUrl = 'https://bloc.money/wallet-api/exchanges-stats';
 
 module.exports = config;

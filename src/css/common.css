@@ -564,6 +564,117 @@ body .news-div-content .button-blue{
 	margin-bottom: 10px;
 }
 
+/* exchange */
+#section-exchange {
+	padding-top: 20px;
+}
+#section-exchange .div-markets {
+	margin-bottom: 27px;
+}
+#div-exchanges img{
+	border: 1px #555 dashed;
+	margin-bottom: 5px;
+}
+.div-section-exchange-chart {
+	margin-left: 45px;
+	margin-right: 50px;
+	padding: 20px 23px;
+	background: #04072788;
+	border-radius: 5px;
+}
+.div-section-exchange-chart-inner {
+	height: 380px;
+}
+
+.exchanges-div-content{
+	margin-left: 45px;
+	margin-right: 50px;
+	margin-bottom: 27px;
+	display: grid;
+	grid-template-columns: repeat(12, 1fr);
+	grid-auto-rows: 130px;
+	column-gap: 20px;
+}
+.exchanges-div-content upper{
+	text-transform: uppercase;
+}
+.exchanges-div-content .text{
+	font-size: 13px;
+	color: #fff;
+}
+.exchanges-div-content a,
+.exchanges-div-content a:hover{
+	font-size: 13px;
+	margin: 0 !important;
+	padding: 0 !important;
+}
+.exchanges-div-content .box{
+	padding: 15px 23px 20px 23px;
+	background: #04072788;
+	border-radius: 5px;
+}
+.exchanges-div-content .box:nth-child(1){
+	grid-column-start: 1;
+	grid-column-end: 4;
+}
+.exchanges-div-content .box:nth-child(2){
+	grid-column-start: 4;
+	grid-column-end: 7;
+}
+.exchanges-div-content .box:nth-child(3){
+	grid-column-start: 7;
+	grid-column-end: 10;
+}
+.exchanges-div-content .box:nth-child(4){
+	grid-column-start: 10;
+	grid-column-end: 13;
+}
+
+.div-section-exchange-chart .buttons {
+	display: inline-block;
+	border-radius: 5px;
+	margin-bottom: 10px;
+}
+.div-section-exchange-chart .buttons button:first-child {
+	border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+}
+.div-section-exchange-chart .buttons button:last-child {
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+}
+.div-section-exchange-chart .buttons button {
+	background-color: #000927;
+	border: none;
+	padding: 9px 15px;
+	color: #7c7f85;
+	cursor: pointer;
+	outline: none;
+}
+.div-section-exchange-chart .buttons button.selected {
+	background-color: #082052;
+	color: #fff;
+}
+.exchange-loading {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background-color: #040727aa;
+}
+.exchange-loading span {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	text-align: center;
+	color: #fff;
+}
+.exchange-loading .fa {
+	margin-bottom: 10px;
+}
+
 
 /* tools */
 #section-tools {

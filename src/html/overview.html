@@ -88,7 +88,7 @@
 				<div class="price" id="market-cap-usd">$ 0.00 USD <span class="none">(0.00%)</span></div>
 			</div>
 			<div class="div-overview-markets-loading hidden" id="div-overview-markets-loading">
-				<span><i class="fas fa-cog fa-spin fa-lg" id="navbar-icon-sync"></i><br />Loading...</span>
+				<span><i class="fas fa-cog fa-spin fa-lg"></i><br />Loading...</span>
 			</div>
 		</div>
 
@@ -107,9 +107,8 @@
 			if (d) {
 				d.click();
 				
-				//var bss = document.getElementById('button-section-news');
-				//var bss = document.getElementById('sswitch');
-				//bss.click();
+				var bss = document.getElementById('button-section-exchange');
+				bss.click();
 				
 				clearInterval(t);
 			}

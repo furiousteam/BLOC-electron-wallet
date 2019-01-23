@@ -12,6 +12,7 @@ const wsutil = require('./ws_utils');
 const WalletShellSession = require('./ws_session');
 const WalletShellManager = require('./ws_manager');
 const config = require('./ws_config');
+const Chart = require('chart.js');
 
 const wsmanager = new WalletShellManager();
 const wsession = new WalletShellSession();
@@ -118,6 +119,9 @@ let thtml;
 let sswitch;
 let kswitch;
 let iswitch;
+// exchange
+let chartConfig;
+let chartInstance;
 
 function populateElementVars(){
 	// misc
@@ -529,8 +533,10 @@ function showNews(listNews){
 			var m = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 			return d.getDate() + ' ' + m[d.getMonth()] + ' ' + d.getFullYear();
 		})();
+		item.content = item.content.replace('<br />', '|');
 		let title = item.title.substring(0, 50) + (item.title.length > 50 ? '...' : '');
 		let content = item.content.substring(0, 250) + (item.content.length > 250 ? '...' : '');
+		content = content.replace('|', '<br />');
 		let cont_start = (i === 1) || ((i - 1) % 3 == 0) ? '<div class="news-div-content">' : '';
 		let cont_end = (i % 3 == 0) || (i === listNews.length) ? '</div>' : '';
 		i++;
@@ -671,6 +677,271 @@ function getBlocPrice() {
     }
 }
 
+function showExchange(listExchange) {
+	listExchange = listExchange || settings.get('exchange_json', {});
+
+	if (!listExchange.hasOwnProperty('exchanges')) return;
+
+	// exchanges list
+	let i = 1;
+	let domainOnly = function(url) {
+		let domain = url;
+		domain = domain.replace('http://', '');
+		domain = domain.replace('https://', '');
+		domain = domain.split('/')[0];
+		return domain;
+	};
+	let itemExchange = function(item) {
+		let text = `Buy & sell BLOC on <upper>${item.name}</upper>`;
+		let domain = domainOnly(item.link);
+		let cont_start = (i === 1) || ((i - 1) % 4 == 0) ? '<div class="exchanges-div-content">' : '';
+		let cont_end = (i % 4 == 0) || (i === listExchange.exchanges.length) ? '</div>' : '';
+		i++;
+		return `${cont_start}
+			<div class="box">
+				<a href="${item.link}" class="external">
+					<img src="${item.image}" height="60" />
+				</a>
+				<div class="text">${text}</div>
+				<div class="link">
+					<a href="${item.link}" class="external">${domain}</a>
+				</div>
+			</div>
+		${cont_end}`;
+	};
+	let html = '';
+	for (let i = 0; i < listExchange.exchanges.length; i++) {
+		html += itemExchange(listExchange.exchanges[i]);
+	}
+	document.querySelector('#div-exchanges').innerHTML = html;
+
+	// price evolution stats
+	var evolutionWrapper = function(value) {
+		if (value < 0) {
+			return `<span class="fall">(${value}%)</span>`;
+		} else if (value > 0) {
+			return `<span class="rise">(${value}%)</span>`;
+		} else {
+			return `<span class="none">(${value}%)</span>`;
+		}
+	};
+	let d;
+
+	d = document.getElementById('exchange-bloc-price-btc');
+	d.innerHTML = listExchange.coingecko_stats.bloc_price_btc + ' BTC ' + evolutionWrapper(listExchange.coingecko_stats.bloc_price_btc_evolution);
+	d = document.getElementById('exchange-bloc-price-usd');
+	d.innerHTML = '$ ' + listExchange.coingecko_stats.bloc_price_usd + ' USD ' + evolutionWrapper(listExchange.coingecko_stats.bloc_price_usd_evolution);
+	d = document.getElementById('exchange-trading-volume-btc');
+	d.innerHTML = listExchange.coingecko_stats['24_hours_volume_btc'] + ' BTC ' + evolutionWrapper(listExchange.coingecko_stats['24_hours_volume_btc_evolution']);
+	d = document.getElementById('exchange-trading-volume-usd');
+	d.innerHTML = '$ ' + listExchange.coingecko_stats['24_hours_volume_usd'] + ' USD ' + evolutionWrapper(listExchange.coingecko_stats['24_hours_volume_usd_evolution']);
+	d = document.getElementById('exchange-market-cap-btc');
+	d.innerHTML = listExchange.coingecko_stats.market_cap_btc + ' BTC ' + evolutionWrapper(listExchange.coingecko_stats.market_cap_btc_evolution);
+	d = document.getElementById('exchange-market-cap-usd');
+	d.innerHTML = '$ ' + listExchange.coingecko_stats.market_cap_usd + ' USD ' + evolutionWrapper(listExchange.coingecko_stats.market_cap_usd_evolution);
+
+	// price evolution chart
+	// https://www.chartjs.org/samples/latest/scales/linear/step-size.html
+	chartConfig = {
+		type: 'line',
+		data: {
+			labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+			datasets: [{
+				label: 'BLOC price BTC',
+				backgroundColor: wsutil.chartColors.red,
+				borderColor: wsutil.chartColors.red,
+				data: [0, 0, 0, 0, 0, 0, 0],
+				fill: false,
+			}, {
+				label: 'BLOC price USD',
+				fill: false,
+				backgroundColor: wsutil.chartColors.blue,
+				borderColor: wsutil.chartColors.blue,
+				data: [0, 0, 0, 0, 0, 0, 0]
+			}]
+		},
+		options: {
+			maintainAspectRatio: false,
+			responsive: true,
+			title: {
+				display: false,
+				text: ''
+			},
+			tooltips: {
+				mode: 'index',
+				intersect: false
+			},
+			hover: {
+				mode: 'nearest',
+				intersect: true
+			},
+			legend: {
+				labels: {
+					fontColor: wsutil.chartColors.white,
+					fontSize: 14,
+					fontFamily: "'Roboto Condensed', sans-serif"
+				},
+				position: 'bottom'
+			},
+			scales: {
+				xAxes: [{
+					display: true,
+					scaleLabel: {
+						display: false,
+						labelString: 'Month'
+					},
+					ticks: {
+						fontColor: wsutil.chartColors.white,
+						fontSize: 12,
+						fontFamily: "'Roboto Condensed', sans-serif"
+					}
+				}],
+				yAxes: [{
+					display: true,
+					scaleLabel: {
+						display: false,
+						labelString: 'Value'
+					},
+					ticks: {
+						fontColor: wsutil.chartColors.white,
+						fontSize: 12,
+						fontFamily: "'Roboto Condensed', sans-serif",
+						beginAtZero: true
+					}
+				}]
+			}
+		}
+	};
+	var ctx = document.getElementById('exchange-chart');
+	if (typeof chartInstance !== 'undefined') chartInstance.destroy();
+	chartInstance = new Chart(ctx.getContext('2d'), chartConfig);
+
+	// price evolution chart buttons
+	let cod = document.getElementById('chart-one-day');
+	let cow = document.getElementById('chart-one-week');
+	let com = document.getElementById('chart-one-month');
+	let coy = document.getElementById('chart-one-year');
+	function resetButtons() {
+		cod.classList.remove('selected');
+		cow.classList.remove('selected');
+		com.classList.remove('selected');
+		coy.classList.remove('selected');
+	}
+	if (!cod.hasAttribute("data-once")) {
+		cod.setAttribute("data-once", 1);
+		cod.addEventListener('click', function(){
+			resetButtons();
+			cod.classList.add('selected');
+			updateExchangeChart();
+		});
+		cow.addEventListener('click', function(){
+			resetButtons();
+			cow.classList.add('selected');
+			updateExchangeChart();
+		});
+		com.addEventListener('click', function(){
+			resetButtons();
+			com.classList.add('selected');
+			updateExchangeChart();
+		});
+		coy.addEventListener('click', function(){
+			resetButtons();
+			coy.classList.add('selected');
+			updateExchangeChart();
+		});
+		updateExchangeChart();
+	}
+
+	let m = document.getElementById('exchange-loading');
+	m.classList.add('hidden');
+}
+
+function updateExchangeChart() {
+	let listExchange = settings.get('exchange_json');
+
+	// find the id of the selected button
+	const buttons = document.querySelectorAll('.div-section-exchange-chart .buttons button');
+	let id;
+	for (let i = 0; i < buttons.length; i++) {
+		if (buttons[i].classList.contains("selected")) {
+			id = buttons[i].getAttribute('id');
+			break;
+		}
+	}
+	if (typeof id === 'undefined') return;
+
+	// render the chart
+	function createDataset(label, color, key1, key2) {
+		let newDataset = {
+			label: label,
+			backgroundColor: color,
+			borderColor: color,
+			data: [],
+			fill: false
+		};
+		listExchange.charts[key1][key2].forEach(function(value) {
+			newDataset.data.push(value);
+		});
+		chartConfig.data.datasets.push(newDataset);
+	}
+	const sets = ['day', 'week', 'month', 'year'];
+	for (let i = 0; i < sets.length; i++) {
+		if (id == 'chart-one-' + sets[i]) {
+			chartConfig.data.labels = listExchange.charts[sets[i]].labels;
+			chartConfig.data.datasets.splice(0, chartConfig.data.datasets.length);
+			createDataset('BLOC price BTC', wsutil.chartColors.red, sets[i], 'bloc_price_btc');
+			createDataset('BLOC price USD', wsutil.chartColors.blue, sets[i], 'bloc_price_usd');
+			createDataset('Volume 24h BTC', wsutil.chartColors.purple, sets[i], '24_hours_volume_btc');
+			createDataset('Volume 24h USD', wsutil.chartColors.green, sets[i], '24_hours_volume_usd');
+			createDataset('Market cap BTC', wsutil.chartColors.white, sets[i], 'market_cap_btc');
+			createDataset('Market cap USD', wsutil.chartColors.yellow, sets[i], 'market_cap_usd');
+			chartInstance.update();
+		}
+	}
+}
+
+function getExchange() {
+	const log = require('electron-log');
+	try{
+		const exchange_time = settings.get('exchange_timestamp', 0);
+		let curr_time = new Date().getTime();
+
+		// if ((curr_time - exchange_time) > (1000 * 60 * 2) || document.querySelector('#section-exchange .list').innerHTML == '') {
+		if ((curr_time - exchange_time) > (1000 * 30)) {
+			let d = document.getElementById('exchange-loading');
+			d.classList.remove('hidden');
+
+			require('https').get(config.exchangeUpdateUrl, (res) => {
+				var result = '';
+				res.setEncoding('utf8');
+
+				res.on('data', (chunk) => {
+					result += chunk;
+				});
+
+				res.on('end', () => {
+					try{
+						var exchangeList = JSON.parse(result);
+						// console.log('exchangeList', exchangeList);
+						settings.set('exchange_json', exchangeList);
+						settings.set('exchange_timestamp', new Date().getTime());
+						showExchange(exchangeList);
+					}catch(e){
+						log.debug(`Failed to get the exchange: ${e.message}`);
+						showExchange();
+					}
+				});
+			}).on('error', (e) => {
+				log.debug(`Failed to get the exchange: ${e.message}`);
+				showExchange();
+			});
+		}
+    }catch(e){
+        log.error(`Failed to get the exchange: ${e.code} - ${e.message}`);
+		showExchange();
+    }
+}
+
 // section switcher
 function changeSection(sectionId, isSettingRedir) {
 	if(WALLET_OPEN_IN_PROGRESS){
@@ -789,10 +1060,15 @@ function changeSection(sectionId, isSettingRedir) {
 		changeSection('section-settings');
 	}
 
-	// when overview is loaded, show the sidebar nav
+	// when overview is loaded, show the sidebar nav and fetch BLOC stats
 	if(targetSection === 'section-overview'){
 		setCssWalletOpened();
 		getBlocPrice();
+	}
+
+	// when exchange is loaded, fetch and display BLOC stats
+	if(targetSection === 'section-exchange'){
+		getExchange();
 	}
 
 	let untoast = false;
