@@ -570,7 +570,7 @@ function getNews(){
 		const news_time = settings.get('news_timestamp', 0);
 		let curr_time = new Date().getTime();
 
-		if ((curr_time - news_time) > (1000 * 60 * 2) || document.querySelector('#section-news .list').innerHTML == '') {
+		if ((curr_time - news_time) > (1000 * 60 * 5) || document.querySelector('#section-news .list').innerHTML == '') {
 			let d = document.getElementById('news-loading');
 			d.classList.remove('hidden');
 
@@ -745,20 +745,8 @@ function showExchange(listExchange) {
 	chartConfig = {
 		type: 'line',
 		data: {
-			labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-			datasets: [{
-				label: 'BLOC price BTC',
-				backgroundColor: wsutil.chartColors.red,
-				borderColor: wsutil.chartColors.red,
-				data: [0, 0, 0, 0, 0, 0, 0],
-				fill: false,
-			}, {
-				label: 'BLOC price USD',
-				fill: false,
-				backgroundColor: wsutil.chartColors.blue,
-				borderColor: wsutil.chartColors.blue,
-				data: [0, 0, 0, 0, 0, 0, 0]
-			}]
+			labels: [],
+			datasets: []
 		},
 		options: {
 			maintainAspectRatio: false,
@@ -787,26 +775,88 @@ function showExchange(listExchange) {
 				xAxes: [{
 					display: true,
 					scaleLabel: {
-						display: false,
-						labelString: 'Month'
+						display: false
 					},
 					ticks: {
 						fontColor: wsutil.chartColors.white,
 						fontSize: 12,
 						fontFamily: "'Roboto Condensed', sans-serif"
+					},
+					gridLines: {
+						color: "rgba(125, 125, 125, 0.3)",
 					}
 				}],
 				yAxes: [{
-					display: true,
+					id: 'price-btc-y-axis',
 					scaleLabel: {
-						display: false,
-						labelString: 'Value'
+						display: false
 					},
 					ticks: {
-						fontColor: wsutil.chartColors.white,
+						display: false
+					},
+					gridLines: {
+						color: "rgba(125, 125, 125, 0.3)",
+					}
+				}, {
+					id: 'price-usd-y-axis',
+					scaleLabel: {
+						display: false
+					},
+					ticks: {
+						display: false
+					},
+					gridLines: {
+						display: false
+					}
+				}, {
+					id: 'volume-btc-y-axis',
+					scaleLabel: {
+						display: false
+					},
+					ticks: {
+						display: false
+					},
+					gridLines: {
+						display: false
+					}
+				}, {
+					id: 'volume-usd-y-axis',
+					scaleLabel: {
+						display: false
+					},
+					ticks: {
+						display: false
+					},
+					gridLines: {
+						display: false
+					}
+				}, {
+					id: 'cap-btc-y-axis',
+					scaleLabel: {
+						display: false
+					},
+					ticks: {
+						display: false
+					},
+					gridLines: {
+						display: false
+					}
+				}, {
+					id: 'cap-usd-y-axis',
+					type: 'linear',
+					position: 'right',
+					scaleLabel: {
+						display: false
+					},
+					ticks: {
+						/*fontColor: wsutil.chartColors.white,
 						fontSize: 12,
 						fontFamily: "'Roboto Condensed', sans-serif",
-						beginAtZero: true
+						beginAtZero: true,*/
+						display: false
+					},
+					gridLines: {
+						display: false
 					}
 				}]
 			}
@@ -849,8 +899,8 @@ function showExchange(listExchange) {
 			coy.classList.add('selected');
 			updateExchangeChart();
 		});
-		updateExchangeChart();
 	}
+	updateExchangeChart();
 
 	let m = document.getElementById('exchange-loading');
 	m.classList.add('hidden');
@@ -871,13 +921,14 @@ function updateExchangeChart() {
 	if (typeof id === 'undefined') return;
 
 	// render the chart
-	function createDataset(label, color, key1, key2) {
+	function createDataset(label, color, key1, key2, id) {
 		let newDataset = {
 			label: label,
 			backgroundColor: color,
 			borderColor: color,
 			data: [],
-			fill: false
+			fill: false,
+			yAxisID: id
 		};
 		listExchange.charts[key1][key2].forEach(function(value) {
 			newDataset.data.push(value);
@@ -889,12 +940,12 @@ function updateExchangeChart() {
 		if (id == 'chart-one-' + sets[i]) {
 			chartConfig.data.labels = listExchange.charts[sets[i]].labels;
 			chartConfig.data.datasets.splice(0, chartConfig.data.datasets.length);
-			createDataset('BLOC price BTC', wsutil.chartColors.red, sets[i], 'bloc_price_btc');
-			createDataset('BLOC price USD', wsutil.chartColors.blue, sets[i], 'bloc_price_usd');
-			createDataset('Volume 24h BTC', wsutil.chartColors.purple, sets[i], '24_hours_volume_btc');
-			createDataset('Volume 24h USD', wsutil.chartColors.green, sets[i], '24_hours_volume_usd');
-			createDataset('Market cap BTC', wsutil.chartColors.white, sets[i], 'market_cap_btc');
-			createDataset('Market cap USD', wsutil.chartColors.yellow, sets[i], 'market_cap_usd');
+			createDataset('BLOC price BTC', wsutil.chartColors.red, sets[i], 'bloc_price_btc', 'price-btc-y-axis');
+			createDataset('BLOC price USD', wsutil.chartColors.blue, sets[i], 'bloc_price_usd', 'price-usd-y-axis');
+			createDataset('Volume 24h BTC', wsutil.chartColors.purple, sets[i], '24_hours_volume_btc', 'volume-btc-y-axis');
+			createDataset('Volume 24h USD', wsutil.chartColors.green, sets[i], '24_hours_volume_usd', 'volume-usd-y-axis');
+			createDataset('Market cap BTC', wsutil.chartColors.white, sets[i], 'market_cap_btc', 'cap-btc-y-axis');
+			createDataset('Market cap USD', wsutil.chartColors.yellow, sets[i], 'market_cap_usd', 'cap-usd-y-axis');
 			chartInstance.update();
 		}
 	}
@@ -907,7 +958,7 @@ function getExchange() {
 		let curr_time = new Date().getTime();
 
 		// if ((curr_time - exchange_time) > (1000 * 60 * 2) || document.querySelector('#section-exchange .list').innerHTML == '') {
-		if ((curr_time - exchange_time) > (1000 * 30)) {
+		if ((curr_time - exchange_time) > (1000 * 60)) {
 			let d = document.getElementById('exchange-loading');
 			d.classList.remove('hidden');
 
