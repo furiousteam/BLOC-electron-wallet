@@ -132,7 +132,7 @@ function populateElementVars(){
 	iswitch = document.getElementById('iswitch');
 	firstTab = document.querySelector('.navbar-button');
 	// generics
-	genericBrowseButton = document.querySelectorAll('.path-input-button');
+	genericBrowseButton = document.querySelectorAll('.path-input-button:not(.d-opened)');
 	genericFormMessage = document.getElementsByClassName('form-ew');
 	genericEnterableInputs = document.querySelectorAll('.section input:not(.noenter)');
 	genericEditableInputs = document.querySelectorAll('textarea:not([readonly]), input:not([readonly]');
@@ -2733,6 +2733,10 @@ function initHandlers(){
 
 	function handleBrowseButton(args){
 		if(!args) return;
+		let tbtn = document.getElementById(args.targetButton);
+		if (tbtn.classList.contains('d-opened')) return;
+		tbtn.classList.add('d-opened');
+
 		let dialogType = args.dialogType;
 		let targetName = (args.targetName ? args.targetName : 'file');
 		let targetInput = args.targetInput;
@@ -2747,12 +2751,14 @@ function initHandlers(){
 			
 			remote.dialog.showSaveDialog(dialogOpts, (file) => {
 				if (file) targetInput.value = file;
+				tbtn.classList.remove('d-opened');
 			});
 		} else{
 			dialogOpts.properties = [dialogType];
 
 			remote.dialog.showOpenDialog(dialogOpts, (files) => {
 				if (files) targetInput.value = files[0];
+				tbtn.classList.remove('d-opened');
 			});
 		}
 	}
@@ -2763,7 +2769,8 @@ function initHandlers(){
 		let args = {
 			dialogType: genericBrowseButton[i].dataset.selection,
 			targetName: genericBrowseButton[i].dataset.fileobj ? genericBrowseButton[i].dataset.fileobj : '',
-			targetInput: document.getElementById(targetInputId)
+			targetInput: document.getElementById(targetInputId),
+			targetButton: genericBrowseButton[i].id
 		};
 		genericBrowseButton[i].addEventListener('click', handleBrowseButton.bind(this, args));
 	}
