@@ -192,7 +192,12 @@ function updateBalance(data){
 
     if(!data) return;
     let availableBalance = parseFloat(data.availableBalance) || 0;
-    if(availableBalance <= 0){
+	let bUnlocked = wsutil.amountForMortal(availableBalance);
+	let bLocked = wsutil.amountForMortal(data.lockedAmount);
+	let fees = (wsession.get('nodeFee') + config.minimumFee);
+	let maxSendRaw = (bUnlocked - fees);
+
+	if (maxSendRaw <= 0) {
         inputSendAmountField.value = 0;
         inputSendAmountField.setAttribute('max','0.0000');
         inputSendAmountField.setAttribute('disabled','disabled');
@@ -205,9 +210,6 @@ function updateBalance(data){
         if(availableBalance < 0) return;
     }
 
-    //let bUnlocked = (availableBalance / 100).toFixed(2);
-    let bUnlocked = wsutil.amountForMortal(availableBalance);
-    let bLocked = wsutil.amountForMortal(data.lockedAmount);
     balanceAvailableField.innerHTML = bUnlocked;
     balanceLockedField.innerHTML = bLocked;
     wsession.set('walletUnlockedBalance', bUnlocked);
@@ -216,9 +218,8 @@ function updateBalance(data){
     let wintitle = `(${walletFile}) - ${bUnlocked} ${config.assetTicker}`;
     setWinTitle(wintitle);
 
-    if(availableBalance > 0){
-        let fees = (wsession.get('nodeFee')+config.minimumFee);
-        let maxSend = (bUnlocked - fees).toFixed(config.decimalPlaces);
+    if (maxSendRaw > 0) {
+		let maxSend = (maxSendRaw).toFixed(config.decimalPlaces);
         inputSendAmountField.setAttribute('max',maxSend);
         inputSendAmountField.removeAttribute('disabled');
         maxSendFormHelp.innerHTML = `Enter the amount you would like to send`;
@@ -246,11 +247,8 @@ function updateTransactions(result){
     Array.from(blockItems).forEach((block) => {
 		block.transactions.map((tx) => {
             if(tx.amount !== 0 && !wsutil.objInArray(txlistExisting, tx, 'transactionHash')){
-                //tx.amount = (tx.amount/100).toFixed(2);
                 tx.amount = wsutil.amountForMortal(tx.amount);
                 tx.timeStr = new Date(tx.timestamp*1000).toUTCString();
-                //tx.timeStr = tx.timeStr = new Date(tx.timestamp * 1000).toDateString();
-                //tx.fee = (tx.fee/100).toFixed(2);
                 tx.fee = wsutil.amountForMortal(tx.fee);
                 tx.paymentId = tx.paymentId.length ? tx.paymentId : '-';
                 tx.txType = (tx.amount > 0 ? 'in' : 'out');
