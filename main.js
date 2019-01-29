@@ -78,7 +78,7 @@ function createWindow () {
         windowOpts: winOpts,
         templateUrl: path.join(__dirname, "src/html/splash.html"),
         delay: 0, 
-        minVisible: 0,
+        minVisible: IS_DEBUG ? 0 : 3500,
         splashScreenOpts: {
             width: 728,
             height: 446,
