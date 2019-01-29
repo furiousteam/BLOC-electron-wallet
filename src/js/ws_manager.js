@@ -621,21 +621,24 @@ WalletShellManager.prototype._fusionGetMinThreshold = function(threshold, minThr
 
 WalletShellManager.prototype._fusionSendTx = function(threshold, counter){
     let wsm = this;
+	const wtime = ms => new Promise(resolve => setTimeout(resolve, ms));
     return new Promise((resolve, reject) => {
         counter = counter || 0;
         let maxIter = 256;
         if(counter >= maxIter) return resolve(wsm.fusionTxHash); // stop at max iter
-        
-        // keep sending fusion tx till it hit IOOR or reaching max iter 
-        log.debug(`send fusion tx, iteration: ${counter}`);
-        wsm.serviceApi.sendFusionTransaction({threshold: threshold}).then((resp)=> {
-            wsm.fusionTxHash.push(resp.transactionHash);
-            counter +=1;
-            return resolve(wsm._fusionSendTx(threshold, counter).then((resp)=>{
-                return resp;
-            }));
-        }).catch((err)=>{
-            return reject(new Error(err));
+
+		wtime(1200).then(() => {
+			// keep sending fusion tx till it hit IOOR or reaching max iter 
+			log.debug(`send fusion tx, iteration: ${counter}`);
+			wsm.serviceApi.sendFusionTransaction({threshold: threshold}).then((resp)=> {
+				wsm.fusionTxHash.push(resp.transactionHash);
+				counter +=1;
+				return resolve(wsm._fusionSendTx(threshold, counter).then((resp)=>{
+					return resp;
+				}));
+			}).catch((err)=>{
+				return reject(new Error(err));
+			});
         });
     });
 };

@@ -418,7 +418,7 @@ function resetFormState(){
 
 // update ui state, push from svc_main
 function updateUiState(msg){
-	if (msg.type == 'fusionTxCompleted') console.log('updateUiState', msg.type, msg.code, msg.data);
+	// if (msg.type == 'fusionTxCompleted') console.log('updateUiState', msg.type, msg.code, msg.data);
 
     // do something with msg
     switch (msg.type) {

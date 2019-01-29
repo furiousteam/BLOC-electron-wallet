@@ -2227,11 +2227,11 @@ function handleSendTransfer(){
 		wsmanager.optimizeWallet().then( (res) => {
 			//FUSION_IN_PROGRESS = false;
 			// do nothing, just wait
-			console.log(res);
+			// console.log(res);
 		}).catch((err) => {
 			//FUSION_IN_PROGRESS = false;
 			// do nothing, just wait
-			console.log(err.message);
+			// console.log(err.message);
 		});
 		return; // just return, it will notify when its done.
 	});
