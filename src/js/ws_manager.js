@@ -237,23 +237,31 @@ WalletShellManager.prototype._spawnService = function(walletFile, password, onEr
     }catch(e){
         if(onError) onError(ERROR_WALLET_EXEC);
         log.error(`${config.walletServiceBinaryFilename} is not running`);
+        // remove config when failed
+        try {fs.unlinkSync(wsession.get('walletConfig'));} catch (e) { }
         return false;
     }
     
     this.serviceProcess.on('close', () => {
         this.terminateService(true);
         log.debug(`${config.walletServiceBinaryFilename} closed`);
+        // remove config when failed
+        try { fs.unlinkSync(wsession.get('walletConfig')); } catch (e) { }
     });
 
     this.serviceProcess.on('error', (err) => {
         this.terminateService(true);
         wsm.syncWorker.stopSyncWorker();
         log.error(`${config.walletServiceBinaryFilename} error: ${err.message}`);
+        // remove config when failed
+        try { fs.unlinkSync(wsession.get('walletConfig')); } catch (e) { }
     });
 
     if(!this.serviceStatus()){
         if(onError) onError(ERROR_WALLET_EXEC);
         log.error(`${config.walletServiceBinaryFilename} is not running`);
+        // remove config when failed
+        try { fs.unlinkSync(wsession.get('walletConfig')); } catch (e) { }
         return false;
     }
 
@@ -690,10 +698,14 @@ WalletShellManager.prototype.networkStateUpdate = function(state){
         // looks like BLOC-service always stalled after disconnected, just kill & relaunch it
         let pid = this.serviceProcess.pid || null;
         this.terminateService();
+        // remove config
+        try { fs.unlinkSync(wsession.get('walletConfig')); } catch (e) { }
         // wait a bit
         setImmediate(() => {
             if(pid){
                 try{process.kill(pid, 'SIGKILL');}catch(e){}
+                // remove config
+                try { fs.unlinkSync(wsession.get('walletConfig')); } catch (e) { }
             }
             setTimeout(()=>{
                 log.debug(`respawning ${config.walletServiceBinaryFilename}`);

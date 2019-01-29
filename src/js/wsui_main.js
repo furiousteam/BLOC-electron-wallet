@@ -2970,6 +2970,8 @@ function initKeyBindings(){
 
 // spawn event handlers
 document.addEventListener('DOMContentLoaded', () => {
+	// remove any leftover wallet config
+	try { fs.unlinkSync(wsession.get('walletConfig')); } catch (e) { }
 	initHandlers();
 	showInitialPage();
 	initKeyBindings();
@@ -2995,10 +2997,12 @@ ipcRenderer.on('cleanup', () => {
 		setTimeout(function(){
 			dialog.innerHTML = 'Good bye!';
 			wsmanager.terminateService(true);
+			try { fs.unlinkSync(wsession.get('walletConfig')); } catch (e) { }
 			win.close();
 		}, 1200);
 	}).catch((err) => {
 		wsmanager.terminateService(true);
+		try { fs.unlinkSync(wsession.get('walletConfig')); } catch (e) { }
 		win.close();
 		console.log(err);
 	});
