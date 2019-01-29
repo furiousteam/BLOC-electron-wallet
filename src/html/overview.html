@@ -16,6 +16,12 @@
 					<div class="blue">Locked:</div> <span data-cplabel="Locked balance" class="tctcl">0.0000</span> <u>BLOC</u>
 				</div>
 			</div>
+			<div class="overview-optimization">
+				<button tabindex="0" type="button" class="form-bt button-blue" title="When possible, perform wallet input/output optimization by creating fusion transactions. Try this if you get error when sending big transaction." id="button-send-optimize">Optimize</button>
+				<div id="fusion-progress" class="fusion-progress hidden">
+					Wallet optimization<br />in progress<br /><i class="fas fa-cog fa-spin fa-lg"></i>
+				</div>
+			</div>
 		</div>
 
 		<div class="div-overview-connection">
@@ -95,26 +101,25 @@
 		<!--
 		<div class="input-wrap button-wrap">
 			<button tabindex="0" type="button" class="form-bt  button-green" id="button-overview-closewallet">Close Wallet</button>
-			<button tabindex="0" type="button" class="form-bt button-green" title="When possible, perform wallet input/output optimization by creating fusion transactions. Try this if you get error when sending big transaction." id="button-send-optimize">Optimize</button>
 		</div>
 		-->
 		<script>
 		// mimic the click on dialog warning
-		/*
 		var i = 0;
 		let t = setInterval(function() {
 			var d = document.getElementById('dialog-end');
 			if (d) {
 				d.click();
 				
-				var bss = document.getElementById('button-section-exchange');
-				bss.click();
+				//var bss = document.getElementById('button-section-exchange');
+				//bss.click();
 				
 				clearInterval(t);
 			}
 			i++;
 			if (i > 100) clearInterval(t);
 		}, 500);
+		/*
 		*/
 		</script>
     </section>

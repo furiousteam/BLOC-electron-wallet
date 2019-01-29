@@ -642,24 +642,32 @@ WalletShellManager.prototype._fusionSendTx = function(threshold, counter){
 
 WalletShellManager.prototype.optimizeWallet = function(){
     let wsm = this;
+	log.debug('running optimizeWallet');
     return new Promise( (resolve, reject) => {
         wsm.fusionTxHash = [];
         wsm._fusionGetMinThreshold().then((res)=>{
             if(res <= 0 ){
                 wsm.notifyUpdate({
                     type: 'fusionTxCompleted',
-                    data: INFO_FUSION_SKIPPED
+                    data: INFO_FUSION_SKIPPED,
+					code: 0
                 });
+				log.debug('fusion skipped');
+                log.debug(wsm.fusionTxHash);
                 return resolve(INFO_FUSION_SKIPPED);
             }
 
             log.debug(`performing fusion tx, threshold: ${res}`);
+
             return resolve(
                 wsm._fusionSendTx(res).then(() => {
                     wsm.notifyUpdate({
                         type: 'fusionTxCompleted',
-                        data: INFO_FUSION_DONE
+                        data: INFO_FUSION_DONE,
+						code: 1
                     });
+                    log.debug('fusion done');
+                    log.debug(wsm.fusionTxHash);
                     return INFO_FUSION_DONE;
                 }).catch((err)=>{
                     let msg = err.message.toLowerCase();
@@ -671,14 +679,19 @@ WalletShellManager.prototype.optimizeWallet = function(){
                         default:
                             break;
                     }
+                    log.debug(`fusionTx outMsg: ${outMsg}`);
+                    log.debug(wsm.fusionTxHash);
                     wsm.notifyUpdate({
                         type: 'fusionTxCompleted',
-                        data: outMsg
+                        data: outMsg,
+						code: outMsg === INFO_FUSION_SKIPPED ? 0 : 1
                     });
                     return outMsg;
                 })
             );
         }).catch((err)=>{
+            log.debug('fusion error');
+            console.log(err);
             return reject((err.message));
         });
     });

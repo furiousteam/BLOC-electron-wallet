@@ -2113,6 +2113,20 @@ progress.light{
 	margin-top: 65px;
 	color: #fff;
 }
+.overview-optimization {
+	grid-column-start: 4;
+	grid-column-end: 5;
+	margin-top: 85px;
+}
+.fusion-progress {
+	text-align: center;
+	margin-right: 50px;
+	color: #fff;
+}
+.fusion-progress .fa-spin {
+	margin-top: 10px;
+	color: #2798c7;
+}
 .overview-balance .blue {
 	display: inline-block;
 	color: #238bb8;

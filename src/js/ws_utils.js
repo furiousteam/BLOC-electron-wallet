@@ -62,6 +62,34 @@ exports.innerHTML = (parentEl, html) => {
     parentEl.parentNode.replaceChild(newEl, parentEl);
 };
 
+// utility: show toast message
+exports.showToast = (msg, duration, force) => {
+	duration = duration || 1800;
+	force = force || false;
+	let datoaste = document.getElementById('datoaste');
+	let openedDialog = document.querySelector('dialog[open]');
+	if(datoaste && force) {
+		datoaste.parentNode.removeChild(datoaste);
+	}
+	
+	//if(datoaste) return;
+
+	let toastOpts = {
+		style: { main: { 
+			'padding': '4px 6px','left': '3px','right':'auto','border-radius': '0px'
+		}},
+		settings: {duration: duration}
+	};
+
+	if(openedDialog){
+		openedDialog.classList.add('dialog-alerted');
+		setTimeout(()=>{
+			openedDialog.classList.remove('dialog-alerted');
+		},duration+100);
+	}
+	iqwerty.toast.Toast(msg, toastOpts);
+}
+
 /*****  MISC util ****/
 exports.arrShuffle = (arr) => {
     return arr.map((a) => ({sort: Math.random(), value: a}))

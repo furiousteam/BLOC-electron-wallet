@@ -214,6 +214,25 @@ function updateBalance(data){
     balanceLockedField.innerHTML = bLocked;
     wsession.set('walletUnlockedBalance', bUnlocked);
     wsession.set('walletLockedBalance', bLocked);
+
+	// update fusion progress
+    if (true === wsession.get('fusionProgress')) {
+        if (wsession.get('fusionStarted') && parseInt(bLocked, 10) <= 0) {
+			const fusionProgressBar = document.getElementById('fusion-progress');
+            fusionProgressBar.classList.add('hidden');
+			const sendOptimize = document.getElementById('button-send-optimize');
+			sendOptimize.classList.remove('hidden');
+            wsession.set('fusionStarted', false);
+            wsession.set('fusionProgress', false);
+            wsutil.showToast('Optimization completed. You may need to repeat the process until your wallet is fully optimized.', 5000);
+			log.debug(`Wallet optimization completed`);
+        } else {
+            if (parseInt(bLocked, 10) > 0) {
+                wsession.set('fusionStarted', true);
+            }
+        }
+    }
+
     let walletFile = require('path').basename(settings.get('recentWallet'));
     let wintitle = `(${walletFile}) - ${bUnlocked} ${config.assetTicker}`;
     setWinTitle(wintitle);
@@ -399,6 +418,8 @@ function resetFormState(){
 
 // update ui state, push from svc_main
 function updateUiState(msg){
+	if (msg.type == 'fusionTxCompleted') console.log('updateUiState', msg.type, msg.code, msg.data);
+
     // do something with msg
     switch (msg.type) {
         case 'blockUpdated':
@@ -420,15 +441,18 @@ function updateUiState(msg){
             if(msg.data) resetFormState(msg.data);
             break;
         case 'fusionTxCompleted':
-            let notif = 'Optimization completed';
-            let toastOpts = {
-                style: { main: {
-                    'padding': '4px 6px','left': '3px','right':'auto','border-radius': '0px'
-                }},
-                settings: {duration: 5000}
-            };
-            if(msg.data) notif = msg.data;
-            iqwerty.toast.Toast(notif, toastOpts);
+			const fusionProgressBar = document.getElementById('fusion-progress');
+			const sendOptimize = document.getElementById('button-send-optimize');
+			if (msg.code === 0) { // skipped
+                wsession.set('fusionProgress', false);
+                fusionProgressBar.classList.add('hidden');
+				sendOptimize.classList.remove('hidden');
+				wsutil.showToast(msg.data, 5000);
+            } else {
+                wsession.set('fusionProgress', true);
+                fusionProgressBar.classList.remove('hidden');
+				// do nothing, just wait
+            }
             break;
         default:
             console.log('invalid command received by ui', msg);
