@@ -78,6 +78,10 @@ WalletShellManager.prototype._reinitSession = function(){
     });
 };
 
+WalletShellManager.prototype._serviceBinExists = function () {
+    wsutil.isFileExist(this.serviceBin);
+};
+
 // check 
 WalletShellManager.prototype.serviceStatus = function(){
     return  (undefined !== this.serviceProcess && null !== this.serviceProcess);
@@ -509,7 +513,7 @@ WalletShellManager.prototype.importFromKeys = function(walletFile, password, vie
             '--view-key', viewKey, '--spend-key', spendKey,
         ]);
 
-        if(scanHeight > 0) serviceArgs = serviceArgs.concat(['--scan-height',scanHeight]);
+        if(scanHeight >= 0) serviceArgs = serviceArgs.concat(['--scan-height',scanHeight]);
 
         childProcess.execFile(
             wsm.serviceBin, serviceArgs, (error, stdout, stderr) => {
@@ -541,7 +545,7 @@ WalletShellManager.prototype.importFromSeed = function(walletFile, password, mne
             '--mnemonic-seed', mnemonicSeed,
         ]);
 
-        if(scanHeight > 0) serviceArgs = serviceArgs.concat(['--scan-height',scanHeight]);
+        if(scanHeight >= 0) serviceArgs = serviceArgs.concat(['--scan-height',scanHeight]);
 
         childProcess.execFile(
             wsm.serviceBin, serviceArgs, (error, stdout, stderr) => {
