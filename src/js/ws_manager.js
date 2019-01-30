@@ -9,7 +9,7 @@ const WalletShellApi = require('./ws_api');
 const uiupdater = require('./wsui_updater');
 const wsutil = require('./ws_utils');
 const config = require('./ws_config');
-
+const { remote } = require('electron');
 const settings = new Store({name: 'Settings'});
 const wsession = new WalletShellSession();
 
@@ -157,32 +157,31 @@ WalletShellManager.prototype.startService = function(walletFile, password, onErr
         '-w', walletFile,
         '-p', password,
         '--log-level', 0,
-        '--log-file', path.join(remote.app.getPath('temp'), 'ts.log'),
+        '--log-file', path.join(remote.app.getPath('temp'), 'ts.log'), // macOS failed without this
         '--address'
     ]);
 
     let wsm = this;
 
     childProcess.execFile(this.serviceBin, serviceArgs, (error, stdout, stderr) => {
-            if(stderr) log.debug(stderr);
+		if(stderr) log.debug(stderr);
 
-            if(error){
-                log.debug(error.message);
-                onError(`ERROR_WALLET_EXEC: ${error.message}`);
-            }else{
-                log.debug(stdout);
-                if(stdout && stdout.length && stdout.indexOf(config.addressPrefix) !== -1){
-                    let trimmed = stdout.trim();
-                    let walletAddress = trimmed.substring(trimmed.indexOf(config.addressPrefix), trimmed.length);
-                    wsession.set('loadedWalletAddress', walletAddress);
-                    wsm._spawnService(walletFile, password, onError, onSuccess, onDelay);
-                }else{
-                    // just stop here
-                    onError(ERROR_WALLET_PASSWORD);
-                }
-            }
-        }
-    );
+		if(error){
+			log.debug(error.message);
+			onError(`ERROR_WALLET_EXEC: ${error.message}`);
+		}else{
+			log.debug(stdout);
+			if(stdout && stdout.length && stdout.indexOf(config.addressPrefix) !== -1){
+				let trimmed = stdout.trim();
+				let walletAddress = trimmed.substring(trimmed.indexOf(config.addressPrefix), trimmed.length);
+				wsession.set('loadedWalletAddress', walletAddress);
+				wsm._spawnService(walletFile, password, onError, onSuccess, onDelay);
+			}else{
+				// just stop here
+				onError(ERROR_WALLET_PASSWORD);
+			}
+		}
+	});
 };
 
 WalletShellManager.prototype._argsToIni = function(args) {
@@ -483,7 +482,10 @@ WalletShellManager.prototype.createWallet = function(walletFile, password){
     let wsm = this;
     return new Promise((resolve, reject) => {
         let serviceArgs = wsm.serviceArgsDefault.concat(
-            ['-g',  '-w', walletFile,  '-p', password]
+            [
+                '-g', '-w', walletFile, '-p', password,
+                '--log-level', 0, '--log-file', path.join(remote.app.getPath('temp'), 'ts.log')
+            ]
         );
         childProcess.execFile(
             wsm.serviceBin, serviceArgs, (error, stdout, stderr) => {
@@ -513,6 +515,7 @@ WalletShellManager.prototype.importFromKeys = function(walletFile, password, vie
         let serviceArgs = wsm.serviceArgsDefault.concat([
             '-g', '-w', walletFile, '-p', password,
             '--view-key', viewKey, '--spend-key', spendKey,
+            '--log-level', 0, '--log-file', path.join(remote.app.getPath('temp'), 'ts.log')
         ]);
 
         if(scanHeight >= 0) serviceArgs = serviceArgs.concat(['--scan-height',scanHeight]);
@@ -545,6 +548,7 @@ WalletShellManager.prototype.importFromSeed = function(walletFile, password, mne
         let serviceArgs = wsm.serviceArgsDefault.concat([
             '-g', '-w', walletFile, '-p', password,
             '--mnemonic-seed', mnemonicSeed,
+            '--log-level', 0, '--log-file', path.join(remote.app.getPath('temp'), 'ts.log')
         ]);
 
         if(scanHeight >= 0) serviceArgs = serviceArgs.concat(['--scan-height',scanHeight]);
