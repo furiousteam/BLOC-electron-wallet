@@ -149,7 +149,7 @@ class WalletShellApi {
             var backupKeys = {};
             this.getViewKey().then((vkres) => {
                 backupKeys.viewSecretKey = vkres.viewSecretKey;
-                return vkres;
+                return backupKeys;
                 //return Object.assign(vkres);
             }).then(() => {
                 this.getSpendKeys(req_params).then((vsres) => {

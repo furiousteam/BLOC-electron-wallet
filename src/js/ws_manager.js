@@ -157,16 +157,17 @@ WalletShellManager.prototype.startService = function(walletFile, password, onErr
         '-w', walletFile,
         '-p', password,
         '--log-level', 0,
+        '--log-file', path.join(remote.app.getPath('temp'), 'ts.log'),
         '--address'
     ]);
 
     let wsm = this;
 
     childProcess.execFile(this.serviceBin, serviceArgs, (error, stdout, stderr) => {
-            if(stderr) log.error(stderr);
+            if(stderr) log.debug(stderr);
 
             if(error){
-                log.error(error.message);
+                log.debug(error.message);
                 onError(`ERROR_WALLET_EXEC: ${error.message}`);
             }else{
                 log.debug(stdout);
@@ -208,13 +209,14 @@ WalletShellManager.prototype._spawnService = function(walletFile, password, onEr
         '--enable-cors', '*',
         '--daemon-address', this.daemonHost,
         '--daemon-port', this.daemonPort,
-        '--log-level', SERVICE_LOG_LEVEL
+        '--log-level', SERVICE_LOG_LEVEL,
+        '--log-file', logFile
     ]);
 
-    if(SERVICE_LOG_LEVEL > 0){
-        serviceArgs.push('--log-file');
-        serviceArgs.push(logFile);
-    }
+    // if(SERVICE_LOG_LEVEL > 0){
+        // serviceArgs.push('--log-file');
+        // serviceArgs.push(logFile);
+    // }
 
     
     let configFile = wsession.get('walletConfig', null);

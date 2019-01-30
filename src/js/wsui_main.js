@@ -1821,7 +1821,7 @@ function handleWalletCreate(){
 				try{
 					// for now, backup instead of delete, just to be save
 					let ts = new Date().getTime();
-					let backfn = `${finalPath}.bak${ts}`;
+					let backfn = `${finalPath}.bak.${ts}`;
 					fs.renameSync(finalPath, backfn);
 					//fs.unlinkSync(finalPath);
 				}catch(err){
@@ -1894,7 +1894,7 @@ function handleWalletImportKeys(){
 				try{
 					// for now, backup instead of delete, just to be safe
 					let ts = new Date().getTime();
-					let backfn = `${finalPath}.bak${ts}`;
+					let backfn = `${finalPath}.bak.${ts}`;
 					fs.renameSync(finalPath, backfn);
 					//fs.unlinkSync(finalPath);
 				}catch(err){
@@ -1958,7 +1958,7 @@ function handleWalletImportSeed(){
 				try{
 					// for now, backup instead of delete, just to be save
 					let ts = new Date().getTime();
-					let backfn = `${finalPath}.bak${ts}`;
+					let backfn = `${finalPath}.bak.${ts}`;
 					fs.renameSync(finalPath, backfn);
 					//fs.unlinkSync(finalPath);
 				}catch(err){
