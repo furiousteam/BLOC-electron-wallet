@@ -293,7 +293,7 @@ WalletShellManager.prototype._spawnService = function(walletFile, password, onEr
             return true;
         }).catch((err) => {
             log.debug('Connection failed or timedout');
-            if(retry === 10 && onDelay) onDelay(`Still no respond from ${config.walletServiceBinaryFilename}, please wait a few more seconds...`);
+            if(retry === 10 && onDelay) onDelay(`Still no response from ${config.walletServiceBinaryFilename}, please wait a few more seconds...`);
             if(retry >= MAX_CHECK && !TEST_OK){
                 if(wsm.serviceStatus()){
                     wsm.terminateService();
