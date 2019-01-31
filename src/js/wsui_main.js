@@ -928,10 +928,10 @@ function getExchange() {
 	try{
 		const exchange_time = settings.get('exchange_timestamp', 0);
 		let curr_time = new Date().getTime();
+		let d = document.getElementById('exchange-loading');
 
-		// if ((curr_time - exchange_time) > (1000 * 60 * 2) || document.querySelector('#section-exchange .list').innerHTML == '') {
-		if ((curr_time - exchange_time) > (1000 * 60)) {
-			let d = document.getElementById('exchange-loading');
+		if ((curr_time - exchange_time) > (1000 * 60 * 2) || ('loaded' in d.dataset === false)) {
+			d.dataset.loaded = '1';
 			d.classList.remove('hidden');
 
 			require('https').get(config.exchangeUpdateUrl, (res) => {
