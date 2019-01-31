@@ -1746,7 +1746,6 @@ function handleWalletOpen(){
 }
 
 function handleWalletClose(){
-	if (!overviewWalletCloseButton) return;
 	overviewWalletCloseButton.addEventListener('click', (event) => {
 		event.preventDefault();
 		if(!confirm('Are you sure want to close your wallet?')) return;
