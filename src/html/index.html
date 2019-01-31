@@ -34,6 +34,11 @@
 	<body>
 		<!-- Left navbar -->
 		<div class="navbar">
+			<div class="navbar-wallet-version">
+				<img src="../assets/left-menu/wallet-version.png" />
+				<div class="wallet-version">v<span id="walletVersion">0.0</span></div>
+			</div>
+
 			<button tabindex="-1" title="Wallet Overview" class="form-bt navbar-button navbar-need-connected" data-section="section-overview" id="button-section-overview">
 				<img src="../assets/left-menu/wallet.png" data-normal="../assets/left-menu/wallet.png" data-selected="../assets/left-menu/wallet-selected.png" /><span class="navbar-label">Wallet</span>
 			</button>
@@ -66,11 +71,6 @@
 			<button tabindex="-1" title="Backup" class="form-bt navbar-button navbar-need-connected" data-section="section-overview-show" id="button-section-overview-show">
 				<img src="../assets/left-menu/backup.png" data-normal="../assets/left-menu/backup.png" data-selected="../assets/left-menu/backup-selected.png" /><span class="navbar-label">Backup</span>
 			</button>
-
-			<div class="navbar-wallet-version">
-				<img src="../assets/left-menu/wallet-version.png" />
-				<div class="wallet-version">v<span id="walletVersion">0.0</span></div>
-			</div>
 		</div>
 
 		<!-- Main div, here the program will load the different .html files depending on the active tab -->

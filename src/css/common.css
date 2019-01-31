@@ -96,7 +96,6 @@ body.wallet-opened .navbar {
 	width: 190px;
 	height: 100%;
 	background-color: #040727;
-	padding-top: 60px;
 }
 .navbar .navbar-label {
 	vertical-align: top;
@@ -2300,14 +2299,15 @@ progress.light{
 
 
 .navbar-wallet-version {
-	position: fixed;
-	bottom: 27px;
-	left: 36px;
+	padding-left: 30px;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	position: relative;
 }
 .navbar-wallet-version .wallet-version {
 	position: absolute;
-	bottom: 0;
-	left: 27px;
+	top: 37px;
+	left: 58px;
 	font-size: 12px;
 	opacity: .5;
 }
