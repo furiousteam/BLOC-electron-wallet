@@ -194,7 +194,7 @@ function updateBalance(data){
     let availableBalance = parseFloat(data.availableBalance) || 0;
 	let bUnlocked = wsutil.amountForMortal(availableBalance);
 	let bLocked = wsutil.amountForMortal(data.lockedAmount);
-	let fees = (wsession.get('nodeFee') + config.minimumFee);
+	let fees = (wsession.get('nodeFee') + (config.minimumFee / config.decimalDivisor));
 	let maxSendRaw = (bUnlocked - fees);
 
 	if (maxSendRaw <= 0) {
