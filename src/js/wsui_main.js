@@ -115,8 +115,6 @@ let txInputUpdated;
 let txInputNotify;
 let txButtonExport;
 // misc
-let thtml;
-// let dmswitch;
 let sswitch;
 let kswitch;
 let iswitch;
@@ -126,8 +124,6 @@ let chartInstance;
 
 function populateElementVars(){
 	// misc
-	thtml = document.documentElement;
-	// dmswitch = document.getElementById('tswitch');
 	sswitch = document.getElementById('sswitch');
 	kswitch = document.getElementById('kswitch');
 	iswitch = document.getElementById('iswitch');
@@ -260,26 +256,6 @@ function initSectionTemplates(){
 	}
 	// once all elements in place, safe to populate dom vars
 	populateElementVars();
-}
-
-// utility: dark mode
-function setDarkMode(dark){
-	let tmode = dark ? 'dark' : '';
-	if(tmode === 'dark'){
-		thtml.classList.add('dark');
-		dmswitch.setAttribute('title', 'Leave dark mode');
-		dmswitch.firstChild.classList.remove('fa-moon');
-		dmswitch.firstChild.classList.add('fa-sun');
-		settings.set('darkmode',true);
-		dmswitch.firstChild.dataset.icon = 'sun';
-	}else{
-		thtml.classList.remove('dark');
-		dmswitch.setAttribute('title', 'Swith to dark mode');
-		dmswitch.firstChild.classList.remove('fa-sun');
-		dmswitch.firstChild.classList.add('fa-moon');
-		settings.set('darkmode', false);
-		dmswitch.firstChild.dataset.icon = 'moon';
-	}
 }
 
 let keybindingTpl = `<div id="section-shortcuts">
@@ -2580,9 +2556,7 @@ function handleNetworkChange(){
 // event handlers
 function initHandlers(){
 	initSectionTemplates();
-	// let darkStart = settings.get('darkmode', false);
-	// setDarkMode(darkStart);
-	
+
 	// netstatus
 	handleNetworkChange();
 
@@ -2814,11 +2788,6 @@ function initHandlers(){
 		}, false);
 	}
 
-	// dmswitch.addEventListener('click', () => {
-		// let tmode = thtml.classList.contains('dark') ? '' : 'dark';
-		// setDarkMode(tmode);
-	// });
-
 	kswitch.addEventListener('click', showKeyBindings);
 
 	sswitch.addEventListener('click', function() {
@@ -2942,10 +2911,6 @@ function initKeyBindings(){
 		if(!openedDialog) return;
 		return openedDialog.close();
 	});
-
-	// Mousetrap.bind([`ctrl+\\`,`command+\\`], ()=>{
-		// setDarkMode(!document.documentElement.classList.contains('dark'));
-	// });
 }
 
 // spawn event handlers

@@ -35,8 +35,7 @@ const DEFAULT_SETTINGS = {
     pubnodes_data: config.remoteNodeListFallback,
     pubnodes_custom: ['127.0.0.1:2086'],
     tray_minimize: false,
-    tray_close: false,
-    darkmode: true
+    tray_close: false
 };
 
 const DEFAULT_SIZE = {
@@ -59,9 +58,6 @@ let tray;
 
 function createWindow () {
     // Create the browser window.
-    let darkmode = settings.get('darkmode', true);
-    let bgColor = darkmode ? '#000000' : '#02853E';
-
     const winOpts = {
         title: `${config.appName} ${config.appDescription}`,
         icon: path.join(__dirname,'src/assets/walletshell_icon.png'),
@@ -71,7 +67,7 @@ function createWindow () {
         minWidth: DEFAULT_SIZE.width,
         minHeight: DEFAULT_SIZE.height,
         show: false,
-        backgroundColor: bgColor,
+        backgroundColor: '#02853E',
         center: true,
     };
 
