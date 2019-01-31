@@ -2087,7 +2087,7 @@ function handleSendTransfer(){
 		}
 
 		let total = 0;
-		let amount = sendInputAmount.value ?  parseFloat(sendInputAmount.value) : 0;
+		let amount = sendInputAmount.value ? parseFloat(sendInputAmount.value) : 0;
 		if (amount <= 0) {
 			formMessageSet('send','error','Sorry, invalid amount');
 			return;
@@ -2099,11 +2099,12 @@ function handleSendTransfer(){
 		}
 
 		total += amount;
+		total = parseFloat(total.toFixed(config.decimalPlaces));
 		let txAmount = wsutil.amountForImmortal(amount); // final transfer amount
 
 		let fee = sendInputFee.value ? parseFloat(sendInputFee.value) : 0;
 		let minFee = config.minimumFee / config.decimalDivisor;
-		if (fee < minFee) {
+		if (precision(fee) < minFee) {
 			formMessageSet('send','error',`Fee can't be less than ${wsutil.amountForMortal(minFee)}`);
 			return;
 		}
@@ -2114,10 +2115,12 @@ function handleSendTransfer(){
 		}
 
 		total += fee;
+		total = parseFloat(total.toFixed(config.decimalPlaces));
 		let txFee = wsutil.amountForImmortal(fee);
 
 		let nodeFee = wsession.get('nodeFee') || 0; // nodeFee value is already for mortal
 		total += nodeFee;
+		total = parseFloat(total.toFixed(config.decimalPlaces));
 		let txTotal = wsutil.amountForMortal(total);
 
 		const availableBalance = wsession.get('walletUnlockedBalance') || (0).toFixed(config.decimalPlaces);
