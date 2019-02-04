@@ -1493,6 +1493,149 @@ input.path-input-button{
 	opacity: .5;
 }
 
+/** ADDRESS BOOK **/
+#section-addressbook {
+	margin-top: 45px;
+}
+#section-addressbook .input-wrap {
+	margin-right: 75px;
+	margin-left: 75px;
+}
+#section-addressbook .div-title {
+	margin-left: 65px;
+	margin-bottom: 45px;
+}
+#section-addressbook .div-title img {
+	float: left;
+	width: 61px;
+	margin-right: 8px;
+}
+#section-addressbook .div-title .title {
+	font-size: 25px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+#section-addressbook .div-title .subtitle {
+	font-size: 14px;
+	opacity: .5;
+}
+.div-addressbook-outer {
+	height: 410px;
+	margin-right: 75px;
+	margin-left: 75px;
+	margin-bottom: 45px;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+.div-addressbook-outer::-webkit-scrollbar-thumb{
+	max-height: 10px;
+	border-radius: 5px;
+	background: -webkit-linear-gradient(top, #7ac0dd 0%,#517fa0 100%);
+}
+.div-addressbook-outer::-webkit-scrollbar{
+	border-radius: 5px;
+	width: 10px;
+	height: 10px;
+	background: #040727;
+}
+.div-addressbook-items {
+	display: grid;
+	grid-template-columns: repeat(12, 1fr);
+	grid-gap: 40px;
+	grid-auto-rows: 205px;
+}
+.div-addressbook-items .item {
+	margin-bottom: 40px;
+}
+.div-addressbook-items .item:nth-child(1){
+	grid-column-start: 1;
+	grid-column-end: 4;
+}
+.div-addressbook-items .item:nth-child(2){
+	grid-column-start: 4;
+	grid-column-end: 7;
+}
+.div-addressbook-items .item:nth-child(3){
+	grid-column-start: 7;
+	grid-column-end: 10;
+}
+.div-addressbook-items .item:nth-child(4){
+	grid-column-start: 10;
+	grid-column-end: 13;
+}
+.div-addressbook-items .user {
+	font-size: 15px;
+	color: #fff;
+	margin-bottom: 15px;
+	padding-left: 30px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	background-image: url(../assets/addressbook/user-icon.png);
+	background-position: left center;
+	background-repeat: no-repeat;
+}
+.div-addressbook-items .address {
+	font-size: 15px;
+	color: #fff;
+	opacity: .5;
+	margin-bottom: 12px;
+	word-wrap: break-word;
+}
+.div-addressbook-items .actions select {
+	font-size: 14px;
+	color: #fff;
+	background-color: #021136;
+	border: none;
+	border-radius: 4px;
+	padding: 9px 22px;
+	outline: 0;
+}
+.div-addressbook-items .actions select:focus {
+	outline: 0;
+	border-radius: 4px;
+	border: 1px solid #5A97BA;
+}
+.div-addressbook-items .actions select option {
+	border: 1px solid #5A97BA;
+}
+.div-addressbook-form-outer {
+	padding: 20px;
+	background: #021136;
+	border-radius: 5px;
+	margin-right: 75px;
+	margin-left: 75px;
+}
+.div-addressbook-form {
+	display: grid;
+	grid-template-columns: repeat(24, 1fr);
+	grid-gap: 12px;
+}
+.div-addressbook-form input {
+	margin: 0;
+	padding: 14px 20px;
+	border: none;
+	background-color: #1c294a;
+	color: #7d818f;
+	font-size: 14px;
+}
+.div-addressbook-form button {
+	text-transform: inherit;
+	font-weight: 400;
+	font-size: 14px;
+}
+.div-addressbook-form .wallet {
+	grid-column-start: 1;
+	grid-column-end: 16;
+}
+.div-addressbook-form .label {
+	grid-column-start: 16;
+	grid-column-end: 22;
+}
+.div-addressbook-form .submit {
+	grid-column-start: 22;
+	grid-column-end: 25;
+}
+
 /** TRX **/
 #section-transactions {
 	margin-top: 45px;

@@ -1,0 +1,279 @@
+[1mdiff --git a/src/css/common.css b/src/css/common.css[m
+[1mindex 93dd070..b919e59 100644[m
+[1m--- a/src/css/common.css[m
+[1m+++ b/src/css/common.css[m
+[36m@@ -1493,6 +1493,82 @@[m [minput.path-input-button{[m
+ 	opacity: .5;[m
+ }[m
+ [m
+[32m+[m[32m/** ADDRESS BOOK **/[m
+[32m+[m[32m#section-addressbook {[m
+[32m+[m	[32mmargin-top: 45px;[m
+[32m+[m[32m}[m
+[32m+[m[32m#section-addressbook .div-title {[m
+[32m+[m	[32mmargin-left: 65px;[m
+[32m+[m	[32mmargin-bottom: 45px;[m
+[32m+[m[32m}[m
+[32m+[m[32m#section-addressbook .div-title img {[m
+[32m+[m	[32mfloat: left;[m
+[32m+[m	[32mwidth: 61px;[m
+[32m+[m	[32mmargin-right: 8px;[m
+[32m+[m[32m}[m
+[32m+[m[32m#section-addressbook .div-title .title {[m
+[32m+[m	[32mfont-size: 25px;[m
+[32m+[m	[32mmargin-top: 5px;[m
+[32m+[m	[32mmargin-bottom: 5px;[m
+[32m+[m[32m}[m
+[32m+[m[32m#section-addressbook .div-title .subtitle {[m
+[32m+[m	[32mfont-size: 14px;[m
+[32m+[m	[32mopacity: .5;[m
+[32m+[m[32m}[m
+[32m+[m[32m.div-addressbook-items {[m
+[32m+[m	[32mdisplay: grid;[m
+[32m+[m	[32mgrid-template-columns: repeat(12, 1fr);[m
+[32m+[m	[32mgrid-gap: 40px;[m
+[32m+[m	[32mgrid-auto-rows: 205px;[m
+[32m+[m	[32mmargin-right: 75px;[m
+[32m+[m	[32mmargin-left: 75px;[m
+[32m+[m[32m}[m
+[32m+[m[32m.div-addressbook-items .item {[m
+[32m+[m	[32mmargin-bottom: 40px;[m
+[32m+[m[32m}[m
+[32m+[m[32m.div-addressbook-items .item:nth-child(1){[m
+[32m+[m	[32mgrid-column-start: 1;[m
+[32m+[m	[32mgrid-column-end: 4;[m
+[32m+[m[32m}[m
+[32m+[m[32m.div-addressbook-items .item:nth-child(2){[m
+[32m+[m	[32mgrid-column-start: 4;[m
+[32m+[m	[32mgrid-column-end: 7;[m
+[32m+[m[32m}[m
+[32m+[m[32m.div-addressbook-items .item:nth-child(3){[m
+[32m+[m	[32mgrid-column-start: 7;[m
+[32m+[m	[32mgrid-column-end: 10;[m
+[32m+[m[32m}[m
+[32m+[m[32m.div-addressbook-items .item:nth-child(4){[m
+[32m+[m	[32mgrid-column-start: 10;[m
+[32m+[m	[32mgrid-column-end: 13;[m
+[32m+[m[32m}[m
+[32m+[m[32m.div-addressbook-items .user {[m
+[32m+[m	[32mfont-size: 15px;[m
+[32m+[m	[32mcolor: #fff;[m
+[32m+[m	[32mmargin-bottom: 15px;[m
+[32m+[m	[32mpadding-left: 30px;[m
+[32m+[m	[32mpadding-top: 2px;[m
+[32m+[m	[32mpadding-bottom: 2px;[m
+[32m+[m	[32mbackground-image: url(../assets/addressbook/user-icon.png);[m
+[32m+[m	[32mbackground-position: left center;[m
+[32m+[m	[32mbackground-repeat: no-repeat;[m
+[32m+[m[32m}[m
+[32m+[m[32m.div-addressbook-items .address {[m
+[32m+[m	[32mfont-size: 15px;[m
+[32m+[m	[32mcolor: #fff;[m
+[32m+[m	[32mopacity: .5;[m
+[32m+[m	[32mmargin-bottom: 12px;[m
+[32m+[m[32m}[m
+[32m+[m[32m.div-addressbook-items .actions select {[m
+[32m+[m	[32mfont-size: 14px;[m
+[32m+[m	[32mcolor: #fff;[m
+[32m+[m	[32mbackground-color: #021136;[m
+[32m+[m	[32mborder: none;[m
+[32m+[m	[32mborder-radius: 4px;[m
+[32m+[m	[32moutline: solid solid #fafafa;[m
+[32m+[m	[32mpadding: 9px 22px;[m
+[32m+[m[32m}[m
+[32m+[m
+ /** TRX **/[m
+ #section-transactions {[m
+ 	margin-top: 45px;[m
+[1mdiff --git a/src/html/address_book.html b/src/html/address_book.html[m
+[1mindex 9c1c203..c6c0f81 100644[m
+[1m--- a/src/html/address_book.html[m
+[1m+++ b/src/html/address_book.html[m
+[36m@@ -1,4 +1,82 @@[m
+ <template>[m
+[32m+[m	[32m<section class="section" id="section-addressbook">[m
+[32m+[m		[32m<div class="div-title clearfix">[m
+[32m+[m			[32m<img src="../assets/addressbook/title.png" />[m
+[32m+[m			[32m<h2 class="title">Address book</h2>[m
+[32m+[m			[32m<div class="subtitle">Contacts</div>[m
+[32m+[m		[32m</div>[m
+[32m+[m
+[32m+[m		[32m<div class="div-addressbook-items">[m
+[32m+[m			[32m<div class="item">[m
+[32m+[m				[32m<div class="user">John Doe</div>[m
+[32m+[m				[32m<div class="address">[m
+[32m+[m					[32m﻿abLoc8AeKJ4V6ABLWaXwoCXg[m
+[32m+[m					[32mKUVBa4oLHsFX9chDwNohNSxg[m
+[32m+[m					[32mNZSumQygSA4JNS9vYee42u9g[m
+[32m+[m					[32mcrogbjkDfXhCwz18y693NC34Ygg[m
+[32m+[m				[32m</div>[m
+[32m+[m				[32m<div class="actions">[m
+[32m+[m					[32m<select>[m
+[32m+[m						[32m<option>Select an action</option>[m
+[32m+[m						[32m<option value="edit">Edit</option>[m
+[32m+[m						[32m<option value="delete">Delete</option>[m
+[32m+[m					[32m</select>[m
+[32m+[m				[32m</div>[m
+[32m+[m			[32m</div>[m
+[32m+[m			[32m<div class="item">[m
+[32m+[m				[32m<div class="user">John Doe</div>[m
+[32m+[m				[32m<div class="address">[m
+[32m+[m					[32m﻿abLoc8AeKJ4V6ABLWaXwoCXg[m
+[32m+[m					[32mKUVBa4oLHsFX9chDwNohNSxg[m
+[32m+[m					[32mNZSumQygSA4JNS9vYee42u9g[m
+[32m+[m					[32mcrogbjkDfXhCwz18y693NC34Ygg[m
+[32m+[m				[32m</div>[m
+[32m+[m				[32m<div class="actions">[m
+[32m+[m					[32m<select>[m
+[32m+[m						[32m<option>Select an action</option>[m
+[32m+[m						[32m<option value="edit">Edit</option>[m
+[32m+[m						[32m<option value="delete">Delete</option>[m
+[32m+[m					[32m</select>[m
+[32m+[m				[32m</div>[m
+[32m+[m			[32m</div>[m
+[32m+[m			[32m<div class="item">[m
+[32m+[m				[32m<div class="user">John Doe</div>[m
+[32m+[m				[32m<div class="address">[m
+[32m+[m					[32m﻿abLoc8AeKJ4V6ABLWaXwoCXg[m
+[32m+[m					[32mKUVBa4oLHsFX9chDwNohNSxg[m
+[32m+[m					[32mNZSumQygSA4JNS9vYee42u9g[m
+[32m+[m					[32mcrogbjkDfXhCwz18y693NC34Ygg[m
+[32m+[m				[32m</div>[m
+[32m+[m				[32m<div class="actions">[m
+[32m+[m					[32m<select>[m
+[32m+[m						[32m<option>Select an action</option>[m
+[32m+[m						[32m<option value="edit">Edit</option>[m
+[32m+[m						[32m<option value="delete">Delete</option>[m
+[32m+[m					[32m</select>[m
+[32m+[m				[32m</div>[m
+[32m+[m			[32m</div>[m
+[32m+[m			[32m<div class="item">[m
+[32m+[m				[32m<div class="user">John Doe</div>[m
+[32m+[m				[32m<div class="address">[m
+[32m+[m					[32m﻿abLoc8AeKJ4V6ABLWaXwoCXg[m
+[32m+[m					[32mKUVBa4oLHsFX9chDwNohNSxg[m
+[32m+[m					[32mNZSumQygSA4JNS9vYee42u9g[m
+[32m+[m					[32mcrogbjkDfXhCwz18y693NC34Ygg[m
+[32m+[m				[32m</div>[m
+[32m+[m				[32m<div class="actions">[m
+[32m+[m					[32m<select>[m
+[32m+[m						[32m<option>Select an action</option>[m
+[32m+[m						[32m<option value="edit">Edit</option>[m
+[32m+[m						[32m<option value="delete">Delete</option>[m
+[32m+[m					[32m</select>[m
+[32m+[m				[32m</div>[m
+[32m+[m			[32m</div>[m
+[32m+[m		[32m</div>[m
+[32m+[m[32m    </section>[m
+[32m+[m[32m</template>[m
+[32m+[m
+[32m+[m[32m<!--[m
+[32m+[m[32m<template>[m
+         <section class="section" id="section-addressbook">[m
+             <div class="section-contents">[m
+                 <div class="div-title">[m
+[36m@@ -36,7 +114,6 @@[m
+                     </div>[m
+                 </div>[m
+ [m
+[31m-                <!-- <div class="input-wrap button-wrap" style="margin-top: 0;"> -->[m
+                 <div class="action-buttons">[m
+                     <button type="button" class="form-bt button-green" data-section="section-addressbook-add">Add New Entry</button>[m
+                     <button type="button" class="form-bt button-red" data-section="section-overview">Back</button>[m
+[36m@@ -44,4 +121,5 @@[m
+ [m
+         </div>[m
+     </section>[m
+[31m-</template>[m
+\ No newline at end of file[m
+[32m+[m[32m</template>[m
+[32m+[m[32m-->[m
+\ No newline at end of file[m
+[1mdiff --git a/src/html/index.html b/src/html/index.html[m
+[1mindex 456193d..63729b8 100644[m
+[1m--- a/src/html/index.html[m
+[1m+++ b/src/html/index.html[m
+[36m@@ -26,7 +26,6 @@[m
+ 		<link rel="import" href="./overview_import_seed.html">[m
+ 		<link rel="import" href="./overview_create.html">[m
+ 		<link rel="import" href="./address_book.html">[m
+[31m-		<link rel="import" href="./address_book_add.html">[m
+ 		<link rel="import" href="./block_explorer.html">[m
+ 	</head>[m
+ [m
+[36m@@ -47,17 +46,15 @@[m
+ 			<button tabindex="-1" title="Transactions" class="form-bt navbar-button navbar-need-connected" data-section="section-transactions" id="button-section-transactions">[m
+ 				<img src="../assets/left-menu/transactions.png" data-normal="../assets/left-menu/transactions.png" data-selected="../assets/left-menu/transactions-selected.png" /><span class="navbar-label">Transactions</span>[m
+ 			</button>[m
+[32m+[m			[32m<button tabindex="-1" title="Address Book" type="button" class="form-bt navbar-button" data-section="section-addressbook" id="button-section-addressbook">[m
+[32m+[m				[32m<img src="../assets/left-menu/address-book.png" data-normal="../assets/left-menu/address-book.png" data-selected="../assets/left-menu/address-book-selected.png" /><span class="navbar-label">Address Book</span>[m
+[32m+[m			[32m</button>[m
+ 			<button tabindex="-1" title="Block explorer" class="form-bt navbar-button navbar-need-connected" data-section="section-block-explorer" id="button-section-block-explorer">[m
+ 				<img src="../assets/left-menu/block-explorer.png" data-normal="../assets/left-menu/block-explorer.png" data-selected="../assets/left-menu/block-explorer-selected.png" /><span class="navbar-label">Block explorer</span>[m
+ 			</button>[m
+ 			<button tabindex="-1" title="Tools" class="form-bt navbar-button navbar-need-connected" data-section="section-tools" id="button-section-tools">[m
+ 				<img src="../assets/left-menu/tools.png" data-normal="../assets/left-menu/tools.png" data-selected="../assets/left-menu/tools-selected.png" /><span class="navbar-label">Tools</span>[m
+ 			</button>[m
+[31m-			<!--[m
+[31m-			<button tabindex="-1" title="Address Book" type="button" class="form-bt navbar-button" data-section="section-addressbook" id="button-section-addressbook">[m
+[31m-				<img src="../assets/left-menu/address-book.png" data-normal="../assets/left-menu/address-book.png" data-selected="../assets/left-menu/address-book-selected.png" /><span class="navbar-label">Address Book</span>[m
+[31m-			</button>[m
+[31m-			-->[m
+ 			<button tabindex="-1" title="News" class="form-bt navbar-button navbar-need-connected" data-section="section-news" id="button-section-news">[m
+ 				<img src="../assets/left-menu/news.png" data-normal="../assets/left-menu/news.png" data-selected="../assets/left-menu/news-selected.png" /><span class="navbar-label">News</span>[m
+ 			</button>[m
+[1mdiff --git a/src/html/overview.html b/src/html/overview.html[m
+[1mindex 05b5c9a..c424b58 100644[m
+[1m--- a/src/html/overview.html[m
+[1m+++ b/src/html/overview.html[m
+[36m@@ -105,13 +105,13 @@[m
+ 		/*[m
+ 		var i = 0;[m
+ 		let t = setInterval(function() {[m
+[32m+[m			[32mvar bss = document.getElementById('button-section-addressbook');[m
+[32m+[m			[32mbss.click();[m
+[32m+[m
+ 			var d = document.getElementById('dialog-end');[m
+ 			if (d) {[m
+ 				d.click();[m
+ 				[m
+[31m-				//var bss = document.getElementById('button-section-exchange');[m
+[31m-				//bss.click();[m
+[31m-				[m
+ 				clearInterval(t);[m
+ 			}[m
+ 			i++;[m
+[1mdiff --git a/src/html/welcome.html b/src/html/welcome.html[m
+[1mindex 12d9114..10c4b9a 100644[m
+[1m--- a/src/html/welcome.html[m
+[1m+++ b/src/html/welcome.html[m
+[36m@@ -31,15 +31,16 @@[m
+ 		*/[m
+ [m
+ 		// mimic the wallet opening[m
+[31m-		/*[m
+ 		setTimeout(function() {[m
+ 			var a = document.getElementById('button-welcome-openwallet');[m
+ 			a.click();[m
+ 			var b = document.getElementById('input-load-password');[m
+ 			b.value = '25000 blocs';[m
+[32m+[m			[32mb.value = 'steve1mainnet';[m
+ 			var c = document.getElementById('button-load-load');[m
+ 			c.click();[m
+ 		}, 200);[m
+[32m+[m		[32m/*[m
+ 		*/[m
+ 		</script>[m
+ 	</section>[m
+[1mdiff --git a/src/js/wsui_main.js b/src/js/wsui_main.js[m
+[1mindex 9fee117..29163f4 100644[m
+[1m--- a/src/js/wsui_main.js[m
+[1m+++ b/src/js/wsui_main.js[m
+[36m@@ -1386,6 +1386,7 @@[m [mfunction handleSettings(){[m
+ }[m
+ [m
+ function handleAddressBook(){[m
+[32m+[m	[32mreturn;[m
+ 	function listAddressBook(force){[m
+ 		force = force || false;[m
+ 		insertSampleAddresses();[m

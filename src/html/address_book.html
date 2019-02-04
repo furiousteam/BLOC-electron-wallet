@@ -1,47 +1,98 @@
 <template>
-        <section class="section" id="section-addressbook">
-            <div class="section-contents">
-                <div class="div-title">
-                    <h2 class="title">Address Book</h2>
-                </div>
-                <div class="div-addressbook-input default-inputs">
-                    <div class="scroll-list-wrap addressbook-list list-tables">
-                        <div id="addressbooks">
-                            <input tabindex="0" class="text-block search noenter" placeholder="Search by name, wallet address or payment id" />
-                            <div class="address-table-wrapper">
-                            <table class="custom-table addressbook-table" id="addressbook-table">
-                            <thead>
-                                <tr>
-                                    <th class="sort" data-sort="addressName">Name</th>
-                                    <th class="sort" data-sort="addressWallet">Wallet Address</th>
-                                    <th class="sort" data-sort="addressPaymentId">Payment ID</th>
-                                </tr>
-                            </thead>
-                              <tbody class="list">
-                                <tr title="click for detail..." class="addressbook-item" 
-                                    data-hash="fake-hash"
-                                     data-nameval="x" 
-                                     data-walletval="x" 
-                                    data-paymentidval="x"
-                                    data-qrcodeval="x">
-                                  <td class="addressName"></td>
-                                  <td class="addressWallet"></td>
-                                  <td class="addressPaymentId"></td>
-                                </tr>
-                              </tbody>
-                            </table>
-                            </div>
-                            <ul class="pagination"></ul>
-                          </div>
-                    </div>
-                </div>
+	<section class="section" id="section-addressbook">
+		<div class="div-title clearfix">
+			<img src="../assets/addressbook/title.png" />
+			<h2 class="title">Address book</h2>
+			<div class="subtitle">Contacts</div>
+		</div>
 
-                <!-- <div class="input-wrap button-wrap" style="margin-top: 0;"> -->
-                <div class="action-buttons">
-                    <button type="button" class="form-bt button-green" data-section="section-addressbook-add">Add New Entry</button>
-                    <button type="button" class="form-bt button-red" data-section="section-overview">Back</button>
-                </div>
-
-        </div>
+		<div class="div-addressbook-outer" id="addressbook-container">
+			<!--
+			<div class="div-addressbook-items">
+				<div class="item div-addressbook-item">
+					<div class="user">John Doe</div>
+					<div class="address">
+						﻿abLoc8AeKJ4V6ABLWaXwoCXg
+						KUVBa4oLHsFX9chDwNohNSxg
+						NZSumQygSA4JNS9vYee42u9g
+						crogbjkDfXhCwz18y693NC34Ygg
+					</div>
+					<div class="actions">
+						<select>
+							<option>Select an action</option>
+							<option value="edit">Edit</option>
+							<option value="delete">Delete</option>
+						</select>
+					</div>
+				</div>
+				<div class="item div-addressbook-item">
+					<div class="user">John Doe</div>
+					<div class="address">
+						﻿abLoc8AeKJ4V6ABLWaXwoCXg
+						KUVBa4oLHsFX9chDwNohNSxg
+						NZSumQygSA4JNS9vYee42u9g
+						crogbjkDfXhCwz18y693NC34Ygg
+					</div>
+					<div class="actions">
+						<select>
+							<option>Select an action</option>
+							<option value="edit">Edit</option>
+							<option value="delete">Delete</option>
+						</select>
+					</div>
+				</div>
+				<div class="item div-addressbook-item">
+					<div class="user">John Doe</div>
+					<div class="address">
+						﻿abLoc8AeKJ4V6ABLWaXwoCXg
+						KUVBa4oLHsFX9chDwNohNSxg
+						NZSumQygSA4JNS9vYee42u9g
+						crogbjkDfXhCwz18y693NC34Ygg
+					</div>
+					<div class="actions">
+						<select>
+							<option>Select an action</option>
+							<option value="edit">Edit</option>
+							<option value="delete">Delete</option>
+						</select>
+					</div>
+				</div>
+				<div class="item div-addressbook-item">
+					<div class="user">John Doe</div>
+					<div class="address">
+						﻿abLoc8AeKJ4V6ABLWaXwoCXg
+						KUVBa4oLHsFX9chDwNohNSxg
+						NZSumQygSA4JNS9vYee42u9g
+						crogbjkDfXhCwz18y693NC34Ygg
+					</div>
+					<div class="actions">
+						<select>
+							<option>Select an action</option>
+							<option value="edit">Edit</option>
+							<option value="delete">Delete</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			-->
+		</div>
+		<div class="div-addressbook-form-outer">
+			<div class="div-addressbook-form">
+				<input type="hidden" value="" id="input-addressbook-update" />
+				<div class="wallet">
+					<input required="required" class="text-block" id="input-addressbook-wallet" placeholder="Address of contact" />
+				</div>
+				<div class="label">
+					<input required="required" class="text-block" id="input-addressbook-name" placeholder="Label" />
+				</div>
+				<div class="submit">
+					<button type="button" class="form-bt button-blue" id="button-addressbook-save">Add contact</button>
+				</div>
+			</div>
+		</div>
+		<div class="input-wrap">
+			<span class="form-ew form-msg text-spaced-error" id="text-addressbook-error"></span>
+			<span class="form-ew form-msg text-spaced-success" id="text-addressbook-success"></span>
+		</div>
     </section>
 </template>

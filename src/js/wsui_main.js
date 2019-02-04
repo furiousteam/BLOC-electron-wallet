@@ -64,7 +64,6 @@ let overviewIntegratedAddressGen;
 // addressbook page
 let addressBookInputName;
 let addressBookInputWallet;
-let addressBookInputPaymentId;
 let addressBookInputUpdate;
 let addressBookButtonSave;
 // open wallet page
@@ -160,7 +159,6 @@ function populateElementVars(){
 	// addressbook page
 	addressBookInputName = document.getElementById('input-addressbook-name');
 	addressBookInputWallet = document.getElementById('input-addressbook-wallet');
-	addressBookInputPaymentId = document.getElementById('input-addressbook-paymentid');
 	addressBookInputUpdate = document.getElementById('input-addressbook-update');
 	addressBookButtonSave = document.getElementById('button-addressbook-save');
 
@@ -1272,7 +1270,7 @@ function formMessageSet(target, status, txt){
 // sample address book, only on first use
 function insertSampleAddresses(){
 	let flag = 'addressBookFirstUse';
-	if(!settings.get(flag, true)) return;
+	if (!settings.get(flag, true)) return;
 	const sampleData = config.addressBookSampleEntries;
 	if(sampleData && Array.isArray(sampleData)){
 		sampleData.forEach((item) => {
@@ -1385,214 +1383,130 @@ function handleSettings(){
 	});
 }
 
-function handleAddressBook(){
+function handleAddressBook() {
+	function resetSelect(sel) {
+		let options = sel.querySelectorAll('option');
+		Array.from(options).forEach((option, idx)=>{
+			option.selected = (idx == 0);
+		});
+	}
+	function listenToEvents() {
+		let items = document.querySelectorAll('.div-addressbook-item');
+		Array.from(items).forEach((item)=>{
+			let select = item.querySelector('select');
+			select.addEventListener('click', () => {
+				formMessageReset();
+				if (select.value == 'edit') {
+					addressBookInputWallet.value = item.dataset.address;
+					addressBookInputName.value = item.dataset.name;
+					addressBookInputUpdate.value = 1;
+				} else if (select.value == 'delete') {
+					addressBookInputWallet.value = '';
+					addressBookInputName.value = '';
+					addressBookInputUpdate.value = 0;
+
+					setTimeout(function() {
+						if (confirm(`Are you sure you want to delete ${item.dataset.address} from the address book?`)) {
+							wsutil.showToast('Address book entry was deleted.',5000);
+							abook.delete(item.dataset.key);
+							listAddressBook(true);
+						}
+					}, 50);
+				}
+				resetSelect(select);
+			});
+		});
+	}
 	function listAddressBook(force){
 		force = force || false;
 		insertSampleAddresses();
-		let currentLength = document.querySelectorAll('.addressbook-item:not([data-hash="fake-hash"])').length;
-		let abookLength =abook.size;
-		let perPage = 9;
-	
-		if(currentLength >= abookLength  && !force)  return;
-	
-		let listOpts = {
-			valueNames: [
-				{data: ['hash', 'nameval','walletval','paymentidval','qrcodeval']},
-				'addressName','addressWallet','addressPaymentId'
-			],
-			indexAsync: true
+		let currentLength = document.querySelectorAll('.div-addressbook-item').length;
+		let abookLength = abook.size;
+
+		if (currentLength == abookLength  && !force) return;
+
+		let i = 1;
+		let itemAddressBook = function(key, item) {
+			let cont_start = (i === 1) || ((i - 1) % 4 == 0) ? '<div class="div-addressbook-items">' : '';
+			let cont_end = (i % 4 == 0) || (i === abookLength) ? '</div>' : '';
+			i++;
+			return `${cont_start}
+				<div class="item div-addressbook-item" data-key="${key}" data-name="${item.name}" data-address="${item.address}">
+					<div class="user">${item.name}</div>
+					<div class="address">${item.address}</div>
+					<div class="actions">
+						<select>
+							<option>Select an action</option>
+							<option value="edit">Edit</option>
+							<option value="delete">Delete</option>
+						</select>
+					</div>
+				</div>
+			${cont_end}`;
 		};
-	
-		if(abookLength > perPage){
-			listOpts.page = perPage;
-			listOpts.pagination = true;
-		}
-	
-		const addressList = new List('addressbooks', listOpts);
-		addressList.clear();
+		let html = '';
 		Object.keys(abook.get()).forEach((key) => {
 			let et = abook.get(key);
-			addressList.add({
-				hash: key,
-				addressName: et.name,
-				addressWallet: et.address,
-				addressPaymentId: et.paymentId || '-',
-				nameval: et.name,
-				walletval: et.address,
-				paymentidval: et.paymentId || '-',
-				qrcodeval: et.qrCode || ''
-			});
+			html += itemAddressBook(key, et);
 		});
-	
-		addressList.remove('hash', 'fake-hash');
+		document.querySelector('#addressbook-container').innerHTML = html;
+		listenToEvents();
 	}
 
-	function displayAddressBookEntry(){
-		let dialog = document.getElementById('ab-dialog');
-		if(dialog.hasAttribute('open')) dialog.close();
-		let tpl = `
-			 <div class="div-transactions-panel">
-				 <h4>Address Detail</h4>
-				 <div class="addressBookDetail">
-					 <div class="addressBookDetail-qr">
-						 <img src="${this.dataset.qrcodeval}" />
-					 </div>
-					 <div class="addressBookDetail-data">
-						 <dl>
-							 <dt>Name:</dt>
-							 <dd data-cplabel="Name" class="tctcl" title="click to copy">${this.dataset.nameval}</dd>
-							 <dt>Wallet Address:</dt>
-							 <dd data-cplabel="Wallet address" class="tctcl" title="click to copy">${this.dataset.walletval}</dd>
-							 <dt>Payment Id:</dt>
-							 <dd data-cplabel="Payment ID" class="tctcl" title="click to copy">${this.dataset.paymentidval ? this.dataset.paymentidval : '-'}</dd>
-						 </dl>
-					 </div>
-				 </div>
-			 </div>
-			 <div class="div-panel-buttons">
-					 <button data-addressid="${this.dataset.hash}" type="button" class="form-bt button-green" id="button-addressbook-panel-edit">Edit</button>
-					 <button type="button" class="form-bt button-red" id="button-addressbook-panel-delete">Delete</button>
-					 <button data-addressid="${this.dataset.hash}" type="button" class="form-bt button-gray" id="button-addressbook-panel-close">Close</button>
-			 </div>
-		`;
-	 
-		wsutil.innerHTML(dialog, tpl);
-		// get new dialog
-		dialog = document.getElementById('ab-dialog');
-		dialog.showModal();
-		document.getElementById('button-addressbook-panel-close').addEventListener('click', () => {
-			 let abdialog = document.getElementById('ab-dialog');
-			 abdialog.close();
-			 wsutil.clearChild(abdialog);
-		 });
-	 
-		 let deleteBtn = document.getElementById('button-addressbook-panel-delete');
-		 deleteBtn.addEventListener('click', () => {
-			 let tardel = this.dataset.nameval;
-			 let tarhash = this.dataset.hash;
-			 if(!confirm(`Are you sure you want to delete ${tardel} from the address book?`)){
-				 return;
-			 }else{
-				 abook.delete(tarhash);
-				 let abdialog = document.getElementById('ab-dialog');
-				 abdialog.close();
-				 wsutil.clearChild(abdialog);
-				 listAddressBook(true);
-				 if(!document.getElementById('datoaste')){
-					 iqwerty.toast.Toast("Address book entry was deleted.", {settings: {duration:1800}});
-				 }
-			 }
-		 });
-	 
-		 let editBtn = document.getElementById('button-addressbook-panel-edit');
-		 editBtn.addEventListener('click', ()=>{
-			 let origHash = this.dataset.hash;
-			 let entry = abook.get(origHash);
-			 if(!entry){
-				 iqwerty.toast.Toast("Invalid address book entry.", {settings: {duration:1800}});
-			 }else{
-				 const nameField = document.getElementById('input-addressbook-name');
-				 const walletField = document.getElementById('input-addressbook-wallet');
-				 const payidField = document.getElementById('input-addressbook-paymentid');
-				 const updateField = document.getElementById('input-addressbook-update');
-				 nameField.value = entry.name;
-				 nameField.dataset.oldhash = origHash;
-				 walletField.value = entry.address;
-				 payidField.value = entry.paymentId;
-				 updateField.value = 1;
-			 }
-			 changeSection('section-addressbook-add');
-			 let axdialog = document.getElementById('ab-dialog');
-			 axdialog.close();
-			 wsutil.clearChild(axdialog);
-		 });
-	 }
-
-	 function setAbPaymentIdState(addr){
-		if(addr.length > 99){
-			addressBookInputPaymentId.value = '';
-			addressBookInputPaymentId.setAttribute('disabled', true);
-		}else{
-			addressBookInputPaymentId.removeAttribute('disabled');
-		}
-	}
-
-	addressBookInputWallet.addEventListener('change', (event) => {
-		let val = event.target.value || '';
-		setAbPaymentIdState(val);
-	});
-
-	addressBookInputWallet.addEventListener('keyup', (event) => {
-		let val = event.target.value || '';
-		setAbPaymentIdState(val);
-	});
-
+	// save button
 	addressBookButtonSave.addEventListener('click', () => {
 		formMessageReset();
-		let nameValue = addressBookInputName.value ? addressBookInputName.value.trim() : '';
+
 		let addressValue = addressBookInputWallet.value ? addressBookInputWallet.value.trim() : '';
-		let paymentIdValue = addressBookInputPaymentId.value ? addressBookInputPaymentId.value.trim() : '';
+		let nameValue = addressBookInputName.value ? addressBookInputName.value.trim() : '';
+		let paymentIdValue = /*addressBookInputPaymentId.value ? addressBookInputPaymentId.value.trim() :*/ '';
+		let entryHash = wsutil.b2sSum(addressValue + paymentIdValue);
 		let isUpdate = addressBookInputUpdate.value ? addressBookInputUpdate.value : 0;
 
-		if( !nameValue || !addressValue ){
+		if (!nameValue || !addressValue) {
 			formMessageSet('addressbook','error',"Name and wallet address can not be left empty!");
 			return;
 		}
 
-		if(!wsutil.validateAddress(addressValue)){
+		if (!wsutil.validateAddress(addressValue)) {
 			formMessageSet('addressbook','error',`Invalid ${config.assetName} address`);
 			return;
 		}
-		
-		if( paymentIdValue.length){
-			if( !wsutil.validatePaymentId(paymentIdValue) ){
+
+		if (paymentIdValue.length) {
+			if (!wsutil.validatePaymentId(paymentIdValue)) {
 				formMessageSet('addressbook','error',"Invalid Payment ID");
 				return;
 			}
 		}
 
-		if(addressValue.length > 99) paymentIdValue.value = '';
+		if (addressValue.length > 99) paymentIdValue.value = '';
 
-		let entryName = nameValue.trim();
-		let entryAddr = addressValue.trim();
-		let entryPaymentId = paymentIdValue.trim();
-		let entryHash = wsutil.b2sSum(entryAddr + entryPaymentId);
-
-		if(abook.has(entryHash) && !isUpdate){
-			formMessageSet('addressbook','error',"This combination of address and payment ID already exist, please enter new address or different payment id.");
+		if (abook.has(entryHash) && !isUpdate) {
+			// formMessageSet('addressbook','error',"This combination of address and payment ID already exist, please enter new address or different payment id.");
+			formMessageSet('addressbook','error',"This address already exist, please enter new address.");
 			return;
 		}
-   
-		try{
-			abook.set(entryHash, {
-				name: entryName,
-				address: entryAddr,
-				paymentId: entryPaymentId,
-				qrCode: wsutil.genQrDataUrl(entryAddr)
-			});
-			let oldHash = addressBookInputName.dataset.oldhash || '';
-			let isNew = (oldHash.length && oldHash !== entryHash);
-			
-			if(isUpdate && isNew){
-				abook.delete(oldHash);
-			}
-		}catch(e){
-			formMessageSet('addressbook','error',"Address book entry can not be saved, please try again");
-			return;
+
+		if (abook.has(entryHash)) {
+			abook.delete(entryHash);
 		}
-		addressBookInputName.value = '';
-		addressBookInputName.dataset.oldhash = '';
+
+		let newBuddy = {
+			name: nameValue,
+			address: addressValue,
+			paymentId: paymentIdValue,
+			qrCode: wsutil.genQrDataUrl(addressValue)
+		};
+		abook.set(entryHash, newBuddy);
+		formMessageSet('addressbook', 'success', `The address book contact has been saved!`);
+
 		addressBookInputWallet.value = '';
-		addressBookInputPaymentId.value = '';
+		addressBookInputName.value = '';
 		addressBookInputUpdate.value = 0;
 		listAddressBook(true);
-		initAddressCompletion();
-		formMessageReset();
-		changeSection('section-addressbook');
-		wsutil.showToast('Address book entry has been saved.');
 	});
-	// entry detail
-	wsutil.liveEvent('.addressbook-item','click',displayAddressBookEntry);
+
 	listAddressBook();
 }
 
