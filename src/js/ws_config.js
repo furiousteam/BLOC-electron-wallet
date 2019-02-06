@@ -7,7 +7,7 @@ config.appSlogan = 'in BLOC we trust';
 config.appId = 'money.bloc.bloc-electron-wallet';
 config.appGitRepo = 'https://github.com/furiousteam/BLOC-electron-wallet';
 
-// default port number for your daemon (e.g. TurtleCoind)
+// default port number for your daemon (e.g. BLOCd)
 config.daemonDefaultRpcPort = 2086;
 
 // wallet file created by this app will have this extension
