@@ -2244,7 +2244,6 @@ progress.light{
 	height: 0.25em;
 }
 
-
 .div-overview-balance {
 	display: grid;
 	grid-template-columns: repeat(4, 1fr);
@@ -2402,28 +2401,48 @@ progress.light{
 
 .div-overview-connection {
 	display: grid;
-	grid-template-columns: repeat(12, 1fr);
+	grid-template-columns: repeat(24, 1fr);
 	column-gap: 33px;
 	margin-left: 45px;
 	margin-bottom: 27px;
 }
 .overview-connection-info {
 	grid-column-start: 1;
-	grid-column-end: 4;
-	padding: 26px 32px;
+	grid-column-end: 8;
+	padding: 26px 32px 16px 32px;
 	background: #021136;
 	border-radius: 5px;
 }
+.c100 {
+	background-color: #2f415f;
+	font-size: 65px;
+	margin-right: 20px;
+}
+.c100:after {
+	background-color: #021136;
+}
+.c100 > span {
+	color: #8f929c;
+}
+.c100 .bar {
+	color: #00ffff;
+}
+.overview-connection-info .text {
+	float: left;
+}
+.overview-connection-info .value {
+	float: left;
+}
 .overview-connection-node-address {
-	grid-column-start: 4;
-	grid-column-end: 8;
+	grid-column-start: 8;
+	grid-column-end: 16;
 	padding: 26px 32px;
 	background: #021136;
 	border-radius: 5px;
 }
 .overview-connection-node-fee {
-	grid-column-start: 8;
-	grid-column-end: 13;
+	grid-column-start: 16;
+	grid-column-end: 26;
 	padding: 26px 32px;
 	background: #021136;
 	border-radius: 5px;

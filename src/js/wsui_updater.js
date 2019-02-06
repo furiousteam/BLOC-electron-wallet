@@ -12,6 +12,8 @@ const wsession = new WalletShellSession();
 /* sync progress ui */
 // const syncDiv = document.getElementById('navbar-div-sync');
 // const syncInfoBar = document.getElementById('navbar-text-sync');
+let circleProgressProcent;
+let circleProgressText;
 let connInfoDiv;
 let nodeAddressDiv;
 let nodeFeeDiv;
@@ -39,29 +41,33 @@ function triggerTxRefresh(){
     txUpdateInputFlag.dispatchEvent(new Event('change'));
 }
 
+function setCircleSyncProcent(procent) {
+	// remove any previous procent
+	Array.from(circleProgressProcent.classList).forEach((cls)=>{
+		if (cls[0] == 'p') {
+			circleProgressProcent.classList.remove(cls);
+		}
+	});
+
+	// add current procent
+	circleProgressProcent.classList.add('p' + procent);
+	circleProgressText.innerHTML = procent + '%';
+}
+
 function updateSyncProgress(data){
+	circleProgressProcent = document.getElementById('circle-progress-procent');
+	circleProgressText = document.getElementById('circle-progress-text');
 	connInfoDiv = document.getElementById('conn-info');
 	nodeAddressDiv = document.getElementById('node-address');
 	nodeFeeDiv = document.getElementById('node-fee');
 
-    // const iconSync = document.getElementById('navbar-icon-sync');
     let blockCount = data.displayBlockCount;
     let knownBlockCount = data.displayKnownBlockCount;
     let blockSyncPercent = data.syncPercent;
     let statusText = '';
 
     if(knownBlockCount === SYNC_STATUS_NET_CONNECTED){
-        // sync status text
         statusText = 'RESUMING WALLET SYNC...';
-        // syncInfoBar.innerHTML = statusText;
-        // sync info bar class
-        // syncDiv.className = 'syncing';
-        // sync status icon
-        // iconSync.setAttribute('data-icon', 'sync');
-        // iconSync.classList.add('fa-spin');
-        // connection status
-        // connInfoDiv.innerHTML = 'Connection restored, resuming sync process...';
-        // connInfoDiv.classList.remove('conn-warning');
 		connInfoDiv.innerHTML = statusText;
 
         // sync sess flags
@@ -69,17 +75,7 @@ function updateSyncProgress(data){
         wsession.set('synchronized', false);
         brwin.setProgressBar(-1);
     }else if(knownBlockCount === SYNC_STATUS_NET_DISCONNECTED){
-        // sync status text
         statusText = 'PAUSED, NETWORK DISCONNECTED';
-        // syncInfoBar.innerHTML = statusText;
-        // sync info bar class
-        // syncDiv.className = '';
-        // sync status icon
-        // iconSync.setAttribute('data-icon', 'ban');
-        // iconSync.classList.remove('fa-spin');
-        // connection status
-        // connInfoDiv.innerHTML = 'Synchronization paused, please check your network connection!';
-        // connInfoDiv.classList.add('conn-warning');
 		connInfoDiv.innerHTML = statusText;
 
 		nodeAddressDiv.innerHTML = 'N/A';
@@ -90,17 +86,7 @@ function updateSyncProgress(data){
         wsession.set('synchronized', false);
         brwin.setProgressBar(-1);
     }else if(knownBlockCount === SYNC_STATUS_IDLE){
-        // sync status text
         statusText = 'IDLE';
-        // syncInfoBar.innerHTML = statusText;
-        // sync info bar class
-        // syncDiv.className = '';
-        // sync status icon
-        // iconSync.setAttribute('data-icon', 'pause-circle');
-        // iconSync.classList.remove('fa-spin');
-        // connection status
-        // connInfoDiv.classList.remove('conn-warning');
-        // connInfoDiv.textContent = 'N/A';
 		connInfoDiv.innerHTML = statusText;
 
 		nodeAddressDiv.innerHTML = 'N/A';
@@ -115,18 +101,7 @@ function updateSyncProgress(data){
         // no node connected
         wsession.set('connectedNode', '');
     }else if(knownBlockCount === SYNC_STATUS_NODE_ERROR){
-        // not connected
-        // status info bar class
-        // syncDiv.className = 'failed';
-        // sync status text
         statusText = 'NODE ERROR';
-        // syncInfoBar.textContent = statusText;
-        //sync status icon
-        // iconSync.setAttribute('data-icon', 'times');
-        // iconSync.classList.remove('fa-spin');
-        // connection status
-        // connInfoDiv.innerHTML = 'Connection failed, try switching to another Node in settings page, close and reopen your wallet';
-        // connInfoDiv.classList.add('conn-warning');
 		connInfoDiv.innerHTML = statusText;
 
         wsession.set('connectedNode', '');
@@ -138,42 +113,24 @@ function updateSyncProgress(data){
 		connInfoDiv.innerHTML = statusText;
 
         if(blockCount+1 >= knownBlockCount && knownBlockCount !== 0) {
-            // info bar class
-            // syncDiv.classList = 'synced';
-            // status text
-            // statusText = `SYNCED ${statusText}`;
-            // syncInfoBar.textContent = statusText;
-            // status icon
-            // iconSync.setAttribute('data-icon', 'check');
-            // iconSync.classList.remove('fa-spin');
             // sync status sess flag
             wsession.set('synchronized', true);
             brwin.setProgressBar(-1);
          } else {
-             // info bar class
-            // syncDiv.className = 'syncing';
-            // status text
-            // statusText = `SYNCING ${statusText} (${blockSyncPercent}%)`;
-            // syncInfoBar.textContent = statusText;
-            // status icon
-            // iconSync.setAttribute('data-icon', 'sync');
-            // iconSync.classList.add('fa-spin');
             // sync status sess flag
             wsession.set('synchronized', false);
             let taskbarProgress = +(parseFloat(blockSyncPercent)/100).toFixed(2);
             brwin.setProgressBar(taskbarProgress);
         }
 
-        // let connStatusText = `<strong>Connected to:</strong><br /><span>${wsession.get('connectedNode')}</span>`;
         let connNodeFee = wsession.get('nodeFee');
-        // if(connNodeFee > 0 ){
-            // connStatusText += `<br /><strong>Node fee:</strong><br /><span>${connNodeFee.toFixed(config.decimalPlaces)} ${config.assetTicker}</span>`;
-        // }
-        // connInfoDiv.innerHTML = connStatusText;
-        // connInfoDiv.classList.remove('conn-warning');
 
 		nodeAddressDiv.innerHTML = wsession.get('connectedNode');
 		nodeFeeDiv.innerHTML = `${connNodeFee.toFixed(config.decimalPlaces)} ${config.assetTicker}`;
+
+		let procent = Math.min(100, parseInt((blockCount * 100) / knownBlockCount));
+		procent = Math.max(0, procent);
+		setCircleSyncProcent(procent);
     }
 
     if(WFCLEAR_TICK === 0 || WFCLEAR_TICK === WFCLEAR_INTERVAL){
