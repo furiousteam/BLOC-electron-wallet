@@ -64,6 +64,7 @@ let overviewIntegratedAddressGen;
 // addressbook page
 let addressBookInputName;
 let addressBookInputWallet;
+let addressBookInputPaymentId;
 let addressBookInputUpdate;
 let addressBookButtonSave;
 // open wallet page
@@ -159,6 +160,7 @@ function populateElementVars(){
 	// addressbook page
 	addressBookInputName = document.getElementById('input-addressbook-name');
 	addressBookInputWallet = document.getElementById('input-addressbook-wallet');
+	addressBookInputPaymentId = document.getElementById('input-addressbook-paymentid');
 	addressBookInputUpdate = document.getElementById('input-addressbook-update');
 	addressBookButtonSave = document.getElementById('button-addressbook-save');
 
@@ -1398,10 +1400,12 @@ function handleAddressBook() {
 				formMessageReset();
 				if (select.value == 'edit') {
 					addressBookInputWallet.value = item.dataset.address;
+					addressBookInputPaymentId.value = item.dataset.paymentid;
 					addressBookInputName.value = item.dataset.name;
 					addressBookInputUpdate.value = 1;
 				} else if (select.value == 'delete') {
 					addressBookInputWallet.value = '';
+					addressBookInputPaymentId.value = '';
 					addressBookInputName.value = '';
 					addressBookInputUpdate.value = 0;
 
@@ -1431,7 +1435,7 @@ function handleAddressBook() {
 			let cont_end = (i % 4 == 0) || (i === abookLength) ? '</div>' : '';
 			i++;
 			return `${cont_start}
-				<div class="item div-addressbook-item" data-key="${key}" data-name="${item.name}" data-address="${item.address}">
+				<div class="item div-addressbook-item" data-key="${key}" data-name="${item.name}" data-address="${item.address}" data-paymentid="${item.paymentId}">
 					<div class="user">${item.name}</div>
 					<div class="address">${item.address}</div>
 					<div class="actions">
@@ -1459,7 +1463,7 @@ function handleAddressBook() {
 
 		let addressValue = addressBookInputWallet.value ? addressBookInputWallet.value.trim() : '';
 		let nameValue = addressBookInputName.value ? addressBookInputName.value.trim() : '';
-		let paymentIdValue = /*addressBookInputPaymentId.value ? addressBookInputPaymentId.value.trim() :*/ '';
+		let paymentIdValue = addressBookInputPaymentId.value ? addressBookInputPaymentId.value.trim() : '';
 		let entryHash = wsutil.b2sSum(addressValue + paymentIdValue);
 		let isUpdate = addressBookInputUpdate.value ? addressBookInputUpdate.value : 0;
 
@@ -1483,8 +1487,7 @@ function handleAddressBook() {
 		if (addressValue.length > 99) paymentIdValue.value = '';
 
 		if (abook.has(entryHash) && !isUpdate) {
-			// formMessageSet('addressbook','error',"This combination of address and payment ID already exist, please enter new address or different payment id.");
-			formMessageSet('addressbook','error',"This address already exist, please enter new address.");
+			formMessageSet('addressbook','error',"This combination of address and payment ID already exist, please enter new address or different payment id.");
 			return;
 		}
 
@@ -1503,6 +1506,7 @@ function handleAddressBook() {
 
 		addressBookInputWallet.value = '';
 		addressBookInputName.value = '';
+		addressBookInputPaymentId.value = '';
 		addressBookInputUpdate.value = 0;
 		listAddressBook(true);
 	});

@@ -1625,6 +1625,10 @@ input.path-input-button{
 }
 .div-addressbook-form .wallet {
 	grid-column-start: 1;
+	grid-column-end: 11;
+}
+.div-addressbook-form .paymentid {
+	grid-column-start: 11;
 	grid-column-end: 16;
 }
 .div-addressbook-form .label {
