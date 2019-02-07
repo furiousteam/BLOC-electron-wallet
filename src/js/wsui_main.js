@@ -1057,6 +1057,11 @@ function changeSection(sectionId, isSettingRedir) {
 		getExchange();
 	}
 
+	// when address book is loaded, redraw the listing
+	if(targetSection === 'section-addressbook'){
+		listAddressBook(true);
+	}
+
 	let untoast = false;
 	if(targetSection === 'section-welcome'){
 		targetSection = 'section-overview';
@@ -1371,78 +1376,76 @@ function handleSettings(){
 	});
 }
 
-function handleAddressBook() {
-	function resetSelect(sel) {
-		let options = sel.querySelectorAll('option');
-		Array.from(options).forEach((option, idx)=>{
-			option.selected = (idx == 0);
-		});
-	}
-	function listenToEvents() {
-		let items = document.querySelectorAll('.div-addressbook-item');
-		Array.from(items).forEach((item)=>{
-			let select = item.querySelector('select');
-			select.addEventListener('click', () => {
-				formMessageReset();
-				if (select.value == 'edit') {
-					addressBookInputWallet.value = item.dataset.address;
-					addressBookInputPaymentId.value = item.dataset.paymentid;
-					addressBookInputName.value = item.dataset.name;
-					addressBookInputUpdate.value = 1;
-				} else if (select.value == 'delete') {
-					addressBookInputWallet.value = '';
-					addressBookInputPaymentId.value = '';
-					addressBookInputName.value = '';
-					addressBookInputUpdate.value = 0;
+function listenToAddressBookEvents() {
+	let items = document.querySelectorAll('.div-addressbook-item');
+	Array.from(items).forEach((item)=>{
+		let select = item.querySelector('select');
+		select.addEventListener('click', () => {
+			formMessageReset();
+			if (select.value == 'edit') {
+				addressBookInputWallet.value = item.dataset.address;
+				addressBookInputPaymentId.value = item.dataset.paymentid;
+				addressBookInputName.value = item.dataset.name;
+				addressBookInputUpdate.value = 1;
+			} else if (select.value == 'delete') {
+				addressBookInputWallet.value = '';
+				addressBookInputPaymentId.value = '';
+				addressBookInputName.value = '';
+				addressBookInputUpdate.value = 0;
 
-					setTimeout(function() {
-						if (confirm(`Are you sure you want to delete ${item.dataset.address} from the address book?`)) {
-							wsutil.showToast('Address book entry was deleted.',5000);
-							abook.delete(item.dataset.key);
-							listAddressBook(true);
-						}
-					}, 50);
-				}
-				resetSelect(select);
+				setTimeout(function() {
+					if (confirm(`Are you sure you want to delete ${item.dataset.address} from the address book?`)) {
+						wsutil.showToast('Address book entry was deleted.',5000);
+						abook.delete(item.dataset.key);
+						listAddressBook(true);
+					}
+				}, 50);
+			}
+			// reset selectors
+			let options = sel.querySelectorAll('option');
+			Array.from(options).forEach((option, idx)=>{
+				option.selected = (idx == 0);
 			});
 		});
-	}
-	function listAddressBook(force){
-		force = force || false;
-		insertSampleAddresses();
-		let currentLength = document.querySelectorAll('.div-addressbook-item').length;
-		let abookLength = abook.size;
+	});
+}
+function listAddressBook(force){
+	force = force || false;
+	insertSampleAddresses();
+	let currentLength = document.querySelectorAll('.div-addressbook-item').length;
+	let abookLength = abook.size;
 
-		if (currentLength == abookLength  && !force) return;
+	if (currentLength == abookLength  && !force) return;
 
-		let i = 1;
-		let itemAddressBook = function(key, item) {
-			let cont_start = (i === 1) || ((i - 1) % 4 == 0) ? '<div class="div-addressbook-items">' : '';
-			let cont_end = (i % 4 == 0) || (i === abookLength) ? '</div>' : '';
-			i++;
-			return `${cont_start}
-				<div class="item div-addressbook-item" data-key="${key}" data-name="${item.name}" data-address="${item.address}" data-paymentid="${item.paymentId}">
-					<div class="user">${item.name}</div>
-					<div class="address">${item.address}</div>
-					<div class="actions">
-						<select>
-							<option>Select an action</option>
-							<option value="edit">Edit</option>
-							<option value="delete">Delete</option>
-						</select>
-					</div>
+	let i = 1;
+	let itemAddressBook = function(key, item) {
+		let cont_start = (i === 1) || ((i - 1) % 4 == 0) ? '<div class="div-addressbook-items">' : '';
+		let cont_end = (i % 4 == 0) || (i === abookLength) ? '</div>' : '';
+		i++;
+		return `${cont_start}
+			<div class="item div-addressbook-item" data-key="${key}" data-name="${item.name}" data-address="${item.address}" data-paymentid="${item.paymentId}">
+				<div class="user">${item.name}</div>
+				<div class="address">${item.address}</div>
+				<div class="actions">
+					<select>
+						<option>Select an action</option>
+						<option value="edit">Edit</option>
+						<option value="delete">Delete</option>
+					</select>
 				</div>
-			${cont_end}`;
-		};
-		let html = '';
-		Object.keys(abook.get()).forEach((key) => {
-			let et = abook.get(key);
-			html += itemAddressBook(key, et);
-		});
-		document.querySelector('#addressbook-container').innerHTML = html;
-		listenToEvents();
-	}
+			</div>
+		${cont_end}`;
+	};
+	let html = '';
+	Object.keys(abook.get()).forEach((key) => {
+		let et = abook.get(key);
+		html += itemAddressBook(key, et);
+	});
+	document.querySelector('#addressbook-container').innerHTML = html;
+	listenToAddressBookEvents();
+}
 
+function handleAddressBook() {
 	// save button
 	addressBookButtonSave.addEventListener('click', () => {
 		formMessageReset();
