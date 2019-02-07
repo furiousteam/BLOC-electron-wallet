@@ -49,7 +49,6 @@ function checkBlockUpdate(){
 
     PENDING_SAVE_SKIP_COUNTER = 0;
     logDebug('checkBlockUpdate: fetching block update');
-    //let svc = new WalletShellApi(SERVICE_CFG);
     wsapi.getStatus().then((blockStatus) => {
         STATE_PENDING_SAVE = false;
         let lastConStatus = STATE_CONNECTED;

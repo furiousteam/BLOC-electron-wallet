@@ -10,8 +10,6 @@ const settings = new Store({name: 'Settings'});
 const wsession = new WalletShellSession();
 
 /* sync progress ui */
-// const syncDiv = document.getElementById('navbar-div-sync');
-// const syncInfoBar = document.getElementById('navbar-text-sync');
 let circleProgressProcent;
 let circleProgressText;
 let connInfoDiv;
@@ -336,9 +334,6 @@ function updateQr(address){
         qrImg.setAttribute('id', 'qr-gen-img');
         qrImg.setAttribute('src', qr_base64);
         qrBox.prepend(qrImg);
-        //document.getElementById('scan-qr-help').classList.remove('hidden');
-    }else{
-        //document.getElementById('scan-qr-help').classList.add('hidden');
     }
 
 	connInfoDiv.innerHTML = 'connected';
@@ -375,9 +370,7 @@ function resetFormState(){
 
 // update ui state, push from svc_main
 function updateUiState(msg){
-	// if (msg.type == 'fusionTxCompleted') console.log('updateUiState', msg.type, msg.code, msg.data);
-
-    // do something with msg
+	// do something with msg
     switch (msg.type) {
         case 'blockUpdated':
             updateSyncProgress(msg.data);

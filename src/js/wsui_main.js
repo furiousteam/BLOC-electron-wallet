@@ -53,8 +53,6 @@ let settingsInputServiceBin;
 let settingsInputMinToTray;
 let settingsInputCloseToTray;
 let settingsButtonSave;
-//let settingsDaemonHostFormHelp;
-//let settingsDaemonPortFormHelp;
 // overview page
 let overviewWalletAddress;
 let overviewWalletCopyButton;
@@ -90,12 +88,10 @@ let sendOptimize;
 let overviewButtonCreate;
 let zoomQrCode;
 let walletCreateInputPath;
-// let walletCreateInputFilename;
 let walletCreateInputPassword;
 // import wallet keys
 let importKeyButtonImport;
 let importKeyInputPath;
-// let importKeyInputFilename;
 let importKeyInputPassword;
 let importKeyInputViewKey;
 let importKeyInputSpendKey;
@@ -103,7 +99,6 @@ let importKeyInputScanHeight;
 // import wallet seed
 let importSeedButtonImport;
 let importSeedInputPath;
-//let importSeedInputFilename;
 let importSeedInputPassword;
 let importSeedInputMnemonic;
 let importSeedInputScanHeight;
@@ -147,8 +142,6 @@ function populateElementVars(){
 	settingsInputMinToTray = document.getElementById('checkbox-tray-minimize');
 	settingsInputCloseToTray = document.getElementById('checkbox-tray-close');
 	settingsButtonSave = document.getElementById('button-settings-save');
-	// settingsDaemonHostFormHelp = document.getElementById('daemonHostFormHelp');
-	// settingsDaemonPortFormHelp = document.getElementById('daemonPortFormHelp');
 
 	// overview pages
 	overviewWalletAddress = document.getElementById('wallet-address');
@@ -189,12 +182,10 @@ function populateElementVars(){
 	overviewButtonCreate = document.getElementById('button-create-create');
 	zoomQrCode = document.getElementById('zoom-qr-code');
 	walletCreateInputPath = document.getElementById('input-create-path');
-	//walletCreateInputFilename = document.getElementById('input-create-name');
 	walletCreateInputPassword = document.getElementById('input-create-password');
 	// import wallet keys
 	importKeyButtonImport = document.getElementById('button-import-import');
 	importKeyInputPath = document.getElementById('input-import-path');
-	//importKeyInputFilename = document.getElementById('input-import-name');
 	importKeyInputPassword = document.getElementById('input-import-password');
 	importKeyInputViewKey = document.getElementById('key-import-view');
 	importKeyInputSpendKey = document.getElementById('key-import-spend');
@@ -202,7 +193,6 @@ function populateElementVars(){
 	// import wallet seed
 	importSeedButtonImport = document.getElementById('button-import-seed-import');
 	importSeedInputPath = document.getElementById('input-import-seed-path');
-	//importSeedInputFilename = document.getElementById('input-import-seed-name');
 	importSeedInputPassword = document.getElementById('input-import-seed-password');
 	importSeedInputMnemonic = document.getElementById('key-import-seed');
 	importSeedInputScanHeight = document.getElementById('key-import-seed-height');
@@ -215,8 +205,6 @@ function populateElementVars(){
 	txInputNotify = document.getElementById('transaction-notify');
 	txButtonExport = document.getElementById('transaction-export');
 }
-
-
 
 // crude/junk template :)
 let jtfr = {
@@ -1320,8 +1308,6 @@ function showInitialPage(){
 
 	let versionInfo = document.getElementById('walletShellVersion');
 	if(versionInfo) versionInfo.innerHTML = WS_VERSION;
-	//let tsVersionInfo = document.getElementById('blocServiceVersion');
-	//if(tsVersionInfo) tsVersionInfo.innerHTML = config.walletServiceBinaryVersion;
 	let wVersionInfo = document.getElementById('walletVersion');
 	if(wVersionInfo) wVersionInfo.innerHTML = remote.app.getVersion();
 }
@@ -2027,7 +2013,6 @@ function handleSendTransfer(){
 			return;
 		}
 
-		// todo: adjust decimal
 		let tx = {
 			address: recipientAddress,
 			amount: txAmount,
@@ -2132,7 +2117,7 @@ function handleSendTransfer(){
 		return; // just return, it will notify when its done.
 	});
 }
-// ﻿b4e8jhgjhgjgh3....3704ghjghjhgj00
+
 function handleTransactions(){
 	// tx list options
 	var itemF = function(item) {
@@ -2714,8 +2699,6 @@ function initHandlers(){
 	iswitch.addEventListener('click', function() {
 		changeSection('section-about');
 	});
-
-	//handleNetworkChange();
 
 	// settings handlers
 	handleSettings();
