@@ -2422,10 +2422,11 @@ progress.light{
 	background-color: #021136;
 }
 .c100 > span {
-	color: #8f929c;
+	color: #8f929c !important;
 }
-.c100 .bar {
-	color: #00ffff;
+.c100 .bar ,
+.c100 .fill {
+	border-color: #00ffff;
 }
 .overview-connection-info .text {
 	float: left;
