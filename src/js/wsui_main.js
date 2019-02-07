@@ -1402,7 +1402,7 @@ function listenToAddressBookEvents() {
 				}, 50);
 			}
 			// reset selectors
-			let options = sel.querySelectorAll('option');
+			let options = select.querySelectorAll('option');
 			Array.from(options).forEach((option, idx)=>{
 				option.selected = (idx == 0);
 			});
