@@ -6,11 +6,11 @@
 
 ![BLOC Electron Wallet - Welcome screen](https://wiki.bloc.money/wallets/images/BLOC-gui-wallet/V3/welcome.png)
 
-![BLOC Electron Wallet - Main](BLOC-Electron-Wallet-main.png)
+![BLOC Electron Wallet - Main](./docs/BLOC-Electron-Wallet-main.png)
 
-![BLOC Electron Wallet - Tools](BLOC-Electron-Wallet-tools.png)
+![BLOC Electron Wallet - Tools](./docs/BLOC-Electron-Wallet-tools.png)
 
-![BLOC Electron Wallet - Exchange](BLOC-Electron-Wallet-xchange.png)
+![BLOC Electron Wallet - Exchange](./docs/BLOC-Electron-Wallet-xchange.png)
 
 ## Features:
 This wallet contains the basic functions required to manage your BLOC assets:
