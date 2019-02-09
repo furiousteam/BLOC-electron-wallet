@@ -6,34 +6,52 @@
 
 ![BLOC Electron Wallet - Welcome screen](https://wiki.bloc.money/wallets/images/BLOC-gui-wallet/V3/welcome.png)
 
+![BLOC Electron Wallet - Main](BLOC-Electron-Wallet-main.png)
+
+![BLOC Electron Wallet - Tools](BLOC-Electron-Wallet-tools.png)
+
+![BLOC Electron Wallet - Exchange](BLOC-Electron-Wallet-xchange.png)
+
 ## Features:
 This wallet contains the basic functions required to manage your BLOC assets:
 
 * Wallet creation
   * Create new wallet
-  * Import from private keys
-  * Import from mnemonic seed
+  * Import from private keys OR mnemonic seed
 * Basic wallet operation
   * Open an existing wallet
   * Display wallet address & balance
+  * Display private keys/seed
+  * Export private keys/seed
   * Transactions listing/sorting/searching
   * Display transaction detail
   * Export incoming, outgoing, or all transactions to csv file.
+  * Incoming Transaction notification
   * Send BLOC to single recipient address, allow to set payment id and custom fee. Provides address lookup from addressbook.
+  * Perform wallet optimization by creating fusion transactions
+  * Provides utility to generate payment id and integrated address
+* Address book
+  * Add/Edit/Delete address entry (label/name, address and payment id)
+  * Listing/sorting/searching existing entries
+  * Allow to store same wallet address with different payment id
+  * Autosave address after sending to new/unknown recipient
 * Misc
   * Provides setting to set local or public node address
   * Option to use system tray (on closing/minimizing wallet)
-  * Provides list of public nodes, fetch/updated daily from BLOC-nodes-json repo.
+  * Provides list of public nodes, fetch/updated daily from [BLOC-nodes-json](https://github.com/furiousteam/BLOC-nodes-json) repo.
   * Custom node address that is not on the list will be added/remembered for future use
   * [Keyboard shortcuts](docs/shortcut.md)
 
+
 ### Notes
 
-BLOC Electron Wallet relies on `BLOC-service` to manage wallet container &amp; rpc communication.
+BLOC-electron-wallet relies on `BLOC-service` to manage wallet container &amp; rpc communication.
 
-Release installer & packaged archived includes a ready to use `BLOC-service` binary, which is unmodified copy BLOC release archive.
+Release installer & packaged archives includes a ready to use `BLOC-service` binary, which is unmodified copy BLOC release archive.
 
-If you don't trust the bundled `BLOC-service` file, you can download and use the binary from official BLOC release, which is available here: https://github.com/furiousteam/BLOC/releases or compile it yourself. Then, make sure to update your `BLOC-service` path setting.
+On first launch, BLOC-electron-wallet will try to detect location/path of bundled `BLOC-service` binary, but if autodetection failed, you can manually set path to the `BLOC-service` binary on the Settings screen.
+
+If you don't trust the bundled `BLOC-service` file, you can compare the checksum (sha256sum) against one from the official release, or simply download and use the binary from official BLOC release, which is available here: https://github.com/furiousteam/BLOC/releases. Then,  make sure to update your `BLOC-service` path setting.
 
 ### Download &amp; Run BLOC Electron Wallet
 
