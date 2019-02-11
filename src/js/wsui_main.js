@@ -819,24 +819,32 @@ function showExchange(listExchange) {
 	if (!cod.hasAttribute("data-once")) {
 		cod.setAttribute("data-once", 1);
 		cod.addEventListener('click', function(){
-			resetButtons();
-			cod.classList.add('selected');
-			updateExchangeChart();
+			if (!cod.classList.contains('selected')) {
+				resetButtons();
+				cod.classList.add('selected');
+				updateExchangeChart();
+			}
 		});
 		cow.addEventListener('click', function(){
-			resetButtons();
-			cow.classList.add('selected');
-			updateExchangeChart();
+			if (!cow.classList.contains('selected')) {
+				resetButtons();
+				cow.classList.add('selected');
+				updateExchangeChart();
+			}
 		});
 		com.addEventListener('click', function(){
-			resetButtons();
-			com.classList.add('selected');
-			updateExchangeChart();
+			if (!com.classList.contains('selected')) {
+				resetButtons();
+				com.classList.add('selected');
+				updateExchangeChart();
+			}
 		});
 		coy.addEventListener('click', function(){
-			resetButtons();
-			coy.classList.add('selected');
-			updateExchangeChart();
+			if (!coy.classList.contains('selected')) {
+				resetButtons();
+				coy.classList.add('selected');
+				updateExchangeChart();
+			}
 		});
 	}
 	updateExchangeChart();
