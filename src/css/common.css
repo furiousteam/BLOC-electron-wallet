@@ -1598,6 +1598,8 @@ input.path-input-button{
 	text-transform: inherit;
 	font-weight: 400;
 	font-size: 14px;
+	padding-left: 34px;
+	padding-right: 34px;
 }
 .div-addressbook-form .wallet {
 	grid-column-start: 1;
@@ -1609,10 +1611,10 @@ input.path-input-button{
 }
 .div-addressbook-form .label {
 	grid-column-start: 16;
-	grid-column-end: 22;
+	grid-column-end: 21;
 }
 .div-addressbook-form .submit {
-	grid-column-start: 22;
+	grid-column-start: 21;
 	grid-column-end: 25;
 }
 

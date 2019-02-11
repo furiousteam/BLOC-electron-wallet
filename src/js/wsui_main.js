@@ -1473,7 +1473,7 @@ function handleAddressBook() {
 		let isUpdate = addressBookInputUpdate.value ? addressBookInputUpdate.value : 0;
 
 		if (!nameValue || !addressValue) {
-			formMessageSet('addressbook','error',"Name and wallet address can not be left empty!");
+			formMessageSet('addressbook','error',"Address of contact and Label can not be left empty!");
 			return;
 		}
 
