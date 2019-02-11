@@ -947,7 +947,10 @@ function changeSection(sectionId, isSettingRedir) {
 
 	// when settings is loaded, show the warning
 	if(targetSection === 'section-settings'){
-		formMessageSet('settings','warning', `If you change the address or port, you will need to restart the wallet`);
+		let walletOpened = wsession.get('serviceReady') || false;
+		if(walletOpened){
+			formMessageSet('settings','warning', `If you change the address or port, you will need to restart the wallet`);
+		}
 	}
 	// when help is loaded, add the wiki link
 	if(targetSection === 'section-help'){
