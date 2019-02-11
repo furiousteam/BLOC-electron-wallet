@@ -754,7 +754,7 @@ body .tools-div-content .button-blue{
 }
 #section-overview-show .div-title {
 	margin-left: 65px;
-	margin-bottom: 45px;
+	margin-bottom: 15px;
 }
 #section-overview-show .div-title img {
 	float: left;
@@ -806,7 +806,7 @@ body .tools-div-content .button-blue{
 	color: #7bc3e3;
 }
 .overview-show-div-content .box {
-	padding: 27px 22px 25px 22px;
+	padding: 22px 22px 20px 22px;
 	background: #04072788;
 	border-radius: 5px;
 	margin-bottom: 15px;
