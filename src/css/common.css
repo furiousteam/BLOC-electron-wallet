@@ -2410,12 +2410,6 @@ progress.light{
 .c100.p91 .fill, .c100.p92 .fill, .c100.p93 .fill, .c100.p94 .fill, .c100.p95 .fill, .c100.p96 .fill, .c100.p97 .fill, .c100.p98 .fill, .c100.p99 .fill, .c100.p100 .fill {
 	border-color: #00ffff;
 }
-.overview-connection-info .text {
-	float: left;
-}
-.overview-connection-info .value {
-	float: left;
-}
 .overview-connection-node-address {
 	grid-column-start: 8;
 	grid-column-end: 16;
