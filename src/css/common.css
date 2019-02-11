@@ -2533,7 +2533,10 @@ progress.light{
 
 /* settings */
 #section-settings {
-	margin-top: 45px;
+	padding-top: 128px;
+}
+body.wallet-opened #section-settings {
+	padding-top: 45px;
 }
 #section-settings .div-title {
 	margin-left: 65px;

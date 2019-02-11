@@ -53,6 +53,7 @@ let settingsInputServiceBin;
 let settingsInputMinToTray;
 let settingsInputCloseToTray;
 let settingsButtonSave;
+let settingsButtonBack;
 // overview page
 let overviewWalletAddress;
 let overviewWalletCopyButton;
@@ -142,6 +143,7 @@ function populateElementVars(){
 	settingsInputMinToTray = document.getElementById('checkbox-tray-minimize');
 	settingsInputCloseToTray = document.getElementById('checkbox-tray-close');
 	settingsButtonSave = document.getElementById('button-settings-save');
+	settingsButtonBack = document.getElementById('button-settings-back');
 
 	// overview pages
 	overviewWalletAddress = document.getElementById('wallet-address');
@@ -948,8 +950,11 @@ function changeSection(sectionId, isSettingRedir) {
 	// when settings is loaded, show the warning
 	if(targetSection === 'section-settings'){
 		let walletOpened = wsession.get('serviceReady') || false;
-		if(walletOpened){
+		if (walletOpened) {
 			formMessageSet('settings','warning', `If you change the address or port, you will need to restart the wallet`);
+			settingsButtonBack.classList.add('hidden');
+		} else {
+			settingsButtonBack.classList.remove('hidden');
 		}
 	}
 	// when help is loaded, add the wiki link
