@@ -1,9 +1,20 @@
 <template>
 	<section class="section" id="section-addressbook">
-		<div class="div-title clearfix">
-			<img src="../assets/addressbook/title.png" />
-			<h2 class="title">Address book</h2>
-			<div class="subtitle">Contacts</div>
+		<div class="title-container">
+			<div class="title-left">
+				<div class="div-title clearfix">
+					<img src="../assets/addressbook/title.png" />
+					<h2 class="title">Address book</h2>
+					<div class="subtitle">Contacts</div>
+				</div>
+			</div>
+			<div class="title-right">
+				<select id="button-addressbook-order">
+					<option>Sort the contact</option>
+					<option value="name">Label</option>
+					<option value="address">Wallet address</option>
+				</select>
+			</div>
 		</div>
 
 		<div class="div-addressbook-outer" id="addressbook-container">

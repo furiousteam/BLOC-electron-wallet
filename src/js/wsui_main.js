@@ -66,6 +66,7 @@ let addressBookInputWallet;
 let addressBookInputPaymentId;
 let addressBookInputUpdate;
 let addressBookButtonSave;
+let addressBookSelectOrder;
 // open wallet page
 let walletOpenInputPath;
 let walletOpenInputPassword;
@@ -158,6 +159,7 @@ function populateElementVars(){
 	addressBookInputPaymentId = document.getElementById('input-addressbook-paymentid');
 	addressBookInputUpdate = document.getElementById('input-addressbook-update');
 	addressBookButtonSave = document.getElementById('button-addressbook-save');
+	addressBookSelectOrder = document.getElementById('button-addressbook-order');
 
 	// open wallet page
 	walletOpenInputPath = document.getElementById('input-load-path');
@@ -1425,8 +1427,9 @@ function listenToAddressBookEvents() {
 		});
 	});
 }
-function listAddressBook(force){
+function listAddressBook(force, sortBy){
 	force = force || false;
+	sortBy = sortBy || '';
 	insertSampleAddresses();
 	let currentLength = document.querySelectorAll('.div-addressbook-item').length;
 	let abookLength = abook.size;
@@ -1434,12 +1437,12 @@ function listAddressBook(force){
 	if (currentLength == abookLength  && !force) return;
 
 	let i = 1;
-	let itemAddressBook = function(key, item) {
+	let itemAddressBook = function(item) {
 		let cont_start = (i === 1) || ((i - 1) % 4 == 0) ? '<div class="div-addressbook-items">' : '';
 		let cont_end = (i % 4 == 0) || (i === abookLength) ? '</div>' : '';
 		i++;
 		return `${cont_start}
-			<div class="item div-addressbook-item" data-key="${key}" data-name="${item.name}" data-address="${item.address}" data-paymentid="${item.paymentId}">
+			<div class="item div-addressbook-item" data-key="${item.key}" data-name="${item.name}" data-address="${item.address}" data-paymentid="${item.paymentId}">
 				<div class="user">${item.name}</div>
 				<div class="address">${item.address}</div>
 				<div class="actions">
@@ -1452,10 +1455,30 @@ function listAddressBook(force){
 			</div>
 		${cont_end}`;
 	};
-	let html = '';
+
+	// get the array
+	let addressBookEntries = [];
 	Object.keys(abook.get()).forEach((key) => {
 		let et = abook.get(key);
-		html += itemAddressBook(key, et);
+		et['key'] = key;
+		addressBookEntries.push(et);
+	});
+
+	// sort the elements
+	if (sortBy != '') {
+		addressBookEntries.sort(function(a, b) {
+			let first = a[sortBy].toLowerCase();
+			let second = b[sortBy].toLowerCase();
+			if(first < second) return -1;
+			if(first > second) return 1;
+			return 0;
+		});
+	}
+
+	// render the entries
+	let html = '';
+	addressBookEntries.forEach((item) => {
+		html += itemAddressBook(item);
 	});
 	document.querySelector('#addressbook-container').innerHTML = html;
 	listenToAddressBookEvents();
@@ -1514,6 +1537,17 @@ function handleAddressBook() {
 		addressBookInputPaymentId.value = '';
 		addressBookInputUpdate.value = 0;
 		listAddressBook(true);
+	});
+
+	// order by button
+	addressBookSelectOrder.addEventListener('click', () => {
+		if (addressBookSelectOrder.value == 'name') {
+			listAddressBook(true, 'name');
+		} else if (addressBookSelectOrder.value == 'address') {
+			listAddressBook(true, 'address');
+		} else {
+			listAddressBook(true);
+		}
 	});
 
 	listAddressBook();
