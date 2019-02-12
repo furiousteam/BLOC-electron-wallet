@@ -46,6 +46,8 @@ let genericFormMessage;
 let genericEnterableInputs;
 let genericEditableInputs;
 let firstTab;
+// about page
+let aboutButtonBack;
 // settings page
 let settingsInputDaemonAddress;
 let settingsInputDaemonPort;
@@ -136,6 +138,9 @@ function populateElementVars(){
 
 	// main section link
 	sectionButtons = document.querySelectorAll('[data-section]');
+
+	// main section link
+	aboutButtonBack = document.getElementById('button-about-back');
 
 	// settings input & elements
 	settingsInputDaemonAddress = document.getElementById('input-settings-daemon-address');
@@ -997,6 +1002,13 @@ function changeSection(sectionId, isSettingRedir) {
 				indexAsync: true
 			};
 			new List('about-donation-addresses', donationOpts, config.addressBookSampleEntries);
+		}
+
+		let walletOpened = wsession.get('serviceReady') || false;
+		if (walletOpened) {
+			aboutButtonBack.classList.add('hidden');
+		} else {
+			aboutButtonBack.classList.remove('hidden');
 		}
 	}
 	// when about is loaded, add the links
