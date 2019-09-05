@@ -2255,10 +2255,6 @@ function handleTransactions(){
 									<td><span class="opa50 tctcl" data-cplabel="Tx. block index">${tx.dataset.blockindex}</span></td>
 								</tr>
 								<tr>
-									<th scope="col"><img src="../assets/transactions/right-blue-arrow.png" /><span class="opa50">Is Base?</span></th>
-									<td><span class="opa50">${tx.dataset.isbase}</span></td>
-								</tr>
-								<tr>
 									<th scope="col"><img src="../assets/transactions/right-blue-arrow.png" />Amount</th>
 									<td data-cplabel="Tx. amount" class="tctcl">${tx.dataset.rawamount} ${config.assetTicker}</td>
 								</tr>
