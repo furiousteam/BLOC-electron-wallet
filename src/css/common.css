@@ -539,6 +539,68 @@ body .news-div-content .button-blue{
 	margin-bottom: 10px;
 }
 
+/* videos */
+#section-videos {
+	position: relative;
+	margin-top: 45px;
+}
+#section-videos .div-title {
+	margin-left: 65px;
+	margin-bottom: 45px;
+}
+#section-videos .div-title img {
+	float: left;
+	width: 61px;
+	margin-right: 8px;
+}
+#section-videos .div-title .title {
+	font-size: 25px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+#section-videos .div-title .subtitle {
+	font-size: 14px;
+	opacity: .5;
+}
+#section-videos .title-container{
+	display: grid;
+	grid-template-columns: repeat(12, 1fr);
+	column-gap: 24px;
+}
+#section-videos .title-left{
+	grid-column-start: 1;
+	grid-column-end: 5;
+}
+#section-videos .title-right{
+	grid-column-start: 5;
+	grid-column-end: 13;
+	text-align: right;
+	margin-right: 65px;
+}
+#section-videos .social-link,
+#section-videos .social-link:hover{
+	padding: 0 2px;
+}
+.videos-loading {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background-color: #040727aa;
+}
+.videos-loading span {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	text-align: center;
+	color: #fff;
+}
+.videos-loading .fa {
+	margin-bottom: 10px;
+}
+
 /* exchange */
 #section-exchange {
 	padding-top: 20px;

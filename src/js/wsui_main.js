@@ -553,6 +553,86 @@ function getNews(){
     }
 }
 
+function showVideos(listVideos){
+	listVideos = listVideos || settings.get('videos_json', []);
+
+	let i = 1;
+	let itemVideos = function(item) {
+		let published = (function() {
+			var d = new Date(item.published);
+			var m = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+			return d.getDate() + ' ' + m[d.getMonth()] + ' ' + d.getFullYear();
+		})();
+		item.content = item.content.replace('<br />', '|');
+		let title = item.title.substring(0, 50) + (item.title.length > 50 ? '...' : '');
+		let content = item.content.substring(0, 250) + (item.content.length > 250 ? '...' : '');
+		content = content.replace('|', '<br />');
+		let cont_start = (i === 1) || ((i - 1) % 3 == 0) ? '<div class="news-div-content">' : '';
+		let cont_end = (i % 3 == 0) || (i === listVideos.length) ? '</div>' : '';
+		i++;
+		return `${cont_start}
+			<div class="box">
+				<div class="title clearfix">
+					<img src="../assets/news/item-icon.png" />
+					${title}
+				</div>
+				<div class="text">${content}</div>
+				<div class="bottom clearfix">
+					<span class="date">${published}</span>
+					<a href="${item.video_url}" class="external form-bt button-blue">View video</a>
+				</div>
+			</div>
+		${cont_end}`;
+	};
+	let html = '';
+	for (let i = 0; i < listVideos.length; i++) {
+		html += itemVideos(listVideos[i]);
+	}
+	document.querySelector('#section-videos .list').innerHTML = html;
+
+	let d = document.getElementById('videos-loading');
+	d.classList.add('hidden');
+}
+
+function getVideos(){
+	try{
+		const videos_time = settings.get('videos_timestamp', 0);
+		let curr_time = new Date().getTime();
+
+		if ((curr_time - videos_time) > (1000 * 60 * 5) || document.querySelector('#section-videos .list').innerHTML == '') {
+			let d = document.getElementById('videos-loading');
+			d.classList.remove('hidden');
+
+			require('https').get(config.videosUpdateUrl, (res) => {
+				var result = '';
+				res.setEncoding('utf8');
+
+				res.on('data', (chunk) => {
+					result += chunk;
+				});
+
+				res.on('end', () => {
+					try{
+						var videosList = JSON.parse(result);
+						settings.set('videos_json', videosList);
+						settings.set('videos_timestamp', new Date().getTime());
+						showVideos(videosList);
+					}catch(e){
+						log.debug(`Failed to get the videos: ${e.message}`);
+						showVideos();
+					}
+				});
+			}).on('error', (e) => {
+				log.debug(`Failed to get the videos: ${e.message}`);
+				showVideos();
+			});
+		}
+    }catch(e){
+        log.error(`Failed to get the videos: ${e.code} - ${e.message}`);
+		showVideos();
+    }
+}
+
 function showOverviewBlocPrice(listBlocPrice){
 	listBlocPrice = listBlocPrice || settings.get('bloc_price_json', {});
 
@@ -1075,7 +1155,13 @@ function changeSection(sectionId, isSettingRedir) {
 
 		getNews();
 
-		changeSection('section-settings');
+		// changeSection('section-settings');
+	}
+	// when videos is loaded
+	if(targetSection === 'section-videos'){
+		getVideos();
+
+		// changeSection('section-settings');
 	}
 
 	// when overview is loaded, show the sidebar nav and fetch BLOC stats
