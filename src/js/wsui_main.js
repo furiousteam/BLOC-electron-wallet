@@ -110,6 +110,7 @@ let importSeedInputScanHeight;
 let txButtonRefresh;
 let txButtonSortAmount;
 let txButtonSortDate;
+let txButtonSortStatus;
 let txInputUpdated;
 let txInputNotify;
 let txButtonExport;
@@ -210,6 +211,7 @@ function populateElementVars(){
 	txButtonRefresh = document.getElementById('button-transactions-refresh');
 	txButtonSortAmount = document.getElementById('txSortAmount');
 	txButtonSortDate = document.getElementById('txSortTime');
+	txButtonSortStatus = document.getElementById('txSortStatus');
 	txInputUpdated = document.getElementById('transaction-updated');
 	txInputNotify = document.getElementById('transaction-notify');
 	txButtonExport = document.getElementById('transaction-export');
@@ -2497,6 +2499,18 @@ function handleTransactions(){
 		resetTxSortMark();
 		event.target.classList.add(targetDir);
 		TXLIST_OBJ.sort('timestamp', {
+			order: targetDir
+		});
+	});
+
+	txButtonSortStatus.addEventListener('click',(event)=>{
+		event.preventDefault();
+		let currentDir = event.target.dataset.dir;
+		let targetDir = (currentDir === 'desc' ? 'asc' : 'desc');
+		event.target.dataset.dir = targetDir;
+		resetTxSortMark();
+		event.target.classList.add(targetDir);
+		TXLIST_OBJ.sort('txType', {
 			order: targetDir
 		});
 	});
