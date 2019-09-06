@@ -2802,7 +2802,7 @@ body.wallet-opened #section-settings {
 .right-top-buttons img {
 	margin-right: 20px;
 }
-#sswitch, #kswitch, #iswitch{
+#sswitch, #kswitch, #iswitch, #cswitch{
 	background: transparent;
 	color: #ccc;
 	font-size: 0.9rem;
@@ -2823,14 +2823,18 @@ body.wallet-opened #section-settings {
 #kswitch:focus,
 #iswitch:hover,
 #iswitch:active,
-#iswitch:focus{
+#iswitch:focus,
+#cswitch:hover,
+#cswitch:active,
+#cswitch:focus{
 	color: #fff;
 	opacity: 1.0;
 	transition: color 0.1s linear;
 }
 #sswitch:hover,
 #kswitch:hover,
-#iswitch:hover{
+#iswitch:hover,
+#cswitch:hover{
 	color: #00ffff;
 	transition: color 0.1s linear;
 }

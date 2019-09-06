@@ -118,6 +118,7 @@ let txButtonExport;
 let sswitch;
 let kswitch;
 let iswitch;
+let cswitch;
 // exchange
 let chartConfig;
 let chartInstance;
@@ -127,6 +128,7 @@ function populateElementVars(){
 	sswitch = document.getElementById('sswitch');
 	kswitch = document.getElementById('kswitch');
 	iswitch = document.getElementById('iswitch');
+	cswitch = document.getElementById('cswitch');
 	firstTab = document.querySelector('.navbar-button');
 	// generics
 	genericBrowseButton = document.querySelectorAll('.path-input-button:not(.d-opened)');
@@ -1173,6 +1175,7 @@ function changeSection(sectionId, isSettingRedir) {
 	if(targetSection === 'section-overview'){
 		setCssWalletOpened();
 		getBlocPrice();
+		cswitch.classList.remove('hidden');
 	}
 
 	// when exchange is loaded, fetch and display BLOC stats
@@ -1801,6 +1804,7 @@ function handleWalletClose(){
 				formMessageReset();
 				changeSection('section-overview');
 				setCssWalletClosed(); // this is not in changeSection function because the section sent was 'section-overview' instead of 'section-welcome'
+				cswitch.classList.add('hidden');
 				// update/clear tx
 				txInputUpdated.value = 1;
 				txInputUpdated.dispatchEvent(new Event('change'));
@@ -2864,6 +2868,9 @@ function initHandlers(){
 	});
 	iswitch.addEventListener('click', function() {
 		changeSection('section-about');
+	});
+	cswitch.addEventListener('click', function() {
+		overviewWalletCloseButton.dispatchEvent(new Event('click'));
 	});
 
 	// settings handlers
