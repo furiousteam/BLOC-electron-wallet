@@ -150,9 +150,9 @@ class WalletShellApi {
             this.getViewKey().then((vkres) => {
                 backupKeys.viewSecretKey = vkres.viewSecretKey;
                 return backupKeys;
-                //return Object.assign(vkres);
             }).then(() => {
                 this.getSpendKeys(req_params).then((vsres) => {
+                    backupKeys.spendPublicKey = vsres.spendPublicKey;
                     backupKeys.spendSecretKey = vsres.spendSecretKey;
                     return vsres;
                 }).catch((err) => {
