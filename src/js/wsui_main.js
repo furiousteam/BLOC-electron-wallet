@@ -564,19 +564,24 @@ function showVideos(listVideos){
 			return d.getDate() + ' ' + m[d.getMonth()] + ' ' + d.getFullYear();
 		})();
 		item.content = item.content.replace('<br />', '|');
-		let title = item.title.substring(0, 50) + (item.title.length > 50 ? '...' : '');
+		let title = item.title.substring(0, 65) + (item.title.length > 65 ? '...' : '');
 		let content = item.content.substring(0, 250) + (item.content.length > 250 ? '...' : '');
 		content = content.replace('|', '<br />');
-		let cont_start = (i === 1) || ((i - 1) % 3 == 0) ? '<div class="news-div-content">' : '';
+		let cont_start = (i === 1) || ((i - 1) % 3 == 0) ? '<div class="videos-div-content">' : '';
 		let cont_end = (i % 3 == 0) || (i === listVideos.length) ? '</div>' : '';
 		i++;
 		return `${cont_start}
 			<div class="box">
 				<div class="title clearfix">
-					<img src="../assets/news/item-icon.png" />
+					<img src="../assets/videos/item-icon.png" />
 					${title}
 				</div>
-				<div class="text">${content}</div>
+				<div class="image">
+					<a href="${item.video_url}" class="external">
+						<img src="${item.thumbnail}" />
+					</a>
+				</div>
+				<!--<div class="text">${content}</div>-->
 				<div class="bottom clearfix">
 					<span class="date">${published}</span>
 					<a href="${item.video_url}" class="external form-bt button-blue">View video</a>
