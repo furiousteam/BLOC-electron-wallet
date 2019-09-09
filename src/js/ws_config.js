@@ -130,6 +130,8 @@ config.blockExplorerTelegramBotUrl = 'https://t.me/bloc_explorer_bot';
 config.newsUpdateUrl = 'https://bloc.money/wallet-api/latest-medium-news?limit=6';
 // API videos update url
 config.videosUpdateUrl = 'https://bloc.money/wallet-api/youtube-channel-videos?limit=6';
+// API ecosystem update url
+config.ecosystemUpdateUrl = 'https://bloc.money/wallet-api/list-ecosystem';
 // BLOC price update url for overview
 config.blocPriceUpdateUrl = 'https://bloc.money/wallet-api/coingecko-general-stats';
 // BLOC exchange url

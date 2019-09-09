@@ -642,6 +642,92 @@ function getVideos(){
     }
 }
 
+function showEcosystem(listEcosystem){
+	listEcosystem = listEcosystem || settings.get('ecosystem_json', []);
+
+	let k = 1;
+	let itemEcosystem = function(item, len) {
+		let title = item.title.substring(0, 65) + (item.title.length > 65 ? '...' : '');
+		let cont_start = (k === 1) || ((k - 1) % 3 == 0) ? '<div class="ecosystem-div-content">' : '';
+		let cont_end = (k % 3 == 0) || (k === len) ? '</div>' : '';
+		k++;
+		return `${cont_start}
+			<a href="${item.link}" class="external box">
+				<div class="image">
+					<img src="${item.image}" />
+				</div>
+				<div class="title clearfix">
+					${title}
+				</div>
+				<div class="text clearfix">
+					${item.description}
+				</div>
+			</a>
+		${cont_end}`;
+	};
+	let itemCat = function(item, inner) {
+		return `<div class="cat">
+			<h3>${item.category_name}</h3>
+			${inner}
+		</div>
+		`;
+	};
+	let html = '<div class="scroller">';
+	for (let i = 0; i < listEcosystem.length; i++) { // categories
+		k = 1;
+		let cats = listEcosystem[i];
+		let inner = '';
+		for (let j = 0; j < cats.links.length; j++) { // links
+			inner += itemEcosystem(cats.links[j], cats.links.length);
+		}
+		html += itemCat(cats, inner);
+	}
+	html += '</div>';
+	document.querySelector('#section-ecosystem .list').innerHTML = html;
+
+	let d = document.getElementById('ecosystem-loading');
+	d.classList.add('hidden');
+}
+
+function getEcosystem(){
+	try{
+		const ecosystem_time = settings.get('ecosystem_timestamp', 0);
+		let curr_time = new Date().getTime();
+
+		if ((curr_time - ecosystem_time) > (1000 * 60 * 5) || document.querySelector('#section-ecosystem .list').innerHTML == '') {
+			let d = document.getElementById('ecosystem-loading');
+			d.classList.remove('hidden');
+
+			require('https').get(config.ecosystemUpdateUrl, (res) => {
+				var result = '';
+				res.setEncoding('utf8');
+
+				res.on('data', (chunk) => {
+					result += chunk;
+				});
+
+				res.on('end', () => {
+					try{
+						var ecosystemList = JSON.parse(result);
+						settings.set('ecosystem_json', ecosystemList);
+						settings.set('ecosystem_timestamp', new Date().getTime());
+						showEcosystem(ecosystemList);
+					}catch(e){
+						log.debug(`Failed to get the ecosystem: ${e.message}`);
+						showEcosystem();
+					}
+				});
+			}).on('error', (e) => {
+				log.debug(`Failed to get the ecosystem: ${e.message}`);
+				showEcosystem();
+			});
+		}
+    }catch(e){
+        log.error(`Failed to get the ecosystem: ${e.code} - ${e.message}`);
+		showEcosystem();
+    }
+}
+
 function showOverviewBlocPrice(listBlocPrice){
 	listBlocPrice = listBlocPrice || settings.get('bloc_price_json', {});
 
@@ -1163,14 +1249,14 @@ function changeSection(sectionId, isSettingRedir) {
 		d.setAttribute('href', config.instagramProfileUrl);
 
 		getNews();
-
-		// changeSection('section-settings');
 	}
 	// when videos is loaded
 	if(targetSection === 'section-videos'){
 		getVideos();
-
-		// changeSection('section-settings');
+	}
+	// when ecosystem is loaded
+	if(targetSection === 'section-ecosystem'){
+		getEcosystem();
 	}
 
 	// when overview is loaded, show the sidebar nav and fetch BLOC stats
