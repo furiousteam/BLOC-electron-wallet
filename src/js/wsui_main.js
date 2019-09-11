@@ -1137,6 +1137,9 @@ function changeSection(sectionId, isSettingRedir) {
 	if(targetSection === 'section-welcome'){
 		sswitch.classList.remove('hidden');
 		iswitch.classList.remove('hidden');
+
+		let d = document.getElementById('bloc-wiki-link-welcome');
+		d.setAttribute('href', config.blocWikiUrl);
 	}
 
 	// when settings is loaded, show the warning
