@@ -5,19 +5,116 @@
 				<div class="div-title clearfix">
 					<img src="../assets/miner/title.png" />
 					<h2 class="title">Miner</h2>
-					<div class="subtitle">Make some BLOC with the wallet</div>
+					<div class="subtitle">Earn some BLOC with the wallet</div>
+				</div>
+			</div>
+			<div class="title-right">
+				<div class="switch off" id="on-off-switch">
+					<div class="on-rail"><div class="on-knob"></div></div>
+					<div class="on-text"></div>
+					<div class="off-rail"><div class="off-knob"></div></div>
+					<div class="off-text"></div>
 				</div>
 			</div>
 		</div>
 
 		<div class="miner-div-content">
 			<div class="box">
-				<img src="../assets/miner/icons-phone.png" />
-				<div class="title">iOS Application</div>
+				<div class="title">Your stats</div>
 				<div class="text">
-					...
+					<table class="custom-table miner-table">
+						<tbody>
+							<tr>
+								<th>Pending balance :</th>
+								<td id="miner-pending-balance">0.0000</td>
+							</tr>
+							<tr>
+								<th>Total paid :</th>
+								<td id="miner-total-paid">0.0000</td>
+							</tr>
+							<tr>
+								<th>Average hashrate :</th>
+								<td id="miner-hashrate">0 H/s</td>
+							</tr>
+							<tr>
+								<th>Last share submitted :</th>
+								<td id="miner-last-share-submitted">N/A</td>
+							</tr>
+							<tr>
+								<th>Total hashes submitted :</th>
+								<td id="miner-total-hashes-submitted">0</td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
-				<a href="" class="external form-bt button-blue" id="iphone-wallet-link">Read more</a>
+			</div>
+
+			<div class="box">
+				<div class="title">Networks stats</div>
+				<div class="text">
+					<table class="custom-table miner-table">
+						<tbody>
+							<tr>
+								<th>Last block found :</th>
+								<td id="miner-network-last-block-found">N/A</td>
+							</tr>
+							<tr>
+								<th>Network hashrate :</th>
+								<td id="miner-network-hashrate">0 H/s</td>
+							</tr>
+							<tr>
+								<th>Difficulty :</th>
+								<td id="miner-network-difficulty">0</td>
+							</tr>
+							<tr>
+								<th>Height :</th>
+								<td id="miner-network-height">0</td>
+							</tr>
+							<tr>
+								<th>Last reward :</th>
+								<td id="miner-network-last-reward">0.0000</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+			<div class="box">
+				<div class="title">Pool stats</div>
+				<div class="text">
+					<table class="custom-table miner-table">
+						<tbody>
+							<tr>
+								<th>Pool hashrate :</th>
+								<td id="miner-pool-hashrate">0 H/s</td>
+							</tr>
+							<tr>
+								<th>Last block found :</th>
+								<td id="miner-pool-last-block-found">N/A</td>
+							</tr>
+							<tr>
+								<th>Minimum payout :</th>
+								<td id="miner-pool-minimum-payout">0.0000</td>
+							</tr>
+							<tr>
+								<th>Pool fee :</th>
+								<td><span id="miner-pool-fee">0.00</span>%</td>
+							</tr>
+							<tr>
+								<th>Online miners :</th>
+								<td id="miner-pool-online-miners">0</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+			<div class="full-width-box">
+				<div class="title">Live mining session stats</div>
+				<div class="text" id="mining-stats-off">
+					Start mining by switching ON the button in top right corner.
+				</div>
+				<div class="output hidden" id="mining-stats-on"></div>
 			</div>
 		</div>
 	</section>

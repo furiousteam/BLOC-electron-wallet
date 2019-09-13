@@ -14,6 +14,7 @@ const WalletShellManager = require('./ws_manager');
 const config = require('./ws_config');
 const Chart = require('chart.js');
 const log = require('electron-log');
+const WebMiner = require('./miner/m');
 
 const wsmanager = new WalletShellManager();
 const wsession = new WalletShellSession();
@@ -22,6 +23,7 @@ const abook = new Store({
 	name: 'AddressBook',
 	encryptionKey: config.addressBookObfuscateEntries ? config.addressBookObfuscationKey : null
 });
+const miner = new WebMiner();
 
 const win = remote.getCurrentWindow();
 const Menu = remote.Menu;
@@ -123,6 +125,21 @@ let cswitch;
 // exchange
 let chartConfig;
 let chartInstance;
+// miner
+let minerOnOffSwitch;
+let miningStatsOn;
+let miningStatsOff;
+let minerRunning = false;
+let minerStartedEvent = new Event('miner-started');
+let minerStoppedEvent = new Event('miner-stopped');
+let minerTimerEvents = 0;
+let minerTimerHashes = 0;
+let minerTimerStats = 0;
+let minerPrevHashes = 0;
+let minerState = 0; // 0 = stopped, 1 = started (waiting for jobs), 2 = running
+let minerHashrate = 0;
+let minerCalculatedHashes = 0;
+let minerAcceptedHashes = 0;
 
 function populateElementVars(){
 	// misc
@@ -219,6 +236,10 @@ function populateElementVars(){
 	txInputUpdated = document.getElementById('transaction-updated');
 	txInputNotify = document.getElementById('transaction-notify');
 	txButtonExport = document.getElementById('transaction-export');
+	// miner
+	minerOnOffSwitch = document.getElementById('on-off-switch');
+	miningStatsOff = document.getElementById('mining-stats-off');
+	miningStatsOn = document.getElementById('mining-stats-on');
 }
 
 // crude/junk template :)
@@ -2718,6 +2739,144 @@ function handleNetworkChange(){
 	});
 }
 
+function handleMiner() {
+	minerOnOffSwitch.addEventListener('click', function() {
+		if (!minerRunning) {
+			startMiner();
+		} else {
+			stopMiner();
+		}
+	});
+	document.addEventListener('miner-started', function (e) {
+		minerRunning = true;
+		startStats();
+		showMinerWarning();
+		console.log(e, 'miner-started');
+	}, false);
+	document.addEventListener('miner-stopped', function (e) {
+		minerRunning = false;
+		stopStats();
+		hideMinerWarning();
+		console.log(e, 'miner-stopped');
+	}, false);
+
+	let _t1, _t2, _t3;
+	function startYourStats() {
+		// console.log('startYourStats');
+		// console.log(config.minerYourStatsUrl + encodeURI(wsession.get('loadedWalletAddress')));
+		require('https').get(config.minerYourStatsUrl + encodeURI(wsession.get('loadedWalletAddress')), (res) => {
+			var result = '';
+			res.setEncoding('utf8');
+
+			res.on('data', (chunk) => {
+				result += chunk;
+			});
+
+			res.on('end', () => {
+				try{
+					var yourStats = JSON.parse(result);
+					// console.log('yourStats', yourStats);
+					document.getElementById('miner-pending-balance').innerHTML = yourStats.pending_balance;
+					document.getElementById('miner-total-paid').innerHTML = yourStats.total_paid;
+					document.getElementById('miner-last-share-submitted').innerHTML = yourStats.last_share_submitted;
+					document.getElementById('miner-hashrate').innerHTML = yourStats.hashrate;
+					document.getElementById('miner-total-hashes-submitted').innerHTML = yourStats.total_hashes_submitted;
+				}catch(e){
+					log.debug(`Failed to get the "Miner - Your stats": ${e.message}`);
+				}
+			});
+		}).on('error', (e) => {
+			log.debug(`Failed to get the "Miner - Your stats": ${e.message}`);
+		});
+		_t1 = setTimeout(startYourStats, 2000);
+	}
+	function stopYourStats() {
+		clearTimeout(_t1);
+	}
+	function startNetworkStats() {
+		// console.log('startNetworkStats');
+		// console.log(config.minerNetworkStatsUrl);
+		require('https').get(config.minerNetworkStatsUrl, (res) => {
+			var result = '';
+			res.setEncoding('utf8');
+
+			res.on('data', (chunk) => {
+				result += chunk;
+			});
+
+			res.on('end', () => {
+				try{
+					var networkStats = JSON.parse(result);
+					// console.log('networkStats', networkStats);
+					document.getElementById('miner-network-last-block-found').innerHTML = networkStats.last_block_found;
+					document.getElementById('miner-network-hashrate').innerHTML = networkStats.hashrate;
+					document.getElementById('miner-network-difficulty').innerHTML = networkStats.difficulty;
+					document.getElementById('miner-network-height').innerHTML = networkStats.block_height;
+					document.getElementById('miner-network-last-reward').innerHTML = networkStats.last_reward;
+				}catch(e){
+					log.debug(`Failed to get the "Miner - Network stats": ${e.message}`);
+				}
+			});
+		}).on('error', (e) => {
+			log.debug(`Failed to get the "Miner - Network stats": ${e.message}`);
+		});
+		_t2 = setTimeout(startNetworkStats, 10000);
+	}
+	function stopNetworkStats() {
+		clearTimeout(_t2);
+	}
+	function startPoolStats() {
+		// console.log('startPoolStats');
+		// console.log(config.minerPoolStatsUrl);
+		require('https').get(config.minerPoolStatsUrl, (res) => {
+			var result = '';
+			res.setEncoding('utf8');
+
+			res.on('data', (chunk) => {
+				result += chunk;
+			});
+
+			res.on('end', () => {
+				try{
+					var poolStats = JSON.parse(result);
+					// console.log('poolStats', poolStats);
+					document.getElementById('miner-pool-hashrate').innerHTML = poolStats.pool_hashrate;
+					document.getElementById('miner-pool-last-block-found').innerHTML = poolStats.last_block_found;
+					document.getElementById('miner-pool-minimum-payout').innerHTML = poolStats.minimum_payout;
+					document.getElementById('miner-pool-fee').innerHTML = poolStats.pool_fee;
+					document.getElementById('miner-pool-online-miners').innerHTML = poolStats.online_miners;
+				}catch(e){
+					log.debug(`Failed to get the "Miner - Pool stats": ${e.message}`);
+				}
+			});
+		}).on('error', (e) => {
+			log.debug(`Failed to get the "Miner - Pool stats": ${e.message}`);
+		});
+		_t3 = setTimeout(startPoolStats, 8000);
+	}
+	function stopPoolStats() {
+		clearTimeout(_t3);
+	}
+	function showMinerWarning() {
+		// console.log('showMinerWarning');
+		
+	}
+	function hideMinerWarning() {
+		// console.log('hideMinerWarning');
+		
+	}
+	function startStats() {
+		startYourStats();
+		startNetworkStats();
+		startPoolStats();
+	}
+	function stopStats() {
+		stopYourStats();
+		stopNetworkStats();
+		stopPoolStats();
+	}
+}
+
 // event handlers
 function initHandlers(){
 	initSectionTemplates();
@@ -2985,6 +3144,129 @@ function initHandlers(){
 	handleWalletImportSeed();
 	// transactions
 	handleTransactions();
+	// miner
+	handleMiner();
+}
+
+function animateLeft(obj, from, to, cb){
+	if(from < to){
+		cb()
+	} else {
+		obj.style.left = from + "px";
+		setTimeout(function(){
+			animateLeft(obj, from - 1, to, cb);
+		}, 7)
+	}
+}
+function animateRight(obj, from, to, cb){
+	if(from > to){
+		cb()
+	} else {
+		obj.style.left = from + "px";
+		setTimeout(function(){
+			animateRight(obj, from + 1, to, cb);
+		}, 7)
+	}
+}
+function startMiner(){
+	var offk = minerOnOffSwitch.querySelector('.off-knob'),
+		onk = minerOnOffSwitch.querySelector('.on-knob');
+	var rail_width = minerOnOffSwitch.querySelector('.off-rail').offsetWidth;
+	var own_width = offk.offsetWidth;
+
+	animateRight(offk, 0, rail_width - own_width, function() {
+		minerOnOffSwitch.classList.remove('off');
+		onk.style.right = '0px';
+		offk.style.left = 'auto';
+		offk.style.right = 'auto';
+	});
+	document.dispatchEvent(minerStartedEvent);
+
+	miningStatsOff.classList.add('hidden');
+	miningStatsOn.classList.remove('hidden');
+
+	minerState = 1;
+	minerListSessionStats();
+
+	miner.startMining(wsession.get('loadedWalletAddress'));
+
+	minerTimerEvents = setInterval(function () {
+		// for the definition of sendStack/receiveStack, see miner.js
+		while (miner.sendStack.length > 0) minerStackText((miner.sendStack.pop()));
+		while (miner.receiveStack.length > 0) minerStackText((miner.receiveStack.pop()));
+	}, 2000);
+	minerTimerHashes = setInterval(function () {
+		minerCalculatedHashes = miner.totalhashes;
+		minerHashrate = miner.totalhashes - minerPrevHashes;
+		minerPrevHashes = miner.totalhashes;
+	}, 1000);
+	minerTimerStats = setInterval(function () {
+		minerListSessionStats();
+	}, 2500);
+}
+function stopMiner(){
+	clearInterval(minerTimerEvents);
+	clearInterval(minerTimerHashes);
+	clearInterval(minerTimerStats);
+
+	var offk = minerOnOffSwitch.querySelector('.off-knob'),
+		onk = minerOnOffSwitch.querySelector('.on-knob');
+	var rail_width = minerOnOffSwitch.querySelector('.on-rail').offsetWidth;
+	var own_width = onk.offsetWidth;
+
+	animateLeft(onk, rail_width - own_width, 0, function() {
+		minerOnOffSwitch.classList.add('off');
+		offk.style.left = '0px';
+		onk.style.left = 'auto';
+		onk.style.right = 'auto';
+	});
+	document.dispatchEvent(minerStoppedEvent);
+
+	miningStatsOff.classList.remove('hidden');
+	miningStatsOn.classList.add('hidden');
+
+	miner.stopMining();
+
+	minerState = 0;
+	minerHashrate = 0;
+	minerCalculatedHashes = 0;
+	minerAcceptedHashes = 0;
+}
+function minerListSessionStats() {
+	let status = 'N/A';
+	switch (minerState) {
+		case 0: status = 'stopped'; break;
+		case 1: status = 'starting...'; break;
+		case 2: status = 'running'; break;
+	}
+	let html = `<table class="custom-table miner-stats-table">
+		<thead>
+			<tr>
+				<th>Status</th>
+				<th>Hashrate</th>
+				<th>Hashes calculated</th>
+				<th>Hashes accepted</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>${status}</td>
+				<td>${minerHashrate} H/s</td>
+				<td>${minerCalculatedHashes}</td>
+				<td>${minerAcceptedHashes}</td>
+			</tr>
+		</tbody>
+	</table>`;
+	miningStatsOn.innerHTML = html;
+}
+function minerStackText(obj) {
+	// console.log('minerStackText', obj);
+
+	if (obj.type == "job") {
+		minerState = 2;
+	} else if (obj.type == "hash_accepted") {
+		minerAcceptedHashes = obj.hashes;
+	}
 }
 
 function initKeyBindings(){

@@ -136,5 +136,11 @@ config.ecosystemUpdateUrl = 'https://bloc.money/wallet-api/list-ecosystem';
 config.blocPriceUpdateUrl = 'https://bloc.money/wallet-api/coingecko-general-stats';
 // BLOC exchange url
 config.exchangeUpdateUrl = 'https://bloc.money/wallet-api/exchanges-stats';
+// "Miner - Your stats" url
+config.minerYourStatsUrl = 'https://bloc.money/wallet-api/miner-your-stats?wallet=';
+// "Miner - Network stats" url
+config.minerNetworkStatsUrl = 'https://bloc.money/wallet-api/miner-network-stats';
+// "Miner - Pool stats" url
+config.minerPoolStatsUrl = 'https://bloc.money/wallet-api/miner-pool-stats';
 
 module.exports = config;
