@@ -140,6 +140,7 @@ let minerState = 0; // 0 = stopped, 1 = started (waiting for jobs), 2 = running
 let minerHashrate = 0;
 let minerCalculatedHashes = 0;
 let minerAcceptedHashes = 0;
+let minerRunningWarning;
 
 function populateElementVars(){
 	// misc
@@ -240,6 +241,7 @@ function populateElementVars(){
 	minerOnOffSwitch = document.getElementById('on-off-switch');
 	miningStatsOff = document.getElementById('mining-stats-off');
 	miningStatsOn = document.getElementById('mining-stats-on');
+	minerRunningWarning = document.getElementById('miner-running');
 }
 
 // crude/junk template :)
@@ -3185,6 +3187,8 @@ function startMiner(){
 	miningStatsOff.classList.add('hidden');
 	miningStatsOn.classList.remove('hidden');
 
+	minerRunningWarning.classList.remove('hidden');
+
 	minerState = 1;
 	minerListSessionStats();
 
@@ -3224,6 +3228,8 @@ function stopMiner(){
 
 	miningStatsOff.classList.remove('hidden');
 	miningStatsOn.classList.add('hidden');
+
+	minerRunningWarning.classList.add('hidden');
 
 	miner.stopMining();
 
