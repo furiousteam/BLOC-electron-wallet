@@ -1844,13 +1844,17 @@ function handleWalletOpen(){
 
 		function onError(err){
 			formMessageReset();
-			formMessageSet('load','error', err);
+			if (err.message.indexOf("ECONNREFUSED") !== -1) {
+				formMessageSet('load','error', 'Unable to open the wallet.<br />The password you provided is incorrect!');
+			} else {
+				formMessageSet('load','error', err);
+			}
+			console.log('err', err);
 			WALLET_OPEN_IN_PROGRESS = false;
 			setOpenButtonsState(0);
 			return false;
 		}
 
-		//function onSuccess(theWallet, scanHeight){
 		function onSuccess(){
 			walletOpenInputPath.value = settings.get('recentWallet');
 			overviewWalletAddress.value = wsession.get('loadedWalletAddress');

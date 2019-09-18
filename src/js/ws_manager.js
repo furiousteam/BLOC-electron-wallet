@@ -271,7 +271,7 @@ WalletShellManager.prototype._spawnService = function(walletFile, password, onEr
     }
 
     let TEST_OK = false;
-    let MAX_CHECK = 48;
+    const MAX_CHECK = 48;
     function testConnection(retry){
         wsm.serviceApi.getAddress().then((address) => {
             log.debug('Got an address, connection ok!');
@@ -294,7 +294,7 @@ WalletShellManager.prototype._spawnService = function(walletFile, password, onEr
             return true;
         }).catch((err) => {
             log.debug('Connection failed or timedout');
-            if(retry === 10 && onDelay) onDelay(`Still no response from ${config.walletServiceBinaryFilename}, please wait a few more seconds...`);
+            if(retry === 7 && onDelay) onDelay(`Still no response from ${config.walletServiceBinaryFilename}.<br />Is your wallet password valid?`);
             if(retry >= MAX_CHECK && !TEST_OK){
                 if(wsm.serviceStatus()){
                     wsm.terminateService();
@@ -314,7 +314,7 @@ WalletShellManager.prototype._spawnService = function(walletFile, password, onEr
 
     setTimeout(function(){
         testConnection(0);
-    }, 10000);
+    }, 5000);
 };
 
 WalletShellManager.prototype.stopService = function(){
