@@ -708,7 +708,7 @@ body .videos-div-content .button-blue{
 #section-ecosystem .scroller{
 	margin: 0 35px 0 35px;
 	padding: 0 25px 0 25px;
-	max-height: 500px;
+	max-height: 540px;
 	overflow-x: hidden;
 	overflow-y: auto;
 }
@@ -746,9 +746,12 @@ body .videos-div-content .button-blue{
 	overflow: hidden;
 }
 .ecosystem-div-content .box .title{
+	margin-bottom: 7px;
+}
+.ecosystem-div-content .box .title a,
+.ecosystem-div-content .box .title a:hover{
 	font-size: 16px;
 	color: #fff;
-	margin-bottom: 7px;
 }
 .ecosystem-div-content .box .title img{
 	float: left;
@@ -757,10 +760,13 @@ body .videos-div-content .button-blue{
 .ecosystem-div-content .text{
 	height: 50px;
 	overflow: hidden;
+	margin-bottom: 15px;
+}
+.ecosystem-div-content .text a,
+.ecosystem-div-content .text a:hover{
 	font-size: 15px;
 	color: #fff;
 	opacity: .5;
-	margin-bottom: 15px;
 }
 .ecosystem-div-content .box:nth-child(1){
 	grid-column-start: 1;

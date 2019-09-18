@@ -675,17 +675,23 @@ function showEcosystem(listEcosystem){
 		let cont_end = (k % 3 == 0) || (k === len) ? '</div>' : '';
 		k++;
 		return `${cont_start}
-			<a href="${item.link}" class="external box">
+			<div class="box">
 				<div class="image">
-					<img src="${item.image}" />
+					<a href="${item.link}" class="external">
+						<img src="${item.image}" height="80" />
+					</a>
 				</div>
 				<div class="title clearfix">
-					${title}
+					<a href="${item.link}" class="external">
+						${title}
+					</a>
 				</div>
 				<div class="text clearfix">
-					${item.description}
+					<a href="${item.link}" class="external">
+						${item.description}
+					</a>
 				</div>
-			</a>
+			</div>
 		${cont_end}`;
 	};
 	let itemCat = function(item, inner) {
