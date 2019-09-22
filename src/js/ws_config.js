@@ -17,7 +17,7 @@ config.walletFileDefaultExt = 'money';
 config.walletServiceBinaryFilename = 'BLOC-service';
 
 // version on the bundled service (BLOC-service)
-config.walletServiceBinaryVersion = "3.5.0.1";
+config.walletServiceBinaryVersion = "3.5.1.2";
 
 // default port number for your wallet service (e.g. BLOC-service)
 config.walletServiceRpcPort = 8070;
