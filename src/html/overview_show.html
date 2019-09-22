@@ -1,47 +1,110 @@
 <template>
-	<section class="section" id="section-overview-show">
-		<div class="title-container">
-			<div class="title-left">
-				<div class="div-title clearfix">
-					<img src="../assets/backup/title.png" />
-					<h2 class="title">Backup</h2>
-					<div class="subtitle">Save your keys</div>
+    <section class="section" id="section-overview">
+		<div class="div-overview-balance">
+			<div class="overview-logo">
+				<img src="../assets/splash/bloc-logo.png" />
+			</div>
+			<div class="overview-balance">
+				<div class="title-balance-available title-with-icon">
+					<img src="../assets/overview/balance-icon.png" />
+					<div class="title-underline">Balance</div>
+				</div>
+				<div id="balance-available" title="Available Balance">
+					<div class="blue">Available:</div> <span data-cplabel="Balance" class="tctcl">0.0000</span> <u>BLOC</u>
+				</div>
+				<div id="balance-locked" title="Unconfirmed/Locked Balance">
+					<div class="blue">Locked:</div> <span data-cplabel="Locked balance" class="tctcl">0.0000</span> <u>BLOC</u>
 				</div>
 			</div>
-			<div class="title-right">
-				<button type="button" class="external form-bt button-blue" id="button-show-reveal">Reveal the keys and mnemonic seed</button>
-				<button type="button" class="external form-bt button-blue" id="button-show-export">Export to file</button>
+			<div class="overview-optimization">
+				<button tabindex="0" type="button" class="form-bt button-blue" title="When possible, perform wallet input/output optimization by creating fusion transactions. Try this if you get error when sending big transaction." id="button-send-optimize">Optimize</button>
+				<div id="fusion-progress" class="fusion-progress hidden">
+					Wallet optimization<br />in progress<br /><i class="fas fa-cog fa-spin fa-lg"></i>
+				</div>
 			</div>
 		</div>
 
-		<div class="overview-show-div-content">
-			<p>
-				Backup your key is one of the most important step to keep your coins safe.The private keys below can restore your wallet using the BLOC Electron Wallet or the BLOC CLI Wallet.<br />
-				You must understand that this private key is very sensitive. <b>NEVER SHARE</b> this key with anyone. With this key you can recover and install your wallet on any computer. So if someone find/see it, he can recover your wallet and move the funds like he want. The best way to save your wallet is to print on paper 2 copy of this key and hide them in 2 different safe place. If you loose this key and your have deleted the wallet file you will never be able to recover your fund, noone will be able to do it, even us. Your funds will be lost for the eternity.<br />
-				<b>This key is essential to save your wallet and funds.</b>
-			</p>
-			<p class="blue">
-				Do not store it on your smartphone, tablet or computer. You are the solo responsible for the security of these key.
-			</p>
-
-			<div class="box">
-				<div class="title">YOUR PRIVATE VIEW KEY</div>
-				<!--<div class="subtitle">Note : the key do not contain space characters</div>-->
-				<input placeholder="Click the Reveal button to see it" type="text" class="text-block ctcl" id="private-view-key" readonly="readonly" />
+		<div class="div-overview-connection">
+			<div class="overview-connection-info">
+				<div class="c100" id="circle-progress-procent">
+					<span id="circle-progress-text">0%</span>
+					<div class="slice">
+						<div class="bar"></div>
+						<div class="fill"></div>
+					</div>
+				</div>
+				<div class="text">Status:</div>
+				<div class="value" id="conn-info">N/A</div>
 			</div>
-			<div class="box">
-				<div class="title">YOUR PRIVATE SPEND KEY</div>
-				<!--<div class="subtitle">Note : the key do not contain space characters</div>-->
-				<input placeholder="Click the Reveal button to see it" type="text" class="text-block  ctcl" id="private-spend-key" readonly="readonly" />
+			<div class="overview-connection-node-address clearfix">
+				<img src="../assets/overview/wallet-node-address.png" />
+				<div class="text">Connected to:</div>
+				<div class="value" id="node-address">N/A</div>
 			</div>
-			<div class="box">
-				<div class="title">YOUR PRIVATE MENMONIC SEED</div>
-				<!--<div class="subtitle">Note : the mnemonic seed is always 20 words</div>-->
-				<textarea placeholder="Click the Reveal button to see it" class="default-textarea  ctcl" id="private-mnemonic-seed" readonly="readonly" rows="2"></textarea>
+			<div class="overview-connection-node-fee clearfix">
+				<img src="../assets/overview/connection-node-fee.png" />
+				<div class="text">Node fee:</div>
+				<div class="value" id="node-fee">N/A</div>
 			</div>
-
-			<span class="form-ew form-msg text-spaced-error text-center" id="text-secret-error"></span>
-			<span class="form-ew form-msg text-spaced-success text-center" id="text-secret-success"></span>
 		</div>
-	</section>
+
+		<div class="div-overview-address">
+			<div class="overview-wallet-address clearfix">
+				<div class="overview-copy-address">
+					<button type="button" id="copy-wallet-address">Copy address</button>
+				</div>
+				<div class="title-with-icon">
+					<img src="../assets/overview/wallet-address-icon.png" />
+					<div class="title-underline">Your wallet address (no space)</div>
+				</div>
+				<textarea tabindex="-1" data-noclear="1" class="overview-input" id="wallet-address" readonly="readonly" rows="2"></textarea>
+				<span id="form-help-wallet-address" class="form-help"></span>
+			</div>
+			<div class="overview-wallet-qrcode clearfix" id="div-w-qr">
+				<div class="title-with-icon">
+					<img src="../assets/overview/qrcode-icon.png" />
+					<div class="title-underline">QR code</div>
+				</div>
+				<div class="text">
+					<span>Scan to share your address.</span>
+					<button type="button" id="zoom-qr-code">Zoom</button>
+				</div>
+			</div>
+			<!--
+			<div class="input-wrap" style="margin-top:0">
+				<h2 class="title">Address:</h2>
+				
+				<span id="form-help-wallet-address" class="form-help"></span>
+				<a id="integrated-wallet-gen" class="wallet-tool form-help align-right">Generate Integrated Address</a>
+				<a id="payment-id-gen" class="wallet-tool form-help align-right">Generate Payment ID</a>
+			</div>
+			-->
+		</div>
+
+		<div class="div-markets">
+			<div class="img">
+				<img src="../assets/general/markets-icon.png" />
+			</div>
+			<div class="box">
+				<div class="title">BLOC price</div>
+				<div class="price" id="bloc-price-btc">0.00000000 BTC <span class="none">(0.00%)</span></div>
+				<div class="price" id="bloc-price-usd">$ 0.00 USD <span class="none">(0.00%)</span></div>
+			</div>
+			<div class="box">
+				<div class="title">24 hours trading volume</div>
+				<div class="price" id="trading-volume-btc">0.00000000 BTC <span class="none">(0.00%)</span></div>
+				<div class="price" id="trading-volume-usd">$ 0.00 USD <span class="none">(0.00%)</span></div>
+			</div>
+			<div class="box">
+				<div class="title">Market cap</div>
+				<div class="price" id="market-cap-btc">0.00000000 BTC <span class="none">(0.00%)</span></div>
+				<div class="price" id="market-cap-usd">$ 0.00 USD <span class="none">(0.00%)</span></div>
+			</div>
+			<div class="div-overview-markets-loading hidden" id="div-overview-markets-loading">
+				<span><i class="fas fa-cog fa-spin fa-lg"></i><br />Loading...</span>
+			</div>
+		</div>
+
+		<button tabindex="0" type="button" class="form-bt button-green hidden" id="button-overview-closewallet">Close Wallet</button>
+    </section>
 </template>

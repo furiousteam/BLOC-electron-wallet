@@ -79,10 +79,9 @@ let walletOpenButtons;
 // show/export keys page
 let overviewShowKeyButton;
 let showkeyButtonExportKey;
-let showkeyInputPrivateViewKey;
-let showkeyInputPublicSpendKey;
-let showkeyInputPrivateSpendKey;
-let showkeyInputPrivateSeed;
+let showkeyInputViewKey;
+let showkeyInputSpendKey;
+let showkeyInputSeed;
 // send page
 let sendInputAddress;
 let sendInputAmount;
@@ -196,10 +195,9 @@ function populateElementVars(){
 	// show/export keys page
 	overviewShowKeyButton = document.getElementById('button-show-reveal');
 	showkeyButtonExportKey = document.getElementById('button-show-export');
-	showkeyInputPrivateViewKey = document.getElementById('private-view-key');
-	showkeyInputPublicSpendKey = document.getElementById('public-spend-key');
-	showkeyInputPrivateSpendKey = document.getElementById('private-spend-key');
-	showkeyInputPrivateSeed = document.getElementById('private-mnemonic-seed');
+	showkeyInputViewKey = document.getElementById('key-show-view');
+	showkeyInputSpendKey = document.getElementById('key-show-spend');
+	showkeyInputSeed = document.getElementById('seed-show');
 
 	// send page
 	sendInputAddress = document.getElementById('input-send-address');
@@ -2162,10 +2160,9 @@ function handleWalletExport(){
 		formMessageReset();
 		if(!overviewWalletAddress.value) return;
 		wsmanager.getSecretKeys(overviewWalletAddress.value).then((keys) => {
-			showkeyInputPrivateViewKey.value = keys.viewSecretKey;
-			showkeyInputPublicSpendKey.value = keys.spendPublicKey;
-			showkeyInputPrivateSpendKey.value = keys.spendSecretKey;
-			showkeyInputPrivateSeed.value = keys.mnemonicSeed;
+			showkeyInputViewKey.value = keys.viewSecretKey;
+			showkeyInputSpendKey.value = keys.spendSecretKey;
+			showkeyInputSeed.value = keys.mnemonicSeed;
 		}).catch(() => {
 			formMessageSet('secret','error', "Failed to get key, please try again in a few seconds");
 		});

@@ -152,7 +152,6 @@ class WalletShellApi {
                 return backupKeys;
             }).then(() => {
                 this.getSpendKeys(req_params).then((vsres) => {
-                    backupKeys.spendPublicKey = vsres.spendPublicKey;
                     backupKeys.spendSecretKey = vsres.spendSecretKey;
                     return vsres;
                 }).catch((err) => {
