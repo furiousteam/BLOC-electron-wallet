@@ -1268,6 +1268,9 @@ function changeSection(sectionId, isSettingRedir) {
 		d = document.getElementById('twitter-profile-link');
 		d.setAttribute('href', config.twitterProfileUrl);
 
+		d = document.getElementById('reddit-profile-link');
+		d.setAttribute('href', config.redditProfileUrl);
+
 		d = document.getElementById('medium-profile-link');
 		d.setAttribute('href', config.mediumProfileUrl);
 

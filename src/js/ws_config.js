@@ -17,7 +17,7 @@ config.walletFileDefaultExt = 'money';
 config.walletServiceBinaryFilename = 'BLOC-service';
 
 // version on the bundled service (BLOC-service)
-config.walletServiceBinaryVersion = "3.0.1";
+config.walletServiceBinaryVersion = "3.5.0.1";
 
 // default port number for your wallet service (e.g. BLOC-service)
 config.walletServiceRpcPort = 8070;
@@ -110,6 +110,9 @@ config.githubPageUrl = 'https://github.com/furiousteam';
 
 // Twitter profile url
 config.twitterProfileUrl = 'https://twitter.com/bloc_money';
+
+// Reddit forum url
+config.redditProfileUrl = 'https://www.reddit.com/r/BLOC_MONEY/';
 
 // Medium profile url
 config.mediumProfileUrl = 'https://medium.com/@bloc.money';
