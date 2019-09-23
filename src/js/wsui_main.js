@@ -3253,7 +3253,7 @@ function minerListSessionStats() {
 				<th>Status</th>
 				<th>Hashrate</th>
 				<th>Hashes calculated</th>
-				<th>Hashes accepted</th>
+				<th>Shares accepted</th>
 			</tr>
 		</thead>
 		<tbody>
