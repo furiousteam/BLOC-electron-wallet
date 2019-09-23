@@ -6,7 +6,7 @@ Make sure to read the complete instructions about how to use the [BLOC Electron 
 
 ## **Screenshot**
 
-![BLOC Electron Wallet - Welcome screen](images/BLOC-gui-wallet/V3/BLOC-Electron-wallet-gif-v3.5.2.gif)
+![BLOC Electron Wallet - Welcome screen](https://wiki.bloc.money/wallets/images/BLOC-gui-wallet/V3/BLOC-Electron-wallet-gif-v3.5.2.gif)
 
 ## Features:
 This wallet contains the basic functions required to manage your BLOC assets:
