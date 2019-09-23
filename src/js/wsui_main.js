@@ -2350,7 +2350,8 @@ function handleSendTransfer(){
 				let okMsg = `Transaction sent!<br>Tx. hash: ${txhashUrl}.<br>Your balance may appear incorrect while transaction not fully confirmed.`;
 				formMessageSet('send', 'success', okMsg);
 				// check if it's new address, if so save it
-				let newId = wsutil.b2sSum(recipientAddress + paymentId);
+				// let newId = wsutil.b2sSum(recipientAddress + paymentId); // remove the paymentId for autosaved addresses to stop showing duplicated addresses
+				let newId = wsutil.b2sSum(recipientAddress);
 				if(!abook.has(newId)){
 					let now = new Date().toISOString();
 					let newName = `unnamed (${now.split('T')[0].replace(/-/g,'')}_${now.split('T')[1].split('.')[0].replace(/:/g,'')})`;
