@@ -8,6 +8,16 @@ Make sure to read the complete instructions about how to use the [BLOC Electron 
 
 ![BLOC Electron Wallet - Welcome screen](https://wiki.bloc.money/wallets/images/BLOC-gui-wallet/V3/BLOC-Electron-wallet-gif-v3.5.2.gif)
 
+![BLOC Electron Wallet - Wallet Overview](https://wiki.bloc.money/wallets/images/BLOC-gui-wallet/V3/wallet-overview.png)
+
+![BLOC Electron Wallet - Transactions](https://wiki.bloc.money/wallets/images/BLOC-gui-wallet/V3/transactions.png)
+
+![BLOC Electron Wallet - Transactions](https://wiki.bloc.money/wallets/images/BLOC-gui-wallet/V3/tools.png)
+
+![BLOC Electron Wallet - Transactions](https://wiki.bloc.money/wallets/images/BLOC-gui-wallet/V3/videos.png)
+
+![BLOC Electron Wallet - Transactions](https://wiki.bloc.money/wallets/images/BLOC-gui-wallet/V3/miner-mining.png)
+
 ## Features:
 This wallet contains the basic functions required to manage your BLOC assets:
 
