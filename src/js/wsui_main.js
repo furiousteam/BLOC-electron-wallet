@@ -2764,13 +2764,11 @@ function handleMiner() {
 	document.addEventListener('miner-started', function (e) {
 		minerRunning = true;
 		startStats();
-		showMinerWarning();
 		console.log(e, 'miner-started');
 	}, false);
 	document.addEventListener('miner-stopped', function (e) {
 		minerRunning = false;
 		stopStats();
-		hideMinerWarning();
 		console.log(e, 'miner-stopped');
 	}, false);
 
@@ -2793,7 +2791,7 @@ function handleMiner() {
 					document.getElementById('miner-pending-balance').innerHTML = yourStats.pending_balance;
 					document.getElementById('miner-total-paid').innerHTML = yourStats.total_paid;
 					document.getElementById('miner-last-share-submitted').innerHTML = yourStats.last_share_submitted;
-					document.getElementById('miner-hashrate').innerHTML = yourStats.hashrate;
+					// document.getElementById('miner-hashrate').innerHTML = yourStats.hashrate;
 					document.getElementById('miner-total-hashes-submitted').innerHTML = yourStats.total_hashes_submitted;
 				}catch(e){
 					log.debug(`Failed to get the "Miner - Your stats": ${e.message}`);
@@ -2870,14 +2868,6 @@ function handleMiner() {
 	}
 	function stopPoolStats() {
 		clearTimeout(_t3);
-	}
-	function showMinerWarning() {
-		// console.log('showMinerWarning');
-		
-	}
-	function hideMinerWarning() {
-		// console.log('hideMinerWarning');
-		
 	}
 	function startStats() {
 		startYourStats();
