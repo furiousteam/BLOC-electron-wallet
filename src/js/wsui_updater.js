@@ -230,6 +230,7 @@ function updateTransactions(result){
                 tx.rawFee = tx.fee;
                 tx.rawPaymentId = tx.paymentId;
                 tx.rawHash = tx.transactionHash;
+				tx.destinationAddress = (tx.amount < 0 ? tx.transfers[0].address : '');
                 txListNew.unshift(tx);
             }
         });

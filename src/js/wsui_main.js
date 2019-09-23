@@ -2434,7 +2434,7 @@ function handleTransactions(){
 	let txListOpts = {
 		valueNames: [
 			{ data: [
-				'rawPaymentId', 'rawHash', 'txType', 'rawAmount', 'rawFee',
+				'rawPaymentId', 'rawHash', 'txType', 'rawAmount', 'rawFee', 'destinationAddress',
 				'fee', 'timestamp', 'blockIndex', 'extra', 'isBase', 'unlockTime'
 			]},
 			'amount','timeStr','paymentId','transactionHash','fee'
@@ -2449,6 +2449,7 @@ function handleTransactions(){
 		let txdate = new Date(tx.dataset.timestamp*1000).toUTCString();
 		let txhashUrl = `<a class="external form-bt button-blue" title="view in block explorer" href="${config.blockExplorerTransactionUrl.replace('[[TX_HASH]]', tx.dataset.rawhash)}">View in block explorer</a>`;
 		let txTypeBtn = tx.dataset.txtype == 'in' ? `<a class="tx-type-btn tx-type-in">Received<img src="../assets/transactions/right-blue-arrow.png" /></a>` : `<a class="tx-type-btn tx-type-out">Sent<img src="../assets/transactions/arrow-up-red.png" /></a>`;
+		let address = tx.dataset.txtype == 'in' ? wsession.get('loadedWalletAddress') : tx.dataset.destinationaddress;
 		let dialogTpl = `
 				<div class="div-transactions-panel">
 					<div class="clearfix">
@@ -2486,7 +2487,7 @@ function handleTransactions(){
 								</tr>
 								<tr>
 									<th scope="col"><img src="../assets/transactions/right-blue-arrow.png" />Address</th>
-									<td data-cplabel="Address" class="tctcl">${wsession.get('loadedWalletAddress')}</td>
+									<td data-cplabel="Address" class="tctcl">${address}</td>
 								</tr>
 								<tr>
 									<th scope="col"><img src="../assets/transactions/right-blue-arrow.png" /><span class="opa50">Extra</span></th>
