@@ -21,18 +21,6 @@
 		let appVersion = require('electron').remote.app.getVersion();
 		let html = `Version ${appVersion}`;
 		document.getElementById('welcome-bottom').innerHTML = html;
-
-		// mimic the wallet opening
-		/*
-		setTimeout(function() {
-			var a = document.getElementById('button-welcome-openwallet');
-			a.click();
-			var b = document.getElementById('input-load-password');
-			b.value = '25000 blocs';
-			var c = document.getElementById('button-load-load');
-			c.click();
-		}, 200);
-		*/
 		</script>
 	</section>
 </template>
