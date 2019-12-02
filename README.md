@@ -8,9 +8,13 @@ Make sure to read the complete instructions about how to use the [BLOC Electron 
 
 ![BLOC Electron Wallet - Welcome screen](https://wiki.bloc.money/wallets/images/BLOC-gui-wallet/V3/BLOC-Electron-wallet-gif-v3.5.2.gif)
 
+![BLOC Electron Wallet - Transactions](https://wiki.bloc.money/wallets/images/BLOC-gui-wallet/V3/2-BLOC-electron-wallet-welcome.png)
+
 ![BLOC Electron Wallet - Wallet Overview](https://wiki.bloc.money/wallets/images/BLOC-gui-wallet/V3/wallet-overview.png)
 
 ![BLOC Electron Wallet - Transactions](https://wiki.bloc.money/wallets/images/BLOC-gui-wallet/V3/transactions.png)
+
+![BLOC Electron Wallet - Transactions](https://wiki.bloc.money/wallets/images/BLOC-gui-wallet/V3/exchange.png)
 
 ![BLOC Electron Wallet - Transactions](https://wiki.bloc.money/wallets/images/BLOC-gui-wallet/V3/tools.png)
 
