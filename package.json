@@ -32,7 +32,7 @@
     "request": "^2.88.0",
     "request-promise-native": "^1.0.5",
     "semver": "^5.6.0",
-    "chart.js": "^2.7.3"
+    "chart.js": "^2.9.4"
   },
   "build": {
     "appId": "money.bloc.bloc-electron-wallet",
